@@ -1,0 +1,8 @@
+com\dingbo\chuxi\route\MyErrorController.class
+com\dingbo\chuxi\test\controller\TestController.class
+com\dingbo\chuxi\config\SwaggerConfig.class
+com\dingbo\chuxi\test\test.class
+com\dingbo\chuxi\Start.class
+com\dingbo\chuxi\route\RouteConteoller.class
+com\dingbo\chuxi\config\MyWebMvcConfigurer.class
+com\dingbo\chuxi\config\DruidConfiguration.class

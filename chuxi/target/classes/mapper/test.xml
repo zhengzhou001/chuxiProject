@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="test" >
+
+
+    <!-- 账户减操作-->
+    <update id="subAccount" >
+    	update   account set money=money-1 where userid=1
+    </update>
+
+    <!-- 账户减操作-->
+    <select id="getAccount"  resultType="java.lang.Integer">
+    	select money from account where  userid=1
+    </select>
+
+
+
+</mapper>
