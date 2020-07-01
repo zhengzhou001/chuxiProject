@@ -1,15 +1,17 @@
 package com.dingbo.chuxi.sys.service.impl;
 
-import org.apache.commons.lang3.StringUtils;
-import com.xinan.distributeCore.tools.BaseTools;
+import com.dingbo.chuxi.sys.entity.SysUserEntity;
+import com.dingbo.chuxi.sys.mapper.SysUserMapper;
+import com.dingbo.chuxi.sys.service.ISysUserService;
+import com.xinan.distributeCore.result.BaseResult;
 import com.xinan.distributeCore.service.impl.BaseServiceImpl;
+import com.xinan.distributeCore.tools.EncryptTools;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
-import com.dingbo.chuxi.sys.service.ISysUserService;
-import com.dingbo.chuxi.sys.mapper.SysUserMapper;
-import com.dingbo.chuxi.sys.entity.SysUserEntity;
 
 /**
  * <ol>
@@ -66,5 +68,57 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
  	 */
 	public	int selectSysUserCount(SysUserEntity sysUserEntity){
 		return sysUserMapper.selectSysUserCount(sysUserEntity);
+	}
+
+	/**
+	 * 登陆
+	 */
+	public BaseResult<SysUserEntity> updateLogin(SysUserEntity sysUserEntity){
+		BaseResult<SysUserEntity> result = new BaseResult<>();
+
+		if (sysUserEntity==null){
+			result.setCode(100);
+			result.setMsg("传参异常");
+			return result;
+		}
+		if (StringUtils.isEmpty(sysUserEntity.getMobile())){
+			result.setCode(101);
+			result.setMsg("手机号不能为空");
+			return result;
+		}
+		if (StringUtils.isEmpty(sysUserEntity.getPassword())){
+			result.setCode(101);
+			result.setMsg("密码不能为空");
+			return result;
+		}
+		SysUserEntity mobileEntity = new SysUserEntity();
+		mobileEntity.setMobile(sysUserEntity.getMobile());
+		List<SysUserEntity> mobileList = sysUserMapper.selectSysUser(mobileEntity);
+
+		if (mobileList==null||mobileList.size()==0){
+			result.setCode(102);
+			result.setMsg("账号不存在");
+			return result;
+		}
+		if (mobileList.size()>1){
+			result.setCode(102);
+			result.setMsg("账号存在多个,请联系客服人员解决");
+			return result;
+		}
+		SysUserEntity mobileDbEntity = mobileList.get(0);
+		if (!StringUtils.equals(mobileDbEntity.getState(),"1")){
+			result.setCode(103);
+			result.setMsg("账号状态异常,请联系客服人员解决");
+			return result;
+		}
+		if (!StringUtils.equals(EncryptTools.encodeMD5String(sysUserEntity.getMobile()),mobileDbEntity.getPassword())){
+			result.setCode(104);
+			result.setMsg("密码不正确");
+			return result;
+		}
+		//添加登陆日志
+		mobileDbEntity.setPassword("");//密码修改为空
+		result.setData(mobileDbEntity);
+		return  result;
 	}
 }

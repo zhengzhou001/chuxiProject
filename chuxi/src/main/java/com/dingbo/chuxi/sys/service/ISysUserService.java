@@ -1,8 +1,10 @@
 package com.dingbo.chuxi.sys.service;
 
-import java.util.List;
-import com.xinan.distributeCore.service.IBaseService;
 import com.dingbo.chuxi.sys.entity.SysUserEntity;
+import com.xinan.distributeCore.result.BaseResult;
+import com.xinan.distributeCore.service.IBaseService;
+
+import java.util.List;
 
 /**
  * <ol>
@@ -46,4 +48,9 @@ public interface ISysUserService extends IBaseService{
 	 * @return int返回符合条件的用户表实体对象个数
  	 */
 	public	int selectSysUserCount(SysUserEntity sysUserEntity);
+
+	/**
+	 * 登陆
+	 */
+	public BaseResult<SysUserEntity> updateLogin(SysUserEntity sysUserEntity);
 }

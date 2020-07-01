@@ -123,4 +123,17 @@ public class SysUserController{
 		}
 		return baseResult;
 	}
+
+
+	/**
+	 * 登陆
+	 * @param SysUserEntity 用户表实体对象
+	 * @return SysUserEntity 用户表实体对象
+	 */
+	@ApiOperation(value = "登陆接口", notes="登陆接口")
+	@RequestMapping(value={"/login"}, method={RequestMethod.POST})
+	public	BaseResult<SysUserEntity> login(@RequestBody SysUserEntity sysUserEntity){
+		 return sysUserService.updateLogin(sysUserEntity);
+	}
+
 }

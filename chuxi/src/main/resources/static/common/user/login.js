@@ -14,9 +14,9 @@ layui.use(['element','table',"layer","form"], function(){
     //监听提交
     form.on('submit(login)', function(data){
         baseTools.xhrAjax({
-            url: context + "test/getTestData",
+            url: context + "sys/login",
             contentType: "application/json",
-            params: JSON.stringify({}),
+            params: JSON.stringify(data),
             callback: [function (jsonObj, xhrArgs) {
                 switch (parseInt(jsonObj.code)) {
                     case 0://成功
@@ -36,9 +36,6 @@ layui.use(['element','table',"layer","form"], function(){
                 baseTools.hideMash();
             }]
         });
-        layer.alert(JSON.stringify(data.field), {
-            title: '最终的提交信息'
-        })
         return false;
     });
 
