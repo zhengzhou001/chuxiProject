@@ -1,6 +1,12 @@
 com\dingbo\chuxi\route\MyErrorController.class
 com\dingbo\chuxi\test\controller\TestController.class
+com\dingbo\chuxi\sys\controller\SysUserController.class
 com\dingbo\chuxi\config\SwaggerConfig.class
+com\dingbo\chuxi\sys\service\ISysUserService.class
+com\dingbo\chuxi\sys\service\impl\SysUserServiceImpl.class
+com\dingbo\chuxi\sys\mapper\SysUserMapper.class
+com\dingbo\chuxi\common\ChuXiConstants.class
+com\dingbo\chuxi\sys\entity\SysUserEntity.class
 com\dingbo\chuxi\test\test.class
 com\dingbo\chuxi\Start.class
 com\dingbo\chuxi\route\RouteConteoller.class
