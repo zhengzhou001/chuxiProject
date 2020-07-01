@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dingbo.chuxi.sys.mapper.SysUserMapper" >
+	<resultMap id="BaseResultMap" type="com.dingbo.chuxi.sys.entity.SysUserEntity" >
+		<result column="TOTAL" property="total"  />
+		<result column="ROWNO" property="rowno"  />
+		<result column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
+		<result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
+		<result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+		<result column="STATE" property="state" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+		<result column="LOGIN_DATE" property="loginDate" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--用户表通用查询条件 -->
+	<sql id="SYS_USER_WHERE">
+		<where>
+			<if test="id != null and id != ''">
+				AND T.ID = #{id}
+			</if>
+			<if test="id_LIKE != null and id_LIKE != ''">
+				AND T.ID LIKE concat(concat('%',#{id_LIKE}),'%')
+			</if>
+			<if test="id_LLIKE != null and id_LLIKE != ''">
+				AND T.ID LIKE concat('%',#{id_LLIKE})
+			</if>
+			<if test="id_RLIKE != null and id_RLIKE != ''">
+				AND T.ID LIKE concat(#{id_RLIKE},'%')
+			</if>
+
+			<if test="name != null and name != ''">
+				AND T.NAME = #{name}
+			</if>
+			<if test="name_LIKE != null and name_LIKE != ''">
+				AND T.NAME LIKE concat(concat('%',#{name_LIKE}),'%')
+			</if>
+			<if test="name_LLIKE != null and name_LLIKE != ''">
+				AND T.NAME LIKE concat('%',#{name_LLIKE})
+			</if>
+			<if test="name_RLIKE != null and name_RLIKE != ''">
+				AND T.NAME LIKE concat(#{name_RLIKE},'%')
+			</if>
+
+			<if test="mobile != null and mobile != ''">
+				AND T.MOBILE = #{mobile}
+			</if>
+			<if test="mobile_LIKE != null and mobile_LIKE != ''">
+				AND T.MOBILE LIKE concat(concat('%',#{mobile_LIKE}),'%')
+			</if>
+			<if test="mobile_LLIKE != null and mobile_LLIKE != ''">
+				AND T.MOBILE LIKE concat('%',#{mobile_LLIKE})
+			</if>
+			<if test="mobile_RLIKE != null and mobile_RLIKE != ''">
+				AND T.MOBILE LIKE concat(#{mobile_RLIKE},'%')
+			</if>
+
+			<if test="email != null and email != ''">
+				AND T.EMAIL = #{email}
+			</if>
+			<if test="email_LIKE != null and email_LIKE != ''">
+				AND T.EMAIL LIKE concat(concat('%',#{email_LIKE}),'%')
+			</if>
+			<if test="email_LLIKE != null and email_LLIKE != ''">
+				AND T.EMAIL LIKE concat('%',#{email_LLIKE})
+			</if>
+			<if test="email_RLIKE != null and email_RLIKE != ''">
+				AND T.EMAIL LIKE concat(#{email_RLIKE},'%')
+			</if>
+
+			<if test="account != null and account != ''">
+				AND T.ACCOUNT = #{account}
+			</if>
+			<if test="account_LIKE != null and account_LIKE != ''">
+				AND T.ACCOUNT LIKE concat(concat('%',#{account_LIKE}),'%')
+			</if>
+			<if test="account_LLIKE != null and account_LLIKE != ''">
+				AND T.ACCOUNT LIKE concat('%',#{account_LLIKE})
+			</if>
+			<if test="account_RLIKE != null and account_RLIKE != ''">
+				AND T.ACCOUNT LIKE concat(#{account_RLIKE},'%')
+			</if>
+
+			<if test="password != null and password != ''">
+				AND T.PASSWORD = #{password}
+			</if>
+			<if test="password_LIKE != null and password_LIKE != ''">
+				AND T.PASSWORD LIKE concat(concat('%',#{password_LIKE}),'%')
+			</if>
+			<if test="password_LLIKE != null and password_LLIKE != ''">
+				AND T.PASSWORD LIKE concat('%',#{password_LLIKE})
+			</if>
+			<if test="password_RLIKE != null and password_RLIKE != ''">
+				AND T.PASSWORD LIKE concat(#{password_RLIKE},'%')
+			</if>
+
+			<if test="state != null and state != ''">
+				AND T.STATE = #{state}
+			</if>
+			<if test="state_LIKE != null and state_LIKE != ''">
+				AND T.STATE LIKE concat(concat('%',#{state_LIKE}),'%')
+			</if>
+			<if test="state_LLIKE != null and state_LLIKE != ''">
+				AND T.STATE LIKE concat('%',#{state_LLIKE})
+			</if>
+			<if test="state_RLIKE != null and state_RLIKE != ''">
+				AND T.STATE LIKE concat(#{state_RLIKE},'%')
+			</if>
+
+			<if test="createDate != null and createDate != ''">
+				AND T.CREATE_DATE = STR_TO_DATE(#{createDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MIN != null and createDate_MIN != ''">
+				AND T.CREATE_DATE &gt;= STR_TO_DATE(#{createDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MAX != null and createDate_MAX != ''">
+				AND T.CREATE_DATE &lt;= STR_TO_DATE(#{createDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+			<if test="loginDate != null and loginDate != ''">
+				AND T.LOGIN_DATE = STR_TO_DATE(#{loginDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="loginDate_MIN != null and loginDate_MIN != ''">
+				AND T.LOGIN_DATE &gt;= STR_TO_DATE(#{loginDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="loginDate_MAX != null and loginDate_MAX != ''">
+				AND T.LOGIN_DATE &lt;= STR_TO_DATE(#{loginDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+		</where>
+	</sql>
+	<!-- 用户表通用查询 -->
+    <select id="selectSysUser" parameterType="com.dingbo.chuxi.sys.entity.SysUserEntity" resultMap="BaseResultMap" >
+		<bind name="startNumber" value="(curPage-1)*pageSize"></bind>
+		SELECT (@rowNum:=@rowNum+1) AS ROWNO,
+		(SELECT COUNT(1) FROM SYS_USER T <include refid="SYS_USER_WHERE"/>) AS TOTAL,
+		E.* FROM (
+		SELECT T.ID,T.NAME,T.MOBILE,T.EMAIL,T.ACCOUNT,
+			T.PASSWORD,T.STATE,
+			DATE_FORMAT(T.CREATE_DATE,'%Y-%m-%d %H:%i:%s') CREATE_DATE,
+			DATE_FORMAT(T.LOGIN_DATE,'%Y-%m-%d %H:%i:%s') LOGIN_DATE
+		FROM SYS_USER T
+		<include refid="SYS_USER_WHERE"/>
+		<if test="sortName != null and sortName != ''">
+			ORDER BY  ${sortName}
+ 				${sortOrder}
+ 		</if>
+			limit ${startNumber},${pageSize}
+		)E,SYS_USER T
+		<if test="pageSize != null and pageSize != ''">
+			,(SELECT(@rowNum :=${startNumber}))TEM_TB
+		</if>
+		WHERE E.ID=T.ID
+
+    </select>
+
+    <!-- 用户表通用查询个数 -->
+    <select id="selectSysUserCount" parameterType="com.dingbo.chuxi.sys.entity.SysUserEntity" resultType="java.lang.Integer" >
+     	 SELECT COUNT(1) FROM SYS_USER T <include refid="SYS_USER_WHERE"/>
+    </select>
+
+    <!-- 用户表保存 -->
+    <insert id="insertSysUser" parameterType="com.dingbo.chuxi.sys.entity.SysUserEntity" >
+    	insert into SYS_USER
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				  ID ,
+			</if>
+			<if test="name != null and name != ''">
+				  NAME ,
+			</if>
+			<if test="mobile != null and mobile != ''">
+				  MOBILE ,
+			</if>
+			<if test="email != null and email != ''">
+				  EMAIL ,
+			</if>
+			<if test="account != null and account != ''">
+				  ACCOUNT ,
+			</if>
+			<if test="password != null and password != ''">
+				  PASSWORD ,
+			</if>
+			<if test="state != null and state != ''">
+				  STATE ,
+			</if>
+			<if test="createDate != null and createDate != ''">
+				  CREATE_DATE ,
+			</if>
+			<if test="loginDate != null and loginDate != ''">
+				  LOGIN_DATE ,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				 #{id},
+			</if>
+			<if test="name != null and name != ''">
+				 #{name},
+			</if>
+			<if test="mobile != null and mobile != ''">
+				 #{mobile},
+			</if>
+			<if test="email != null and email != ''">
+				 #{email},
+			</if>
+			<if test="account != null and account != ''">
+				 #{account},
+			</if>
+			<if test="password != null and password != ''">
+				 #{password},
+			</if>
+			<if test="state != null and state != ''">
+				 #{state},
+			</if>
+			<if test="createDate != null and createDate != ''">
+				 STR_TO_DATE(#{createDate},'%Y-%m-%d %H:%i:%s'),
+			</if>
+			<if test="loginDate != null and loginDate != ''">
+				 STR_TO_DATE(#{loginDate},'%Y-%m-%d %H:%i:%s'),
+			</if>
+		</trim>
+    </insert>
+
+    <!-- 用户表修改-->
+    <update id="updateSysUser" parameterType="com.dingbo.chuxi.sys.entity.SysUserEntity" >
+    	update   SYS_USER T
+    	<set>
+			<if test="id_NEW != null and id_NEW != ''">
+				  ID=  #{id_NEW},
+			</if>
+			<if test="name_NEW != null and name_NEW != ''">
+				  NAME=  #{name_NEW},
+			</if>
+			<if test="mobile_NEW != null and mobile_NEW != ''">
+				  MOBILE=  #{mobile_NEW},
+			</if>
+			<if test="email_NEW != null and email_NEW != ''">
+				  EMAIL=  #{email_NEW},
+			</if>
+			<if test="account_NEW != null and account_NEW != ''">
+				  ACCOUNT=  #{account_NEW},
+			</if>
+			<if test="password_NEW != null and password_NEW != ''">
+				  PASSWORD=  #{password_NEW},
+			</if>
+			<if test="state_NEW != null and state_NEW != ''">
+				  STATE=  #{state_NEW},
+			</if>
+			<if test="createDate_NEW != null and createDate_NEW != ''">
+				  CREATE_DATE=  STR_TO_DATE(#{createDate_NEW},'%Y-%m-%d %H:%i:%s'),
+			</if>
+
+			<if test="loginDate_NEW != null and loginDate_NEW != ''">
+				  LOGIN_DATE=  STR_TO_DATE(#{loginDate_NEW},'%Y-%m-%d %H:%i:%s'),
+			</if>
+
+		</set>
+		<include refid="SYS_USER_WHERE"/>
+    </update>
+
+    <!-- 用户表删除-->
+    <delete id="deleteSysUser" parameterType="com.dingbo.chuxi.sys.entity.SysUserEntity" >
+    	delete  T  from SYS_USER  T  <include refid="SYS_USER_WHERE"/>
+    </delete>
+
+</mapper>
