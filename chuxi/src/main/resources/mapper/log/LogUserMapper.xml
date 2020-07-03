@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dingbo.chuxi.log.mapper.LogUserMapper" >
+	<resultMap id="BaseResultMap" type="com.dingbo.chuxi.log.entity.LogUserEntity" >
+		<result column="TOTAL" property="total"  />
+		<result column="ROWNO" property="rowno"  />
+		<result column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="USERID" property="userid" jdbcType="NUMERIC" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+		<result column="CONTENT" property="content" jdbcType="VARCHAR" />
+		<result column="IP" property="ip" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--用户日志通用查询条件 -->
+	<sql id="LOG_USER_WHERE">
+		<where>
+			<if test="id != null and id != ''">
+				AND T.ID = #{id}
+			</if>
+			<if test="id_LIKE != null and id_LIKE != ''">
+				AND T.ID LIKE concat(concat('%',#{id_LIKE}),'%')
+			</if>
+			<if test="id_LLIKE != null and id_LLIKE != ''">
+				AND T.ID LIKE concat('%',#{id_LLIKE})
+			</if>
+			<if test="id_RLIKE != null and id_RLIKE != ''">
+				AND T.ID LIKE concat(#{id_RLIKE},'%')
+			</if>
+
+			<if test="userid != null and userid != ''">
+				AND T.USERID = #{userid}
+			</if>
+			<if test="userid_LIKE != null and userid_LIKE != ''">
+				AND T.USERID LIKE concat(concat('%',#{userid_LIKE}),'%')
+			</if>
+			<if test="userid_LLIKE != null and userid_LLIKE != ''">
+				AND T.USERID LIKE concat('%',#{userid_LLIKE})
+			</if>
+			<if test="userid_RLIKE != null and userid_RLIKE != ''">
+				AND T.USERID LIKE concat(#{userid_RLIKE},'%')
+			</if>
+
+			<if test="createDate != null and createDate != ''">
+				AND T.CREATE_DATE = STR_TO_DATE(#{createDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MIN != null and createDate_MIN != ''">
+				AND T.CREATE_DATE &gt;= STR_TO_DATE(#{createDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MAX != null and createDate_MAX != ''">
+				AND T.CREATE_DATE &lt;= STR_TO_DATE(#{createDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+			<if test="content != null and content != ''">
+				AND T.CONTENT = #{content}
+			</if>
+			<if test="content_LIKE != null and content_LIKE != ''">
+				AND T.CONTENT LIKE concat(concat('%',#{content_LIKE}),'%')
+			</if>
+			<if test="content_LLIKE != null and content_LLIKE != ''">
+				AND T.CONTENT LIKE concat('%',#{content_LLIKE})
+			</if>
+			<if test="content_RLIKE != null and content_RLIKE != ''">
+				AND T.CONTENT LIKE concat(#{content_RLIKE},'%')
+			</if>
+
+			<if test="ip != null and ip != ''">
+				AND T.IP = #{ip}
+			</if>
+			<if test="ip_LIKE != null and ip_LIKE != ''">
+				AND T.IP LIKE concat(concat('%',#{ip_LIKE}),'%')
+			</if>
+			<if test="ip_LLIKE != null and ip_LLIKE != ''">
+				AND T.IP LIKE concat('%',#{ip_LLIKE})
+			</if>
+			<if test="ip_RLIKE != null and ip_RLIKE != ''">
+				AND T.IP LIKE concat(#{ip_RLIKE},'%')
+			</if>
+
+		</where>
+	</sql>
+	<!-- 用户日志通用查询 -->
+    <select id="selectLogUser" parameterType="com.dingbo.chuxi.log.entity.LogUserEntity" resultMap="BaseResultMap" >
+		<bind name="startNumber" value="(curPage-1)*pageSize"></bind>
+		SELECT (@rowNum:=@rowNum+1) AS ROWNO,
+		(SELECT COUNT(1) FROM LOG_USER T <include refid="LOG_USER_WHERE"/>) AS TOTAL,
+		E.* FROM (
+		SELECT T.ID,T.USERID,
+			DATE_FORMAT(T.CREATE_DATE,'%Y-%m-%d %H:%i:%s') CREATE_DATE,T.CONTENT
+		FROM LOG_USER T
+		<include refid="LOG_USER_WHERE"/>
+		<if test="sortName != null and sortName != ''">
+			ORDER BY  ${sortName}
+ 				${sortOrder}
+ 		</if>
+			limit ${startNumber},${pageSize}
+		)E,LOG_USER T
+		<if test="pageSize != null and pageSize != ''">
+			,(SELECT(@rowNum :=${startNumber}))TEM_TB
+		</if>
+		WHERE E.ID=T.ID
+
+    </select>
+
+    <!-- 用户日志通用查询个数 -->
+    <select id="selectLogUserCount" parameterType="com.dingbo.chuxi.log.entity.LogUserEntity" resultType="java.lang.Integer" >
+     	 SELECT COUNT(1) FROM LOG_USER T <include refid="LOG_USER_WHERE"/>
+    </select>
+
+    <!-- 用户日志保存 -->
+    <insert id="insertLogUser"   parameterType="com.dingbo.chuxi.log.entity.LogUserEntity" >
+    	insert into LOG_USER
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				  ID ,
+			</if>
+			<if test="userid != null and userid != ''">
+				  USERID ,
+			</if>
+				  CREATE_DATE ,
+			<if test="content != null and content != ''">
+				  CONTENT ,
+			</if>
+			<if test="ip != null and ip != ''">
+				  IP,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				 #{id},
+			</if>
+			<if test="userid != null and userid != ''">
+				 #{userid},
+			</if>
+			 now(),
+			<if test="content != null and content != ''">
+				 #{content},
+			</if>
+			<if test="ip != null and ip != ''">
+				#{ip},
+			</if>
+		</trim>
+    </insert>
+
+    <!-- 用户日志修改-->
+    <update id="updateLogUser" parameterType="com.dingbo.chuxi.log.entity.LogUserEntity" >
+    	update   LOG_USER T
+    	<set>
+			<if test="id_NEW != null and id_NEW != ''">
+				  ID=  #{id_NEW},
+			</if>
+			<if test="userid_NEW != null and userid_NEW != ''">
+				  USERID=  #{userid_NEW},
+			</if>
+			<if test="createDate_NEW != null and createDate_NEW != ''">
+				  CREATE_DATE=  STR_TO_DATE(#{createDate_NEW},'%Y-%m-%d %H:%i:%s'),
+			</if>
+
+			<if test="content_NEW != null and content_NEW != ''">
+				  CONTENT=  #{content_NEW},
+			</if>
+			<if test="ip_NEW != null and ip_NEW != ''">
+				  IP=  #{ip_NEW},
+			</if>
+		</set>
+		<include refid="LOG_USER_WHERE"/>
+    </update>
+
+    <!-- 用户日志删除-->
+    <delete id="deleteLogUser" parameterType="com.dingbo.chuxi.log.entity.LogUserEntity" >
+    	delete  T  from LOG_USER  T  <include refid="LOG_USER_WHERE"/>
+    </delete>
+
+</mapper>

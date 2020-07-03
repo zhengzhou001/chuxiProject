@@ -20,7 +20,7 @@ var baseTools = (function () {
     return {
     	//重新登录
     	gotoLogin: function (dateStr) {
-    		top.location.href="/laxt/html/login/login.html?appid=1"
+    		top.location.href=context+"route/login";
         },
     	//解决IE8获取时间失败
         getDate: function (dateStr) {

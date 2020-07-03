@@ -19,7 +19,7 @@ public class RouteConteoller {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/front/index/index");
         Map<String, Object> model = modelAndView.getModel();
-        model.put("title", ChuXiConstants.TITLE +"-登陆");
+        model.put("title", ChuXiConstants.TITLE +"-首页");
         model.put("foot", ChuXiConstants.FOOT);
         model.put("gsjj", "www.abaidu.com");
         return modelAndView;
@@ -35,4 +35,29 @@ public class RouteConteoller {
         model.put("foot", ChuXiConstants.FOOT);
         return modelAndView;
     }
+
+    @GetMapping("/home")
+    public ModelAndView home() {
+        //登录
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/back/home/home");
+        Map<String, Object> model = modelAndView.getModel();
+        model.put("title", ChuXiConstants.TITLE +"-个人主页");
+        model.put("foot", ChuXiConstants.FOOT);
+        return modelAndView;
+    }
+
+
+    @GetMapping("/test")
+    public ModelAndView test() {
+        //首页
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/front/test/test");
+        Map<String, Object> model = modelAndView.getModel();
+        model.put("title", ChuXiConstants.TITLE +"-测试");
+        model.put("foot", ChuXiConstants.FOOT);
+        model.put("gsjj", "www.abaidu.com");
+        return modelAndView;
+    }
+
 }

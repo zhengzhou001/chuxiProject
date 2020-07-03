@@ -5,6 +5,7 @@ import com.xinan.distributeCore.result.BaseResult;
 import com.xinan.distributeCore.service.IBaseService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <ol>
@@ -49,8 +50,12 @@ public interface ISysUserService extends IBaseService{
  	 */
 	public	int selectSysUserCount(SysUserEntity sysUserEntity);
 
-	/**
-	 * 登陆
-	 */
+	//登陆
 	public BaseResult<SysUserEntity> updateLogin(SysUserEntity sysUserEntity);
+
+	//注册
+	public BaseResult<SysUserEntity> updateRegister(SysUserEntity sysUserEntity);
+
+	//退出登录
+	public void updateLogout(Map map);
 }

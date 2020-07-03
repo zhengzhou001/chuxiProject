@@ -1,11 +1,16 @@
-<div th:fragment="head" class="layui-header header header-store">
-    <ul class="layui-nav">
+<div th:fragment="head" class="layui-header"
+     style="position: fixed; left:10%;right: 10%;top: 0px;"
+>
+    <ul class="layui-nav" style="background-color: #dedede;">
         <li class="layui-nav-item"><a th:href="${gsjj}">公司简介</a></li>
+        <li class="layui-nav-item"  style="float: right"><a href="javascript:void (0)" onclick="logout()">退出</a></li>
+        <li class="layui-nav-item"  style="float: right"><a   th:href= "@{/route/home}"  target="_blank">张三</a></li>
+
     </ul>
 </div>
 
 
 <div th:fragment="foot"
-     style="position: fixed; left:0px;right: 0px;bottom: 0px;background-color: #dedede;line-height: 45px;padding-top: 5px;">
+     style="position: fixed; left:10%;right: 10%;bottom: 0px;background-color: #dedede;line-height: 45px;">
     <p align="center" th:text="${foot}"></p>
 </div>

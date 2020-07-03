@@ -1,0 +1,6 @@
+<script th:inline="javascript">
+    if(!$.cookie("CUR_USER")||$.cookie("CUR_USER")=="null"||$.cookie("CUR_USER")==""){
+        baseTools.gotoLogin();
+    }
+    var user = JSON.parse($.cookie("CUR_USER"));
+</script>

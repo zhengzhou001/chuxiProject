@@ -70,7 +70,7 @@
                      </label>
                      </label>
                      <div class="layui-input-block">
-                         <a class="layui-btn  layui-btn-primary"  target="_blank" href="http://www.baidu.com"> 注册</a>
+                          <button class="layui-btn  layui-btn-primary" style="float: right" lay-submit="" lay-filter="register">注册</button>
                           <button class="layui-btn" style="float: right" lay-submit="" lay-filter="login">登陆</button>
                      </div>
                  </div>
@@ -79,8 +79,65 @@
         </div>
     </div>
 
-    <!--foot-->
-    <div th:replace="/front/head/head :: foot"></div>
+
+    <!--注册表单-->
+    <form class="layui-form" lay-filter="" action="" style="display: none" id="registerForm">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name"  class="layui-input" lay-verify="required|name" placeholder="请输入用户名"
+                value="张三">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机号码</label>
+            <div class="layui-input-inline">
+                <input type="tel" name="mobile"  class="layui-input" lay-verify="required|phone" placeholder="请输入手机号码"
+                       value="13683816984">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password" id="password_register"  class="layui-input" lay-verify="required|pass"  p
+                       laceholder="请输入密码"
+                       value="123456">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">重复密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="repassword"  class="layui-input" lay-verify="required|pass|confirmPwd"
+                       placeholder="请再次输入新密码"
+                       value="123456">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">电子邮箱</label>
+            <div class="layui-input-inline">
+                <input type="text" name="email"  class="layui-input" lay-verify="email" placeholder="请输入邮箱"
+                       value="2449709309@qq.com">
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit  lay-filter="registerFormSubmit">注册</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+
+
 </div>
+<!--foot-->
+<div th:replace="/front/head/head :: foot"></div>
 </body>
 </html>

@@ -161,7 +161,7 @@
     </select>
 
     <!-- 用户表保存 -->
-    <insert id="insertSysUser" parameterType="com.dingbo.chuxi.sys.entity.SysUserEntity" >
+    <insert id="insertSysUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.dingbo.chuxi.sys.entity.SysUserEntity" >
     	insert into SYS_USER
     	<trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id != null and id != ''">

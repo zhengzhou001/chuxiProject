@@ -40,20 +40,21 @@
             display:block;	/* ... */
         }
 
+
     </style>
 </head>
-<body>
+<body  >
 <!--加载整个base.html-->
 <div th:replace="/common/base/base"></div>
+<div th:replace="/common/base/checkLogin"></div>
 
 
-
-<div class="layui-container">
+<div class="layui-container"  >
     <!--head-->
     <div th:replace="/front/head/head :: head"></div>
 
     <!--轮播图-->
-    <div class="layui-carousel" id="carousel" style="">
+    <div class="layui-carousel" id="carousel"  style="margin-top: 65px">
         <div carousel-item="">
             <div  class="divMain"><img   th:src="@{/images/carousel/index/1.jpg}"></div>
             <div  class="divMain"><img   th:src="@{/images/carousel/index/2.jpg}"></div>
@@ -66,7 +67,8 @@
     </div>
 
 
-    <div class="layui-row">
+
+    <div class="layui-row"  style="margin-bottom: 50px">
         <!--热销产品-->
         <div class="layui-col-xs6">
             <div class="layui-card">
@@ -90,6 +92,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     <!--foot-->

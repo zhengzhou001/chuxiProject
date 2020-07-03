@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <ol>
@@ -127,13 +128,49 @@ public class SysUserController{
 
 	/**
 	 * 登陆
-	 * @param SysUserEntity 用户表实体对象
-	 * @return SysUserEntity 用户表实体对象
 	 */
-	@ApiOperation(value = "登陆接口", notes="登陆接口")
+	@ApiOperation(value = "登陆接口")
 	@RequestMapping(value={"/login"}, method={RequestMethod.POST})
 	public	BaseResult<SysUserEntity> login(@RequestBody SysUserEntity sysUserEntity){
-		 return sysUserService.updateLogin(sysUserEntity);
+		BaseResult<SysUserEntity> result;
+		try{
+			result = sysUserService.updateLogin(sysUserEntity);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return BaseResult.getInstance(-1,e.getMessage());
+		}
+		return result;
+	}
+
+	/**
+	 * 注册
+	 */
+	@ApiOperation(value = "注册接口")
+	@RequestMapping(value={"/register"}, method={RequestMethod.POST})
+	public	BaseResult<SysUserEntity> register(@RequestBody SysUserEntity sysUserEntity){
+		BaseResult<SysUserEntity> result;
+		try{
+			result = sysUserService.updateRegister(sysUserEntity);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return BaseResult.getInstance(-1,e.getMessage());
+		}
+		return result;
+	}
+
+	/**
+	 * 退出
+	 */
+	@ApiOperation(value = "退出接口")
+	@RequestMapping(value={"/logout"}, method={RequestMethod.POST})
+	public	BaseResult logout(@RequestBody Map map){
+		try{
+			sysUserService.updateLogout(map);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return BaseResult.getInstance(-1,e.getMessage());
+		}
+		return BaseResult.getInstance();
 	}
 
 }
