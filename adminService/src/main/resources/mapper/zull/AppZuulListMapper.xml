@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinan.userService.zull.mapper.AppZuulListMapper" >
+	<resultMap id="BaseResultMap" type="com.xinan.userService.zull.entity.AppZuulListEntity" >
+		<result column="TOTAL" property="total"  />
+		<result column="ROWNO" property="rowno"  />
+		<result column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="APPNAME" property="appname" jdbcType="VARCHAR" />
+		<result column="STATE" property="state" jdbcType="NUMERIC" />
+		<result column="NOTE" property="note" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--应用列表通用查询条件 -->
+	<sql id="APP_ZUUL_LIST_WHERE">
+		<where>
+			<if test="id != null and id != ''">
+				AND T.ID = #{id}
+			</if>
+			<if test="id_LIKE != null and id_LIKE != ''">
+				AND T.ID LIKE concat(concat('%',#{id_LIKE}),'%')
+			</if>
+			<if test="id_LLIKE != null and id_LLIKE != ''">
+				AND T.ID LIKE concat('%',#{id_LLIKE})
+			</if>
+			<if test="id_RLIKE != null and id_RLIKE != ''">
+				AND T.ID LIKE concat(#{id_RLIKE},'%')
+			</if>
+
+			<if test="appname != null and appname != ''">
+				AND T.APPNAME = #{appname}
+			</if>
+			<if test="appname_LIKE != null and appname_LIKE != ''">
+				AND T.APPNAME LIKE concat(concat('%',#{appname_LIKE}),'%')
+			</if>
+			<if test="appname_LLIKE != null and appname_LLIKE != ''">
+				AND T.APPNAME LIKE concat('%',#{appname_LLIKE})
+			</if>
+			<if test="appname_RLIKE != null and appname_RLIKE != ''">
+				AND T.APPNAME LIKE concat(#{appname_RLIKE},'%')
+			</if>
+
+			<if test="state != null and state != ''">
+				AND T.STATE = #{state}
+			</if>
+			<if test="state_LIKE != null and state_LIKE != ''">
+				AND T.STATE LIKE concat(concat('%',#{state_LIKE}),'%')
+			</if>
+			<if test="state_LLIKE != null and state_LLIKE != ''">
+				AND T.STATE LIKE concat('%',#{state_LLIKE})
+			</if>
+			<if test="state_RLIKE != null and state_RLIKE != ''">
+				AND T.STATE LIKE concat(#{state_RLIKE},'%')
+			</if>
+
+			<if test="note != null and note != ''">
+				AND T.NOTE = #{note}
+			</if>
+			<if test="note_LIKE != null and note_LIKE != ''">
+				AND T.NOTE LIKE concat(concat('%',#{note_LIKE}),'%')
+			</if>
+			<if test="note_LLIKE != null and note_LLIKE != ''">
+				AND T.NOTE LIKE concat('%',#{note_LLIKE})
+			</if>
+			<if test="note_RLIKE != null and note_RLIKE != ''">
+				AND T.NOTE LIKE concat(#{note_RLIKE},'%')
+			</if>
+
+		</where>
+	</sql>
+	<!-- 应用列表通用查询 -->
+    <select id="selectAppZuulList" parameterType="com.xinan.userService.zull.entity.AppZuulListEntity" resultMap="BaseResultMap" >
+		<bind name="startNumber" value="(curPage-1)*pageSize"></bind>
+		SELECT (@rowNum:=@rowNum+1) AS ROWNO,
+		(SELECT COUNT(1) FROM APP_ZUUL_LIST T <include refid="APP_ZUUL_LIST_WHERE"/>) AS TOTAL,
+		E.* FROM (
+		SELECT T.ID,T.APPNAME,T.STATE,T.NOTE
+		FROM APP_ZUUL_LIST T
+		<include refid="APP_ZUUL_LIST_WHERE"/>
+		<if test="sortName != null and sortName != ''">
+			ORDER BY  ${sortName}
+ 				${sortOrder}
+ 		</if>
+			limit ${startNumber},${pageSize}
+		)E,APP_ZUUL_LIST T
+		<if test="pageSize != null and pageSize != ''">
+			,(SELECT(@rowNum :=${startNumber}))TEM_TB
+		</if>
+		WHERE E.ID=T.ID
+
+    </select>
+
+    <!-- 应用列表通用查询个数 -->
+    <select id="selectAppZuulListCount" parameterType="com.xinan.userService.zull.entity.AppZuulListEntity" resultType="java.lang.Integer" >
+     	 SELECT COUNT(1) FROM APP_ZUUL_LIST T <include refid="APP_ZUUL_LIST_WHERE"/>
+    </select>
+
+    <!-- 应用列表保存 -->
+    <insert id="insertAppZuulList" parameterType="com.xinan.userService.zull.entity.AppZuulListEntity" >
+    	insert into APP_ZUUL_LIST
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				  ID ,
+			</if>
+			<if test="appname != null and appname != ''">
+				  APPNAME ,
+			</if>
+			<if test="state != null and state != ''">
+				  STATE ,
+			</if>
+			<if test="note != null and note != ''">
+				  NOTE ,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				 #{id},
+			</if>
+			<if test="appname != null and appname != ''">
+				 #{appname},
+			</if>
+			<if test="state != null and state != ''">
+				 #{state},
+			</if>
+			<if test="note != null and note != ''">
+				 #{note},
+			</if>
+		</trim>
+    </insert>
+
+    <!-- 应用列表修改-->
+    <update id="updateAppZuulList" parameterType="com.xinan.userService.zull.entity.AppZuulListEntity" >
+    	update   APP_ZUUL_LIST T
+    	<set>
+			<if test="id_NEW != null and id_NEW != ''">
+				  ID=  #{id_NEW},
+			</if>
+			<if test="appname_NEW != null and appname_NEW != ''">
+				  APPNAME=  #{appname_NEW},
+			</if>
+			<if test="state_NEW != null and state_NEW != ''">
+				  STATE=  #{state_NEW},
+			</if>
+			<if test="note_NEW != null and note_NEW != ''">
+				  NOTE=  #{note_NEW},
+			</if>
+		</set>
+		<include refid="APP_ZUUL_LIST_WHERE"/>
+    </update>
+
+    <!-- 应用列表删除-->
+    <delete id="deleteAppZuulList" parameterType="com.xinan.userService.zull.entity.AppZuulListEntity" >
+    	delete  T  from APP_ZUUL_LIST  T  <include refid="APP_ZUUL_LIST_WHERE"/>
+    </delete>
+
+</mapper>

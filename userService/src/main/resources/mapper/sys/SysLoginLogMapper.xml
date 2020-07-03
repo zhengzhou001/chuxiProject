@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinan.userService.sys.mapper.SysLoginLogMapper" >
+	<resultMap id="BaseResultMap" type="com.xinan.userService.sys.entity.SysLoginLogEntity" >
+		<result column="TOTAL" property="total"  />
+		<result column="ROWNO" property="rowno"  />
+		<result column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="USERID" property="userid" jdbcType="NUMERIC" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+		<result column="IP" property="ip" jdbcType="VARCHAR" />
+		<result column="ADDR" property="addr" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--用户登录日志表通用查询条件 -->
+	<sql id="SYS_LOGIN_LOG_WHERE">
+		<where>
+			<if test="id != null and id != ''">
+				AND T.ID = #{id}
+			</if>
+			<if test="id_LIKE != null and id_LIKE != ''">
+				AND T.ID LIKE concat(concat('%',#{id_LIKE}),'%')
+			</if>
+			<if test="id_LLIKE != null and id_LLIKE != ''">
+				AND T.ID LIKE concat('%',#{id_LLIKE})
+			</if>
+			<if test="id_RLIKE != null and id_RLIKE != ''">
+				AND T.ID LIKE concat(#{id_RLIKE},'%')
+			</if>
+
+			<if test="userid != null and userid != ''">
+				AND T.USERID = #{userid}
+			</if>
+			<if test="userid_LIKE != null and userid_LIKE != ''">
+				AND T.USERID LIKE concat(concat('%',#{userid_LIKE}),'%')
+			</if>
+			<if test="userid_LLIKE != null and userid_LLIKE != ''">
+				AND T.USERID LIKE concat('%',#{userid_LLIKE})
+			</if>
+			<if test="userid_RLIKE != null and userid_RLIKE != ''">
+				AND T.USERID LIKE concat(#{userid_RLIKE},'%')
+			</if>
+
+			<if test="createDate != null and createDate != ''">
+				AND T.CREATE_DATE = STR_TO_DATE(#{createDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MIN != null and createDate_MIN != ''">
+				AND T.CREATE_DATE &gt;= STR_TO_DATE(#{createDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MAX != null and createDate_MAX != ''">
+				AND T.CREATE_DATE &lt;= STR_TO_DATE(#{createDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+			<if test="ip != null and ip != ''">
+				AND T.IP = #{ip}
+			</if>
+			<if test="ip_LIKE != null and ip_LIKE != ''">
+				AND T.IP LIKE concat(concat('%',#{ip_LIKE}),'%')
+			</if>
+			<if test="ip_LLIKE != null and ip_LLIKE != ''">
+				AND T.IP LIKE concat('%',#{ip_LLIKE})
+			</if>
+			<if test="ip_RLIKE != null and ip_RLIKE != ''">
+				AND T.IP LIKE concat(#{ip_RLIKE},'%')
+			</if>
+
+			<if test="addr != null and addr != ''">
+				AND T.ADDR = #{addr}
+			</if>
+			<if test="addr_LIKE != null and addr_LIKE != ''">
+				AND T.ADDR LIKE concat(concat('%',#{addr_LIKE}),'%')
+			</if>
+			<if test="addr_LLIKE != null and addr_LLIKE != ''">
+				AND T.ADDR LIKE concat('%',#{addr_LLIKE})
+			</if>
+			<if test="addr_RLIKE != null and addr_RLIKE != ''">
+				AND T.ADDR LIKE concat(#{addr_RLIKE},'%')
+			</if>
+
+		</where>
+	</sql>
+	<!-- 用户登录日志表通用查询 -->
+    <select id="selectSysLoginLog" parameterType="com.xinan.userService.sys.entity.SysLoginLogEntity" resultMap="BaseResultMap" >
+		<bind name="startNumber" value="(curPage-1)*pageSize"></bind>
+		SELECT (@rowNum:=@rowNum+1) AS ROWNO,
+		(SELECT COUNT(1) FROM SYS_LOGIN_LOG T <include refid="SYS_LOGIN_LOG_WHERE"/>) AS TOTAL,
+		E.* FROM (
+		SELECT T.ID,T.USERID,
+			DATE_FORMAT(T.CREATE_DATE,'%Y-%m-%d %H:%i:%s') CREATE_DATE,T.IP,T.ADDR
+			
+		FROM SYS_LOGIN_LOG T
+		<include refid="SYS_LOGIN_LOG_WHERE"/>
+		<if test="sortName != null and sortName != ''">
+			ORDER BY  ${sortName}
+ 				${sortOrder}
+ 		</if>
+			limit ${startNumber},${pageSize}
+		)E,SYS_LOGIN_LOG T
+		<if test="pageSize != null and pageSize != ''">
+			,(SELECT(@rowNum :=${startNumber}))TEM_TB
+		</if>
+		WHERE E.ID=T.ID
+
+    </select>
+
+    <!-- 用户登录日志表通用查询个数 -->
+    <select id="selectSysLoginLogCount" parameterType="com.xinan.userService.sys.entity.SysLoginLogEntity" resultType="java.lang.Integer" >
+     	 SELECT COUNT(1) FROM SYS_LOGIN_LOG T <include refid="SYS_LOGIN_LOG_WHERE"/>
+    </select>
+
+    <!-- 用户登录日志表保存 -->
+    <insert id="insertSysLoginLog" parameterType="com.xinan.userService.sys.entity.SysLoginLogEntity" >
+    	insert into SYS_LOGIN_LOG
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				  ID ,
+			</if>
+			<if test="userid != null and userid != ''">
+				  USERID ,
+			</if>
+			 CREATE_DATE ,
+			<if test="ip != null and ip != ''">
+				  IP ,
+			</if>
+			<if test="addr != null and addr != ''">
+				  ADDR ,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				 #{id},
+			</if>
+			<if test="userid != null and userid != ''">
+				 #{userid},
+			</if>
+				SYSDATE(),
+			<if test="ip != null and ip != ''">
+				 #{ip},
+			</if>
+			<if test="addr != null and addr != ''">
+				 #{addr},
+			</if>
+		</trim>
+    </insert>
+
+    <!-- 用户登录日志表修改-->
+    <update id="updateSysLoginLog" parameterType="com.xinan.userService.sys.entity.SysLoginLogEntity" >
+    	update   SYS_LOGIN_LOG T
+    	<set>
+			<if test="id_NEW != null and id_NEW != ''">
+				  ID=  #{id_NEW},
+			</if>
+			<if test="userid_NEW != null and userid_NEW != ''">
+				  USERID=  #{userid_NEW},
+			</if>
+			<if test="createDate_NEW != null and createDate_NEW != ''">
+				  CREATE_DATE=  STR_TO_DATE(#{createDate_NEW},'%Y-%m-%d %H:%i:%s'),
+			</if>
+
+			<if test="ip_NEW != null and ip_NEW != ''">
+				  IP=  #{ip_NEW},
+			</if>
+			<if test="addr_NEW != null and addr_NEW != ''">
+				  ADDR=  #{addr_NEW},
+			</if>
+		</set>
+		<include refid="SYS_LOGIN_LOG_WHERE"/>
+    </update>
+
+    <!-- 用户登录日志表删除-->
+    <delete id="deleteSysLoginLog" parameterType="com.xinan.userService.sys.entity.SysLoginLogEntity" >
+    	delete  T  from SYS_LOGIN_LOG  T  <include refid="SYS_LOGIN_LOG_WHERE"/>
+    </delete>
+
+
+
+</mapper>

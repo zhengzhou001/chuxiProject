@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="base" >
+	<resultMap id="BaseResultMap" type="com.xinan.Entity.ClobEntity" >
+
+		<result column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="CLOB1" property="clob1" jdbcType="CLOB" />
+
+	</resultMap>
+
+	<select id="selectByEntity" parameterType="com.xinan.Entity.ClobEntity" resultMap="BaseResultMap">
+		 select T.ID,T.NAME,T.CLOB1  from CLOB_TEST T
+		<where>
+			<if test="id != null">
+				AND T.ID = #{id}
+			</if>
+			<if test="name != null and name != ''">
+				AND T.NAME = #{name}
+			</if>
+			<if test="clob1 != null and clob1 != ''">
+				AND dbms_lob.substr(T.CLOB1) = #{clob1}
+			</if>
+		</where>
+	 </select>
+	 <select id="selectByMap" parameterType="java.util.Map" resultType="com.xinan.tools.ResultHashMap">
+		 select  T.ID,T.NAME,T.CLOB1    from CLOB_TEST T
+		 <where>
+			 <if test="id != null">
+				 AND T.ID = #{id}
+			 </if>
+			 <if test="name != null and name != ''">
+				 AND T.NAME = #{name}
+			 </if>
+			 <if test="clob1 != null and clob1 != ''">
+				 AND dbms_lob.substr(T.CLOB1) = #{clob1}
+			 </if>
+		 </where>
+	 </select>
+
+	<insert id="insertByEntity"  parameterType="com.xinan.Entity.ClobEntity">
+		insert into CLOB_TEST(id,name,clob1) values
+		(#{id},#{name},#{clob1})
+	</insert>
+	<insert id="insertByMap"  parameterType="java.util.Map">
+		insert into CLOB_TEST(id,name,clob1) values
+		(#{id},#{name},#{clob1})
+	</insert>
+
+	<update id="updateByEntity"  parameterType="com.xinan.Entity.ClobEntity">
+		 update CLOB_TEST set clob1=#{clob1}
+		 where id=#{id}
+	</update>
+
+	<update id="updateByMap"  parameterType="java.util.Map">
+		 update CLOB_TEST set clob1=#{clob1}
+		 where id=#{id}
+	</update>
+
+	<select id="selectGsmDataCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		 select count(1)
+		from GSMDATA partition(${tableName})
+	</select>
+
+	<select id="selectGsmData" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *
+		from (
+		select IMSI,IMEI,to_char(TME,'YYYY-MM-DD HH24:MI:SS') TME,IP
+		LOCATION,SEQUENCE,ATTRIBUTION,PHONENUM,ID,
+		to_char(UPLOADTIME,'YYYY-MM-DD HH24:MI:SS') UPLOADTIME
+		,rownum rn
+		from GSMDATA partition(${tableName})
+		where rownum &lt;=#{curPage} * #{pageSize})
+		where rn &gt;=(#{curPage} - 1) * #{pageSize} + 1
+	</select>
+
+
+	<select id="selectCaseInfosCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		 select count(1)
+		from  case_infos
+	</select>
+
+	<select id="selectCaseInfos" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select *
+		from (
+		select  caseid,attrname,attrvalue
+		from  case_infos
+		where rownum &lt;=#{curPage} * #{pageSize})
+		where rn &gt;=(#{curPage} - 1) * #{pageSize} + 1
+	</select>
+
+</mapper>

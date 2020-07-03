@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<script type="text/javascript"  src="../js/jquery/jquery-1.9.1.min.js"></script>
+ 
+<script type="text/javascript"  src="../js/json/json2.js"></script>
+ 
+<title>示例代码</title>
+</head>
+<body>
+   <table>
+	   <tr>
+		   <td><input type="button" onclick="" value="增"></td>
+		   <td><input type="button" onclick="" value="删"></td>
+		   <td><input type="button" onclick="" value="改"></td>
+		   <td><input type="button" onclick="doSearch()" value="查"></td>
+	   </tr>
+   </table>
+  <table id="firstTr" border="2px">
+	  <tr>
+		  <th>id</th>
+	  	  <th>name</th>
+	  	  <th>create_date</th>
+	  </tr>
+  </table>
+  </body>
+  <script type="text/javascript">
+  	$(function (){
+		init();//页面初始化
+	});
+	//页面初始化
+	function init(){
+
+	}
+
+	//查询
+	function doSearch(){
+		 $.ajax({
+		    url:"../test/selectUserDemo",
+		    dataType:"json",
+		 	contentType: "application/json",
+		    async:true,
+		    data:JSON.stringify({}),
+		    type:"POST",
+		    beforeSend:function(){
+		       
+		    },
+		    success:function(req){
+				var data = req.data;
+				var html="";
+				for(var i=0;i<data.length;i++){
+					html+="<tr>"+
+							"<td>"+data[i].id+"</td>"+
+							"<td>"+data[i].name+"</td>"+
+							"<td>"+data[i].createDate+"</td>"+
+							"</tr>";
+				}
+				$("#firstTr").append(html);
+
+		    },
+		    complete:function(){
+		       
+		    },
+		    error:function(){
+		      
+		    }
+		}); 
+	}
+  </script>
+</html>

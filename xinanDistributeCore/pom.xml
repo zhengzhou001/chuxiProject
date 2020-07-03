@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.xinan</groupId>
+    <artifactId>xinanDistributeCore</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+    <name>xinanDistributeCore</name>
+    <url>http://www.example.com</url>
+
+    <description>何南信安通信技术股份有限公司 分布式微服务版本核心包</description>
+
+    <!--加载基础pom-->
+    <parent>
+        <groupId>com.xinan</groupId>
+        <artifactId>basePom</artifactId>
+        <version>1.0</version>
+        <relativePath/>
+    </parent>
+
+    <dependencies>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 部署源代码 -->
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 部署组件说明文档 -->
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <charset>UTF-8</charset>
+                    <docencoding>UTF-8</docencoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

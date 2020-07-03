@@ -1,0 +1,45 @@
+server:
+  port: 9300
+spring:
+  application:
+    name: user-service
+
+  # druid 配置：
+  datasource:
+    # oracle
+    url: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.0.220)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=orcl)))
+    username: test_db
+    password: orcl
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    platform: oracle
+
+    #mysql
+    #url: jdbc:mysql://192.168.0.220:3306/laxt?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+    #username: root
+    #password: 123456
+    #driver-class-name: com.mysql.jdbc.Driver
+    #platform: mysql
+
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 下面为连接池的补充设置，应用到上面所有数据源中
+    # 初始化大小，最小，最大
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 30000
+    # validationQuery: SELECT 1 FROM DUAL
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    logSlowSql: true
+    druid_user: xinan
+    druid_pwd: xinan
+

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinan.zuul.app.mapper.AppZuulLogMapper" >
+	<resultMap id="BaseResultMap" type="com.xinan.zuul.app.entity.AppZuulLogEntity" >
+		<result column="TOTAL" property="total"  />
+		<result column="ROWNO" property="rowno"  />
+		<result column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="APPID" property="appid" jdbcType="NUMERIC" />
+		<result column="APPNAME" property="appname" jdbcType="VARCHAR" />
+		<result column="REQ_ADDR" property="reqAddr" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+		<result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
+		<result column="REQ_PARAM" property="reqParam" jdbcType="VARCHAR" />
+		<result column="RET_BODY" property="retBody" jdbcType="VARCHAR" />
+		<result column="TIME" property="time" jdbcType="NUMERIC" />
+	</resultMap>
+	<!--接口调用日志表通用查询条件 -->
+	<sql id="APP_ZUUL_LOG_WHERE">
+		<where>
+			<if test="id != null and id != ''">
+				AND T.ID = #{id}
+			</if>
+			<if test="id_LIKE != null and id_LIKE != ''">
+				AND T.ID LIKE concat(concat('%',#{id_LIKE}),'%')
+			</if>
+			<if test="id_LLIKE != null and id_LLIKE != ''">
+				AND T.ID LIKE concat('%',#{id_LLIKE})
+			</if>
+			<if test="id_RLIKE != null and id_RLIKE != ''">
+				AND T.ID LIKE concat(#{id_RLIKE},'%')
+			</if>
+
+			<if test="appid != null and appid != ''">
+				AND T.APPID = #{appid}
+			</if>
+			<if test="appid_LIKE != null and appid_LIKE != ''">
+				AND T.APPID LIKE concat(concat('%',#{appid_LIKE}),'%')
+			</if>
+			<if test="appid_LLIKE != null and appid_LLIKE != ''">
+				AND T.APPID LIKE concat('%',#{appid_LLIKE})
+			</if>
+			<if test="appid_RLIKE != null and appid_RLIKE != ''">
+				AND T.APPID LIKE concat(#{appid_RLIKE},'%')
+			</if>
+
+			<if test="appname != null and appname != ''">
+				AND T.APPNAME = #{appname}
+			</if>
+			<if test="appname_LIKE != null and appname_LIKE != ''">
+				AND T.APPNAME LIKE concat(concat('%',#{appname_LIKE}),'%')
+			</if>
+			<if test="appname_LLIKE != null and appname_LLIKE != ''">
+				AND T.APPNAME LIKE concat('%',#{appname_LLIKE})
+			</if>
+			<if test="appname_RLIKE != null and appname_RLIKE != ''">
+				AND T.APPNAME LIKE concat(#{appname_RLIKE},'%')
+			</if>
+
+			<if test="reqAddr != null and reqAddr != ''">
+				AND T.REQ_ADDR = #{reqAddr}
+			</if>
+			<if test="reqAddr_LIKE != null and reqAddr_LIKE != ''">
+				AND T.REQ_ADDR LIKE concat(concat('%',#{reqAddr_LIKE}),'%')
+			</if>
+			<if test="reqAddr_LLIKE != null and reqAddr_LLIKE != ''">
+				AND T.REQ_ADDR LIKE concat('%',#{reqAddr_LLIKE})
+			</if>
+			<if test="reqAddr_RLIKE != null and reqAddr_RLIKE != ''">
+				AND T.REQ_ADDR LIKE concat(#{reqAddr_RLIKE},'%')
+			</if>
+
+			<if test="createDate != null and createDate != ''">
+				AND T.CREATE_DATE = STR_TO_DATE(#{createDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MIN != null and createDate_MIN != ''">
+				AND T.CREATE_DATE &gt;= STR_TO_DATE(#{createDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MAX != null and createDate_MAX != ''">
+				AND T.CREATE_DATE &lt;= STR_TO_DATE(#{createDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+			<if test="endDate != null and endDate != ''">
+				AND T.END_DATE = STR_TO_DATE(#{endDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="endDate_MIN != null and endDate_MIN != ''">
+				AND T.END_DATE &gt;= STR_TO_DATE(#{endDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="endDate_MAX != null and endDate_MAX != ''">
+				AND T.END_DATE &lt;= STR_TO_DATE(#{endDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+			<if test="reqParam != null and reqParam != ''">
+				AND T.REQ_PARAM = #{reqParam}
+			</if>
+			<if test="reqParam_LIKE != null and reqParam_LIKE != ''">
+				AND T.REQ_PARAM LIKE concat(concat('%',#{reqParam_LIKE}),'%')
+			</if>
+			<if test="reqParam_LLIKE != null and reqParam_LLIKE != ''">
+				AND T.REQ_PARAM LIKE concat('%',#{reqParam_LLIKE})
+			</if>
+			<if test="reqParam_RLIKE != null and reqParam_RLIKE != ''">
+				AND T.REQ_PARAM LIKE concat(#{reqParam_RLIKE},'%')
+			</if>
+
+			<if test="retBody != null and retBody != ''">
+				AND T.RET_BODY = #{retBody}
+			</if>
+			<if test="retBody_LIKE != null and retBody_LIKE != ''">
+				AND T.RET_BODY LIKE concat(concat('%',#{retBody_LIKE}),'%')
+			</if>
+			<if test="retBody_LLIKE != null and retBody_LLIKE != ''">
+				AND T.RET_BODY LIKE concat('%',#{retBody_LLIKE})
+			</if>
+			<if test="retBody_RLIKE != null and retBody_RLIKE != ''">
+				AND T.RET_BODY LIKE concat(#{retBody_RLIKE},'%')
+			</if>
+
+			<if test="time != null and time != ''">
+				AND T.TIME = #{time}
+			</if>
+			<if test="time_LIKE != null and time_LIKE != ''">
+				AND T.TIME LIKE concat(concat('%',#{time_LIKE}),'%')
+			</if>
+			<if test="time_LLIKE != null and time_LLIKE != ''">
+				AND T.TIME LIKE concat('%',#{time_LLIKE})
+			</if>
+			<if test="time_RLIKE != null and time_RLIKE != ''">
+				AND T.TIME LIKE concat(#{time_RLIKE},'%')
+			</if>
+
+		</where>
+	</sql>
+	<!-- 接口调用日志表通用查询 -->
+    <select id="selectAppZuulLog" parameterType="com.xinan.zuul.app.entity.AppZuulLogEntity" resultMap="BaseResultMap" >
+		<bind name="startNumber" value="(curPage-1)*pageSize"></bind>
+		SELECT (@rowNum:=@rowNum+1) AS ROWNO,
+		(SELECT COUNT(1) FROM APP_ZUUL_LOG T <include refid="APP_ZUUL_LOG_WHERE"/>) AS TOTAL,
+		E.* FROM (
+		SELECT T.ID,T.APPID,T.APPNAME,T.REQ_ADDR,
+			DATE_FORMAT(T.CREATE_DATE,'%Y-%m-%d %H:%i:%s') CREATE_DATE,
+			
+			DATE_FORMAT(T.END_DATE,'%Y-%m-%d %H:%i:%s') END_DATE,T.REQ_PARAM,T.RET_BODY,T.TIME
+		FROM APP_ZUUL_LOG T
+		<include refid="APP_ZUUL_LOG_WHERE"/>
+		<if test="sortName != null and sortName != ''">
+			ORDER BY  ${sortName}
+ 				${sortOrder}
+ 		</if>
+			limit ${startNumber},${pageSize}
+		)E,APP_ZUUL_LOG T
+		<if test="pageSize != null and pageSize != ''">
+			,(SELECT(@rowNum :=${startNumber}))TEM_TB
+		</if>
+		WHERE E.ID=T.ID
+
+    </select>
+
+    <!-- 接口调用日志表通用查询个数 -->
+    <select id="selectAppZuulLogCount" parameterType="com.xinan.zuul.app.entity.AppZuulLogEntity" resultType="java.lang.Integer" >
+     	 SELECT COUNT(1) FROM APP_ZUUL_LOG T <include refid="APP_ZUUL_LOG_WHERE"/>
+    </select>
+
+    <!-- 接口调用日志表保存 -->
+    <insert id="insertAppZuulLog" parameterType="com.xinan.zuul.app.entity.AppZuulLogEntity" >
+    	insert into APP_ZUUL_LOG
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				  ID ,
+			</if>
+			<if test="appid != null and appid != ''">
+				  APPID ,
+			</if>
+			<if test="appname != null and appname != ''">
+				  APPNAME ,
+			</if>
+			<if test="reqAddr != null and reqAddr != ''">
+				  REQ_ADDR ,
+			</if>
+			<if test="createDate != null and createDate != ''">
+				  CREATE_DATE ,
+			</if>
+			<if test="endDate != null and endDate != ''">
+				  END_DATE ,
+			</if>
+			<if test="reqParam != null and reqParam != ''">
+				  REQ_PARAM ,
+			</if>
+			<if test="retBody != null and retBody != ''">
+				  RET_BODY ,
+			</if>
+			<if test="time != null">
+				  TIME ,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				 #{id},
+			</if>
+			<if test="appid != null and appid != ''">
+				 #{appid},
+			</if>
+			<if test="appname != null and appname != ''">
+				 #{appname},
+			</if>
+			<if test="reqAddr != null and reqAddr != ''">
+				 #{reqAddr},
+			</if>
+			<if test="createDate != null and createDate != ''">
+				 STR_TO_DATE(#{createDate},'%Y-%m-%d %H:%i:%s'),
+			</if>
+			<if test="endDate != null and endDate != ''">
+				 STR_TO_DATE(#{endDate},'%Y-%m-%d %H:%i:%s'),
+			</if>
+			<if test="reqParam != null and reqParam != ''">
+				 #{reqParam},
+			</if>
+			<if test="retBody != null and retBody != ''">
+				 #{retBody},
+			</if>
+			<if test="time != null">
+				 #{time},
+			</if>
+		</trim>
+    </insert>
+
+    <!-- 接口调用日志表修改-->
+    <update id="updateAppZuulLog" parameterType="com.xinan.zuul.app.entity.AppZuulLogEntity" >
+    	update   APP_ZUUL_LOG T
+    	<set>
+			<if test="id_NEW != null and id_NEW != ''">
+				  ID=  #{id_NEW},
+			</if>
+			<if test="appid_NEW != null and appid_NEW != ''">
+				  APPID=  #{appid_NEW},
+			</if>
+			<if test="appname_NEW != null and appname_NEW != ''">
+				  APPNAME=  #{appname_NEW},
+			</if>
+			<if test="reqAddr_NEW != null and reqAddr_NEW != ''">
+				  REQ_ADDR=  #{reqAddr_NEW},
+			</if>
+			<if test="createDate_NEW != null and createDate_NEW != ''">
+				  CREATE_DATE=  STR_TO_DATE(#{createDate_NEW},'%Y-%m-%d %H:%i:%s'),
+			</if>
+
+			<if test="endDate_NEW != null and endDate_NEW != ''">
+				  END_DATE=  STR_TO_DATE(#{endDate_NEW},'%Y-%m-%d %H:%i:%s'),
+			</if>
+
+			<if test="reqParam_NEW != null and reqParam_NEW != ''">
+				  REQ_PARAM=  #{reqParam_NEW},
+			</if>
+			<if test="retBody_NEW != null and retBody_NEW != ''">
+				  RET_BODY=  #{retBody_NEW},
+			</if>
+			<if test="time_NEW != null">
+				  TIME=  #{time_NEW},
+			</if>
+		</set>
+		<include refid="APP_ZUUL_LOG_WHERE"/>
+    </update>
+
+    <!-- 接口调用日志表删除-->
+    <delete id="deleteAppZuulLog" parameterType="com.xinan.zuul.app.entity.AppZuulLogEntity" >
+    	delete  T  from APP_ZUUL_LOG  T  <include refid="APP_ZUUL_LOG_WHERE"/>
+    </delete>
+
+</mapper>

@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  context-path: /springbootCasClient/
+spring:
+  application:
+    name: test
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+
+  thymeleaf:
+    servlet:
+      content-type: text/html
+    suffix: .html
+    mode: LEGACYHTML5
+    cache: false
+    encoding: utf-8

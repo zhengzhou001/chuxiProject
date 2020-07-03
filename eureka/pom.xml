@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.xinan</groupId>
+    <artifactId>eureka</artifactId>
+    <version>1.0</version>
+    <name>eureka</name>
+    <url>http://www.example.com</url>
+    <description>何南信安通信技术股份有限公司 分布式微服务 注册中心</description>
+
+    <!--加载基础pom-->
+    <parent>
+        <groupId>com.xinan</groupId>
+        <artifactId>basePom</artifactId>
+        <version>1.0</version>
+        <relativePath/>
+    </parent>
+
+    <dependencies>
+        <!--加载核心包-->
+        <dependency>
+            <groupId>com.xinan</groupId>
+            <artifactId>xinanDistributeCore</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!--eureka服务器端依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+    </build>
+</project>

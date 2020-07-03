@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户中心-菜单</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="../../images/favicon.ico">
+    <link rel="stylesheet" href="../../js/layui/css/layui.css" media="all">
+
+    <script src="../../js/layui/layui.js" charset="utf-8"></script>
+    <script src="../../js/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="../../js/jquery/jquery.blockUI.js" type="text/javascript"></script>
+    <script src="../../js/base/base.tools.js" type="text/javascript"></script>
+    <script src="../../js/cookie/jquery.cookie.js" type="text/javascript"></script>
+    <script src="../../js/md5/md5.js" type="text/javascript"></script>
+    <script src="../../js/json/json2.js" type="text/javascript"></script>
+    <script src="./menu.js" type="text/javascript"></script>
+    <!--[if lt IE 9]>
+    <script src="../../js/ie/html5.min.js"></script>
+    <script src="../../js/ie/respond.min.js"></script>
+
+    <![endif]-->
+    <style>
+        .layui-tab-content {
+            padding: 0;/*layui-tab-content:默认有padding: 10px;的值，因为iframe的绝对定位脱离文档流，所以会存在20px的空白空间*/
+        }
+        .show-frame {
+            top: 50px!important;
+            /*默认.layui-layout-admin .layui-body {
+                top: 60px;
+                bottom: 44px;
+            }*/
+            overflow: hidden;/*消除浏览器最右边的滚动条*/
+        }
+        .frame {
+            position: absolute;
+            padding: 10px;/*与layui-footer隔开一段距离*/
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <table id="menuTable" class="layui-table" lay-filter="menuTable"></table>
+        <!--工具栏模板   在treeTable中已经启用default toolbar-->
+  <!--  <script type="text/html" id="toolbarDemo">
+
+        <div class="layui-btn-container">
+            <div class="layui-inline">
+                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="open" id="btn-expand">展开全部菜单</button>
+                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="close" id="btn-fold">折叠全部菜单</button>
+                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="addMenu" >添加菜单</button>
+
+            </div>
+        </div>
+    </script>-->
+    <!--工具栏模板=========END=======-->
+    <!--修改的表单-->
+    <form class="layui-form" lay-filter="updateFormFilter" action="" style="display: none" id="updateForm">
+        <input name="id" type="hidden">
+        <input name="pid" type="hidden">
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name"  class="layui-input" lay-verify="required|name">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">链接地址</label>
+            <div class="layui-input-inline">
+                <input type="text" name="url"  class="layui-input" lay-verify="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">顺序</label>
+            <div class="layui-input-inline">
+                <input type="text" name="orderid" placeholder="请输入顺序" class="layui-input"lay-verify="required|number">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="state" id="state_enable" value="1" title="启用" checked="">
+                <input type="radio" name="state" id="state_disable" value="0" title="禁用">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否用户中心显示</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="flag" value="1" title="显示" >
+                <input type="radio" name="flag" value="0" title="不显示" checked="">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit  lay-filter="updateFormSubmit">立即修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    <!--工具栏添加顶级菜单的表单-->
+    <form class="layui-form" lay-filter="addFormFilter" style="display: none" id="addForm" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单名称</label>
+            <div class="layui-input-inline">
+                <input  style="width:300px;" type="text" name="name" placeholder="请输入菜单名称" class="layui-input" lay-verify="required|name">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">链接地址</label>
+            <div class="layui-input-inline">
+                <input style="width:300px;" type="text" name="url" placeholder="请输入链接地址" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">顺序</label>
+            <div class="layui-input-inline">
+                <input  type="text" name="orderid" placeholder="请输入顺序" class="layui-input"lay-verify="required|number">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="state" value="1" title="启用" checked="">
+                <input type="radio" name="state" value="0" title="禁用">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否用户中心显示</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="flag" value="1" title="显示" >
+                <input type="radio" name="flag" value="0" title="不显示" checked="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit lay-filter="addSubmitFilter">立即添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    <!--//关于表格显示-->
+    <script type="text/html" id="pidTemp">
+        {{#  if(d.pid==-1){ }}
+        <span style="color: cornflowerblue;">菜单</span>
+        {{#  } else { }}
+        <span style="color: yellowgreen;">按钮</span>
+        {{#  } }}
+    </script>
+
+    <!--//关于表格显示-->
+    <script type="text/html" id="stateTemp">
+        {{#  if(d.state==1){ }}
+        <span style="color: cornflowerblue;">启用</span>
+        {{#  } else { }}
+        <span style="color: yellowgreen;">禁用</span>
+        {{#  } }}
+    </script>
+
+    <!--//关于表格显示-->
+    <script type="text/html" id="flagTemp">
+        {{#  if(d.flag==1){ }}
+        <span style="color: cornflowerblue;">显示</span>
+        {{#  } else { }}
+        <span style="color: yellowgreen;">不显示</span>
+        {{#  } }}
+    </script>
+
+</body>
+</html>

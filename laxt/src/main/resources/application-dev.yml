@@ -1,0 +1,9 @@
+server:
+  port: 9700
+  context-path: /laxt/
+spring:
+  application:
+    name: laxt
+
+zuul_address: http://127.0.0.1:9000/
+yhzx_address: http://127.0.0.1:9800/

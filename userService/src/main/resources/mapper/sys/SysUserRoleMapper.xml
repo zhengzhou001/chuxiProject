@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinan.userService.sys.mapper.SysUserRoleMapper" >
+	<resultMap id="BaseResultMap" type="com.xinan.userService.sys.entity.SysUserRoleEntity" >
+		<result column="TOTAL" property="total"  />
+		<result column="ROWNO" property="rowno"  />
+		<result column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="USERID" property="userid" jdbcType="NUMERIC" />
+		<result column="ROLEID" property="roleid" jdbcType="NUMERIC" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--用户角色表通用查询条件 -->
+	<sql id="SYS_USER_ROLE_WHERE">
+		<where>
+			<if test="id != null and id != ''">
+				AND T.ID = #{id}
+			</if>
+			<if test="id_LIKE != null and id_LIKE != ''">
+				AND T.ID LIKE concat(concat('%',#{id_LIKE}),'%')
+			</if>
+			<if test="id_LLIKE != null and id_LLIKE != ''">
+				AND T.ID LIKE concat('%',#{id_LLIKE})
+			</if>
+			<if test="id_RLIKE != null and id_RLIKE != ''">
+				AND T.ID LIKE concat(#{id_RLIKE},'%')
+			</if>
+
+			<if test="userid != null and userid != ''">
+				AND T.USERID = #{userid}
+			</if>
+			<if test="userid_LIKE != null and userid_LIKE != ''">
+				AND T.USERID LIKE concat(concat('%',#{userid_LIKE}),'%')
+			</if>
+			<if test="userid_LLIKE != null and userid_LLIKE != ''">
+				AND T.USERID LIKE concat('%',#{userid_LLIKE})
+			</if>
+			<if test="userid_RLIKE != null and userid_RLIKE != ''">
+				AND T.USERID LIKE concat(#{userid_RLIKE},'%')
+			</if>
+
+			<if test="roleid != null and roleid != ''">
+				AND T.ROLEID = #{roleid}
+			</if>
+			<if test="roleid_LIKE != null and roleid_LIKE != ''">
+				AND T.ROLEID LIKE concat(concat('%',#{roleid_LIKE}),'%')
+			</if>
+			<if test="roleid_LLIKE != null and roleid_LLIKE != ''">
+				AND T.ROLEID LIKE concat('%',#{roleid_LLIKE})
+			</if>
+			<if test="roleid_RLIKE != null and roleid_RLIKE != ''">
+				AND T.ROLEID LIKE concat(#{roleid_RLIKE},'%')
+			</if>
+
+			<if test="createDate != null and createDate != ''">
+				AND T.CREATE_DATE = STR_TO_DATE(#{createDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MIN != null and createDate_MIN != ''">
+				AND T.CREATE_DATE &gt;= STR_TO_DATE(#{createDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MAX != null and createDate_MAX != ''">
+				AND T.CREATE_DATE &lt;= STR_TO_DATE(#{createDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+		</where>
+	</sql>
+	<!-- 用户角色表通用查询 -->
+    <select id="selectSysUserRole" parameterType="com.xinan.userService.sys.entity.SysUserRoleEntity" resultMap="BaseResultMap" >
+		<bind name="startNumber" value="(curPage-1)*pageSize"></bind>
+		SELECT (@rowNum:=@rowNum+1) AS ROWNO,
+		(SELECT COUNT(1) FROM SYS_USER_ROLE T <include refid="SYS_USER_ROLE_WHERE"/>) AS TOTAL,
+		E.* FROM (
+		SELECT T.ID,T.USERID,T.ROLEID,
+			DATE_FORMAT(T.CREATE_DATE,'%Y-%m-%d %H:%i:%s') CREATE_DATE
+		FROM SYS_USER_ROLE T
+		<include refid="SYS_USER_ROLE_WHERE"/>
+		<if test="sortName != null and sortName != ''">
+			ORDER BY  ${sortName}
+ 				${sortOrder}
+ 		</if>
+			limit ${startNumber},${pageSize}
+		)E,SYS_USER_ROLE T
+		<if test="pageSize != null and pageSize != ''">
+			,(SELECT(@rowNum :=${startNumber}))TEM_TB
+		</if>
+		WHERE E.ID=T.ID
+
+    </select>
+
+    <!-- 用户角色表通用查询个数 -->
+    <select id="selectSysUserRoleCount" parameterType="com.xinan.userService.sys.entity.SysUserRoleEntity" resultType="java.lang.Integer" >
+     	 SELECT COUNT(1) FROM SYS_USER_ROLE T <include refid="SYS_USER_ROLE_WHERE"/>
+    </select>
+
+    <!-- 用户角色表保存 -->
+    <insert id="insertSysUserRole" parameterType="com.xinan.userService.sys.entity.SysUserRoleEntity" >
+    	insert into SYS_USER_ROLE
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				  ID ,
+			</if>
+			<if test="userid != null and userid != ''">
+				  USERID ,
+			</if>
+			<if test="roleid != null and roleid != ''">
+				  ROLEID ,
+			</if>
+
+				  CREATE_DATE ,
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				 #{id},
+			</if>
+			<if test="userid != null and userid != ''">
+				 #{userid},
+			</if>
+			<if test="roleid != null and roleid != ''">
+				 #{roleid},
+			</if>
+			sysdate(),
+		</trim>
+    </insert>
+
+    <!-- 用户角色表修改-->
+    <update id="updateSysUserRole" parameterType="com.xinan.userService.sys.entity.SysUserRoleEntity" >
+    	update   SYS_USER_ROLE T
+    	<set>
+			<if test="id_NEW != null and id_NEW != ''">
+				  ID=  #{id_NEW},
+			</if>
+			<if test="userid_NEW != null and userid_NEW != ''">
+				  USERID=  #{userid_NEW},
+			</if>
+			<if test="roleid_NEW != null and roleid_NEW != ''">
+				  ROLEID=  #{roleid_NEW},
+			</if>
+		</set>
+		<include refid="SYS_USER_ROLE_WHERE"/>
+    </update>
+
+    <!-- 用户角色表删除-->
+    <delete id="deleteSysUserRole" parameterType="com.xinan.userService.sys.entity.SysUserRoleEntity" >
+    	delete  T  from SYS_USER_ROLE  T  <include refid="SYS_USER_ROLE_WHERE"/>
+    </delete>
+	<!-- 删除角色-->
+	<delete id="deleteSysRoleByIds" parameterType="com.xinan.userService.sys.entity.SysRoleEntity" >
+		delete  T  from SYS_ROLE  T where id in (${ids});
+		 delete from sys_user_role  where roleid in (${ids});
+	</delete>
+
+</mapper>

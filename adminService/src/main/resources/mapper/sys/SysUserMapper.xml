@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinan.userService.sys.mapper.SysUserMapper" >
+	<resultMap id="BaseResultMap" type="com.xinan.userService.sys.entity.SysUserEntity" >
+		<result column="TOTAL" property="total"  />
+		<result column="ROWNO" property="rowno"  />
+		<result column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
+		<result column="PWD" property="pwd" jdbcType="VARCHAR" />
+		<result column="STATE" property="state" jdbcType="NUMERIC" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+		<result column="LOGIN_DATE" property="loginDate" jdbcType="VARCHAR" />
+		<result column="APPID" property="appid" jdbcType="NUMERIC" />
+		<result column="roleName" property="roleName" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="NUMERIC" />
+	</resultMap>
+	<!--系统用户表通用查询条件 -->
+	<sql id="SYS_USER_WHERE">
+		<where>
+
+
+			<if test="flag != null ">
+				AND T.flag = #{flag}
+			</if>
+			<if test="id != null and id != ''">
+				AND T.ID = #{id}
+			</if>
+			<if test="id_LIKE != null and id_LIKE != ''">
+				AND T.ID LIKE concat(concat('%',#{id_LIKE}),'%')
+			</if>
+			<if test="id_LLIKE != null and id_LLIKE != ''">
+				AND T.ID LIKE concat('%',#{id_LLIKE})
+			</if>
+			<if test="id_RLIKE != null and id_RLIKE != ''">
+				AND T.ID LIKE concat(#{id_RLIKE},'%')
+			</if>
+
+			<if test="account != null and account != ''">
+				AND T.ACCOUNT = #{account}
+			</if>
+			<if test="account_LIKE != null and account_LIKE != ''">
+				AND T.ACCOUNT LIKE concat(concat('%',#{account_LIKE}),'%')
+			</if>
+			<if test="account_LLIKE != null and account_LLIKE != ''">
+				AND T.ACCOUNT LIKE concat('%',#{account_LLIKE})
+			</if>
+			<if test="account_RLIKE != null and account_RLIKE != ''">
+				AND T.ACCOUNT LIKE concat(#{account_RLIKE},'%')
+			</if>
+
+			<if test="pwd != null and pwd != ''">
+				AND T.PWD = #{pwd}
+			</if>
+			<if test="pwd_LIKE != null and pwd_LIKE != ''">
+				AND T.PWD LIKE concat(concat('%',#{pwd_LIKE}),'%')
+			</if>
+			<if test="pwd_LLIKE != null and pwd_LLIKE != ''">
+				AND T.PWD LIKE concat('%',#{pwd_LLIKE})
+			</if>
+			<if test="pwd_RLIKE != null and pwd_RLIKE != ''">
+				AND T.PWD LIKE concat(#{pwd_RLIKE},'%')
+			</if>
+
+			<if test="state != null and state != ''">
+				AND T.STATE = #{state}
+			</if>
+			<if test="state_LIKE != null and state_LIKE != ''">
+				AND T.STATE LIKE concat(concat('%',#{state_LIKE}),'%')
+			</if>
+			<if test="state_LLIKE != null and state_LLIKE != ''">
+				AND T.STATE LIKE concat('%',#{state_LLIKE})
+			</if>
+			<if test="state_RLIKE != null and state_RLIKE != ''">
+				AND T.STATE LIKE concat(#{state_RLIKE},'%')
+			</if>
+
+			<if test="name != null and name != ''">
+				AND T.NAME = #{name}
+			</if>
+			<if test="name_LIKE != null and name_LIKE != ''">
+				AND T.NAME LIKE concat(concat('%',#{name_LIKE}),'%')
+			</if>
+			<if test="name_LLIKE != null and name_LLIKE != ''">
+				AND T.NAME LIKE concat('%',#{name_LLIKE})
+			</if>
+			<if test="name_RLIKE != null and name_RLIKE != ''">
+				AND T.NAME LIKE concat(#{name_RLIKE},'%')
+			</if>
+
+			<if test="phone != null and phone != ''">
+				AND T.PHONE = #{phone}
+			</if>
+			<if test="phone_LIKE != null and phone_LIKE != ''">
+				AND T.PHONE LIKE concat(concat('%',#{phone_LIKE}),'%')
+			</if>
+			<if test="phone_LLIKE != null and phone_LLIKE != ''">
+				AND T.PHONE LIKE concat('%',#{phone_LLIKE})
+			</if>
+			<if test="phone_RLIKE != null and phone_RLIKE != ''">
+				AND T.PHONE LIKE concat(#{phone_RLIKE},'%')
+			</if>
+
+			<if test="email != null and email != ''">
+				AND T.EMAIL = #{email}
+			</if>
+			<if test="email_LIKE != null and email_LIKE != ''">
+				AND T.EMAIL LIKE concat(concat('%',#{email_LIKE}),'%')
+			</if>
+			<if test="email_LLIKE != null and email_LLIKE != ''">
+				AND T.EMAIL LIKE concat('%',#{email_LLIKE})
+			</if>
+			<if test="email_RLIKE != null and email_RLIKE != ''">
+				AND T.EMAIL LIKE concat(#{email_RLIKE},'%')
+			</if>
+
+			<if test="createDate != null and createDate != ''">
+				AND T.CREATE_DATE = STR_TO_DATE(#{createDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MIN != null and createDate_MIN != ''">
+				AND T.CREATE_DATE &gt;= STR_TO_DATE(#{createDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MAX != null and createDate_MAX != ''">
+				AND T.CREATE_DATE &lt;= STR_TO_DATE(#{createDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+			<if test="updateDate != null and updateDate != ''">
+				AND T.UPDATE_DATE = STR_TO_DATE(#{updateDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="updateDate_MIN != null and updateDate_MIN != ''">
+				AND T.UPDATE_DATE &gt;= STR_TO_DATE(#{updateDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="updateDate_MAX != null and updateDate_MAX != ''">
+				AND T.UPDATE_DATE &lt;= STR_TO_DATE(#{updateDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+			<if test="loginDate != null and loginDate != ''">
+				AND T.LOGIN_DATE = STR_TO_DATE(#{loginDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="loginDate_MIN != null and loginDate_MIN != ''">
+				AND T.LOGIN_DATE &gt;= STR_TO_DATE(#{loginDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="loginDate_MAX != null and loginDate_MAX != ''">
+				AND T.LOGIN_DATE &lt;= STR_TO_DATE(#{loginDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+			<if test="appid != null and appid != ''">
+				AND T.APPID = #{appid}
+			</if>
+			<if test="appid_LIKE != null and appid_LIKE != ''">
+				AND T.APPID LIKE concat(concat('%',#{appid_LIKE}),'%')
+			</if>
+			<if test="appid_LLIKE != null and appid_LLIKE != ''">
+				AND T.APPID LIKE concat('%',#{appid_LLIKE})
+			</if>
+			<if test="appid_RLIKE != null and appid_RLIKE != ''">
+				AND T.APPID LIKE concat(#{appid_RLIKE},'%')
+			</if>
+
+		</where>
+	</sql>
+	<!-- 系统用户表通用查询 -->
+    <select id="selectSysUser" parameterType="com.xinan.userService.sys.entity.SysUserEntity" resultMap="BaseResultMap" >
+		<bind name="startNumber" value="(curPage-1)*pageSize"></bind>
+		SELECT (@rowNum:=@rowNum+1) AS ROWNO,
+		(SELECT COUNT(1) FROM SYS_USER T <include refid="SYS_USER_WHERE"/>) AS TOTAL,
+		E.* FROM (
+		SELECT T.ID,T.ACCOUNT,T.PWD,T.STATE,T.NAME,
+			T.PHONE,T.EMAIL,
+			DATE_FORMAT(T.CREATE_DATE,'%Y-%m-%d %H:%i:%s') CREATE_DATE,
+			DATE_FORMAT(T.UPDATE_DATE,'%Y-%m-%d %H:%i:%s') UPDATE_DATE,
+			DATE_FORMAT(T.LOGIN_DATE,'%Y-%m-%d %H:%i:%s') LOGIN_DATE,
+			T.APPID,
+			 (select group_concat(b.name) from sys_user_role a,sys_role b where a.userid=T.id
+			 and a.roleid=b.id and b.state=1)
+			as roleName
+		FROM SYS_USER T
+		<include refid="SYS_USER_WHERE"/>
+		<if test="sortName != null and sortName != ''">
+			ORDER BY  ${sortName}
+ 				${sortOrder}
+ 		</if>
+			limit ${startNumber},${pageSize}
+		)E,SYS_USER T
+		<if test="pageSize != null and pageSize != ''">
+			,(SELECT(@rowNum :=${startNumber}))TEM_TB
+		</if>
+		WHERE E.ID=T.ID
+
+    </select>
+
+    <!-- 系统用户表通用查询个数 -->
+    <select id="selectSysUserCount" parameterType="com.xinan.userService.sys.entity.SysUserEntity" resultType="java.lang.Integer" >
+     	 SELECT COUNT(1) FROM SYS_USER T <include refid="SYS_USER_WHERE"/>
+    </select>
+
+    <!-- 系统用户表保存 -->
+    <insert id="insertSysUser"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.xinan.userService.sys.entity.SysUserEntity" >
+    	insert into SYS_USER
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				  ID ,
+			</if>
+			<if test="account != null and account != ''">
+				  ACCOUNT ,
+			</if>
+			<if test="pwd != null and pwd != ''">
+				  PWD ,
+			</if>
+			<if test="state != null">
+				  STATE ,
+			</if>
+			<if test="name != null and name != ''">
+				  NAME ,
+			</if>
+			<if test="phone != null and phone != ''">
+				  PHONE ,
+			</if>
+			<if test="email != null and email != ''">
+				  EMAIL ,
+			</if>
+
+				  CREATE_DATE ,
+
+			<if test="updateDate != null and updateDate != ''">
+				  UPDATE_DATE ,
+			</if>
+			<if test="loginDate != null and loginDate != ''">
+				  LOGIN_DATE ,
+			</if>
+			<if test="appid != null and appid != ''">
+				  APPID ,
+			</if>
+			<if test="flag != null ">
+				flag ,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				 #{id},
+			</if>
+			<if test="account != null and account != ''">
+				 #{account},
+			</if>
+			<if test="pwd != null and pwd != ''">
+				 #{pwd},
+			</if>
+			<if test="state != null">
+				 #{state},
+			</if>
+			<if test="name != null and name != ''">
+				 #{name},
+			</if>
+			<if test="phone != null and phone != ''">
+				 #{phone},
+			</if>
+			<if test="email != null and email != ''">
+				 #{email},
+			</if>
+			SYSDATE(),
+			<if test="appid != null and appid != ''">
+				 #{appid},
+			</if>
+			<if test="flag != null ">
+				#{flag},
+			</if>
+		</trim>
+    </insert>
+
+    <!-- 系统用户表修改-->
+    <update id="updateSysUser" parameterType="com.xinan.userService.sys.entity.SysUserEntity" >
+    	update   SYS_USER T
+		<trim  suffixOverrides="," >
+			set update_date=sysdate(),
+			<if test="pwd_NEW != null and pwd_NEW != ''">
+				  PWD=  #{pwd_NEW},
+			</if>
+			<if test="state_NEW != null">
+				  STATE=  #{state_NEW},
+			</if>
+			<if test="name_NEW != null and name_NEW != ''">
+				  NAME=  #{name_NEW},
+			</if>
+			<if test="phone_NEW != null and phone_NEW != ''">
+				  PHONE=  #{phone_NEW},
+			</if>
+			<if test="email_NEW != null and email_NEW != ''">
+				  EMAIL=  #{email_NEW},
+			</if>
+			<if test="loginDate_NEW != null and loginDate_NEW != ''">
+				  LOGIN_DATE=  STR_TO_DATE(#{loginDate_NEW},'%Y-%m-%d %H:%i:%s'),
+			</if>
+
+			<if test="appid_NEW != null and appid_NEW != ''">
+				  APPID=  #{appid_NEW},
+			</if>
+		</trim>
+		<include refid="SYS_USER_WHERE"/>
+    </update>
+
+    <!-- 系统用户表删除-->
+    <delete id="deleteSysUser" parameterType="com.xinan.userService.sys.entity.SysUserEntity" >
+    	delete  T  from SYS_USER  T  <include refid="SYS_USER_WHERE"/>
+    </delete>
+
+	<delete id="multiDeleteSysUser"  parameterType="com.xinan.userService.sys.entity.SysUserEntity">
+		delete from SYS_USER where id in
+		<foreach collection="array" item="id" open="(" separator="," close=")">#{id}</foreach>
+	</delete>
+
+</mapper>

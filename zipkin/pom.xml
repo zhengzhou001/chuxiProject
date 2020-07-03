@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.xinan</groupId>
+    <artifactId>zipkin</artifactId>
+    <version>1.0</version>
+    <name>zipkin</name>
+
+    <url>http://www.example.com</url>
+    <description>何南信安通信技术股份有限公司 分布式微服务 11链路追踪服务</description>
+
+    <!--加载基础pom-->
+    <parent>
+        <groupId>com.xinan</groupId>
+        <artifactId>basePom</artifactId>
+        <version>1.0</version>
+        <relativePath/>
+    </parent>
+
+    <dependencies>
+        <!--加载核心包-->
+        <dependency>
+            <groupId>com.xinan</groupId>
+            <artifactId>xinanDistributeCore</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!--zipkin依赖-->
+        <dependency>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-autoconfigure-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-server</artifactId>
+        </dependency>
+
+        <!-- eureka 客户端 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+        <!-- zuul -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zuul</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

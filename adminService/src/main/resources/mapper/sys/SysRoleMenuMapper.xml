@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinan.userService.sys.mapper.SysRoleMenuMapper" >
+	<resultMap id="BaseResultMap" type="com.xinan.userService.sys.entity.SysRoleMenuEntity" >
+		<result column="TOTAL" property="total"  />
+		<result column="ROWNO" property="rowno"  />
+		<result column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="ROLEID" property="roleid" jdbcType="NUMERIC" />
+		<result column="MENUID" property="menuid" jdbcType="NUMERIC" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--角色菜单表通用查询条件 -->
+	<sql id="SYS_ROLE_MENU_WHERE">
+		<where>
+			<if test="id != null and id != ''">
+				AND T.ID = #{id}
+			</if>
+			<if test="id_LIKE != null and id_LIKE != ''">
+				AND T.ID LIKE concat(concat('%',#{id_LIKE}),'%')
+			</if>
+			<if test="id_LLIKE != null and id_LLIKE != ''">
+				AND T.ID LIKE concat('%',#{id_LLIKE})
+			</if>
+			<if test="id_RLIKE != null and id_RLIKE != ''">
+				AND T.ID LIKE concat(#{id_RLIKE},'%')
+			</if>
+
+			<if test="roleid != null and roleid != ''">
+				AND T.ROLEID = #{roleid}
+			</if>
+			<if test="roleid_LIKE != null and roleid_LIKE != ''">
+				AND T.ROLEID LIKE concat(concat('%',#{roleid_LIKE}),'%')
+			</if>
+			<if test="roleid_LLIKE != null and roleid_LLIKE != ''">
+				AND T.ROLEID LIKE concat('%',#{roleid_LLIKE})
+			</if>
+			<if test="roleid_RLIKE != null and roleid_RLIKE != ''">
+				AND T.ROLEID LIKE concat(#{roleid_RLIKE},'%')
+			</if>
+
+			<if test="menuid != null and menuid != ''">
+				AND T.MENUID = #{menuid}
+			</if>
+			<if test="menuid_LIKE != null and menuid_LIKE != ''">
+				AND T.MENUID LIKE concat(concat('%',#{menuid_LIKE}),'%')
+			</if>
+			<if test="menuid_LLIKE != null and menuid_LLIKE != ''">
+				AND T.MENUID LIKE concat('%',#{menuid_LLIKE})
+			</if>
+			<if test="menuid_RLIKE != null and menuid_RLIKE != ''">
+				AND T.MENUID LIKE concat(#{menuid_RLIKE},'%')
+			</if>
+
+			<if test="createDate != null and createDate != ''">
+				AND T.CREATE_DATE = STR_TO_DATE(#{createDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MIN != null and createDate_MIN != ''">
+				AND T.CREATE_DATE &gt;= STR_TO_DATE(#{createDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MAX != null and createDate_MAX != ''">
+				AND T.CREATE_DATE &lt;= STR_TO_DATE(#{createDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+		</where>
+	</sql>
+	<!-- 角色菜单表通用查询 -->
+    <select id="selectSysRoleMenu" parameterType="com.xinan.userService.sys.entity.SysRoleMenuEntity" resultMap="BaseResultMap" >
+		<bind name="startNumber" value="(curPage-1)*pageSize"></bind>
+		SELECT (@rowNum:=@rowNum+1) AS ROWNO,
+		(SELECT COUNT(1) FROM SYS_ROLE_MENU T <include refid="SYS_ROLE_MENU_WHERE"/>) AS TOTAL,
+		E.* FROM (
+		SELECT T.ID,T.ROLEID,T.MENUID,
+			DATE_FORMAT(T.CREATE_DATE,'%Y-%m-%d %H:%i:%s') CREATE_DATE
+		FROM SYS_ROLE_MENU T
+		<include refid="SYS_ROLE_MENU_WHERE"/>
+		<if test="sortName != null and sortName != ''">
+			ORDER BY  ${sortName}
+ 				${sortOrder}
+ 		</if>
+			limit ${startNumber},${pageSize}
+		)E,SYS_ROLE_MENU T
+		<if test="pageSize != null and pageSize != ''">
+			,(SELECT(@rowNum :=${startNumber}))TEM_TB
+		</if>
+		WHERE E.ID=T.ID
+
+    </select>
+
+    <!-- 角色菜单表通用查询个数 -->
+    <select id="selectSysRoleMenuCount" parameterType="com.xinan.userService.sys.entity.SysRoleMenuEntity" resultType="java.lang.Integer" >
+     	 SELECT COUNT(1) FROM SYS_ROLE_MENU T <include refid="SYS_ROLE_MENU_WHERE"/>
+    </select>
+
+    <!-- 角色菜单表保存 -->
+    <insert id="insertSysRoleMenu" parameterType="com.xinan.userService.sys.entity.SysRoleMenuEntity" >
+    	insert into SYS_ROLE_MENU
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				  ID ,
+			</if>
+			<if test="roleid != null and roleid != ''">
+				  ROLEID ,
+			</if>
+			<if test="menuid != null and menuid != ''">
+				  MENUID ,
+			</if>
+			 CREATE_DATE ,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				 #{id},
+			</if>
+			<if test="roleid != null and roleid != ''">
+				 #{roleid},
+			</if>
+			<if test="menuid != null and menuid != ''">
+				 #{menuid},
+			</if>
+			sysdate(),
+		</trim>
+    </insert>
+
+    <!-- 角色菜单表修改-->
+    <update id="updateSysRoleMenu" parameterType="com.xinan.userService.sys.entity.SysRoleMenuEntity" >
+    	update   SYS_ROLE_MENU T
+    	<set>
+			<if test="roleid_NEW != null and roleid_NEW != ''">
+				  ROLEID=  #{roleid_NEW},
+			</if>
+			<if test="menuid_NEW != null and menuid_NEW != ''">
+				  MENUID=  #{menuid_NEW},
+			</if>
+		</set>
+		<include refid="SYS_ROLE_MENU_WHERE"/>
+    </update>
+
+    <!-- 角色菜单表删除-->
+    <delete id="deleteSysRoleMenu" parameterType="com.xinan.userService.sys.entity.SysRoleMenuEntity" >
+    	delete  T  from SYS_ROLE_MENU  T  <include refid="SYS_ROLE_MENU_WHERE"/>
+    </delete>
+
+	<!--删除子角色多余菜单-->
+	<delete id="deleteSysRoleMenuByPidChildrens" parameterType="java.util.Map" >
+		delete  from SYS_ROLE_MENU
+		where menuid not in
+		 ( select t.menuid from (
+		(select menuid from SYS_ROLE_MENU a where a.roleid=#{roleid})
+		) t )
+		and roleid in(
+			${roleids}
+		)
+
+	</delete>
+	<!--插入基础角色菜单-->
+	<insert id="insertBaseRoleMenu" parameterType="com.xinan.userService.sys.entity.SysRoleEntity" >
+		insert into sys_role_menu (roleid,menuid,create_date)
+		select #{id},id,sysdate() from sys_menu where appid=#{appid}
+	</insert>
+
+</mapper>

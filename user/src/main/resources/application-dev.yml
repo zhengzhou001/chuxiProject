@@ -1,0 +1,9 @@
+server:
+  port: 9800
+  context-path: /user/
+spring:
+  application:
+    name: user
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+zuul_address: http://127.0.0.1:9000/

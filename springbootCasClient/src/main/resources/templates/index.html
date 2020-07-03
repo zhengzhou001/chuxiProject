@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+ <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="./js/jquery/jquery-1.9.1.min.js" th:src="@{/js/jquery/jquery-1.9.1.min.js}"  type="text/javascript"></script>
+    <title>Title</title>
+</head>
+<body>
+
+  <button type="button"  onclick="getUser()" >用户</button>
+
+
+<br>
+ <button type="button"  onclick="logout()" >退出</button>
+</body>
+
+<script type="text/javascript">
+
+    $(function(){
+
+    });
+
+    function getUser() {
+        $.ajax({
+            url: "./getUser",
+            type: 'POST',
+            async: true,
+            dataType: "json",
+            contentType: "application/json",
+            //要发送到服务器的数据
+            data: {},
+            beforeSend: function (XMLHttpRequest) {
+
+            },
+            //当请求失败时调用的函数
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            },
+            //当请求成功时调用的函数
+            success: function (data, textStatus) {
+                alert(JSON.stringify(data));
+            },
+            //当请求完成时调用的函数
+            complete: function (XMLHttpRequest, textStatus) {
+
+            }
+        });
+    }
+
+    function logout() {
+        window.location.href="./logout"
+    }
+</script>
+
+</html>

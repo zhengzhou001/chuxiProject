@@ -1,0 +1,22 @@
+server:
+  port: 9200
+spring:
+  application:
+    name: zipkin
+eureka:
+  instance:
+    prefer-ip-address: true # 注册服务的时候使用服务的ip地址
+  client:
+    service-url:
+      defaultZone: http://192.168.0.220:9100/eureka/
+
+###actuator监控点 start####
+endpoints:
+  health:
+    sensitive: false
+    enabled: true
+##默认情况下很多端点是不允许访问的，会返回401:Unauthorized
+management:
+  security:
+    enabled: false
+###actuator监控点 end####

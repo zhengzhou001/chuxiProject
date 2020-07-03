@@ -1,0 +1,24 @@
+server:
+  port: 9100
+eureka:
+  instance:
+    hostname: 192.168.0.220  # eureka实例的主机名
+  client:
+    register-with-eureka: false #不把自己注册到eureka上
+    fetch-registry: false #不从eureka上来获取服务的注册信息
+    service-url:
+      defaultZone: http://192.168.0.220:9100/
+  server:
+    #### 清理间隔（单位毫秒，默认是60*1000），开发环境设置如下可快速移除不可用的服务
+    eviction-interval-timer-in-ms: 5000
+    enable-self-preservation: false
+###actuator监控点 start####
+endpoints:
+  health:
+    sensitive: false
+    enabled: true
+##默认情况下很多端点是不允许访问的，会返回401:Unauthorized
+management:
+  security:
+    enabled: false
+###actuator监控点 end####

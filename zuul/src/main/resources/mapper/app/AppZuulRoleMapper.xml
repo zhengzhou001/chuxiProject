@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinan.zuul.app.mapper.AppZuulRoleMapper" >
+	<resultMap id="BaseResultMap" type="com.xinan.zuul.app.entity.AppZuulRoleEntity" >
+		<result column="TOTAL" property="total"  />
+		<result column="ROWNO" property="rowno"  />
+		<result column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="APPID" property="appid" jdbcType="NUMERIC" />
+		<result column="ROLE" property="role" jdbcType="VARCHAR" />
+		<result column="STATE" property="state" jdbcType="NUMERIC" />
+		<result column="NOTE" property="note" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--应用权限表通用查询条件 -->
+	<sql id="APP_ZUUL_ROLE_WHERE">
+		<where>
+			<if test="id != null and id != ''">
+				AND T.ID = #{id}
+			</if>
+			<if test="id_LIKE != null and id_LIKE != ''">
+				AND T.ID LIKE concat(concat('%',#{id_LIKE}),'%')
+			</if>
+			<if test="id_LLIKE != null and id_LLIKE != ''">
+				AND T.ID LIKE concat('%',#{id_LLIKE})
+			</if>
+			<if test="id_RLIKE != null and id_RLIKE != ''">
+				AND T.ID LIKE concat(#{id_RLIKE},'%')
+			</if>
+
+			<if test="appid != null and appid != ''">
+				AND T.APPID = #{appid}
+			</if>
+			<if test="appid_LIKE != null and appid_LIKE != ''">
+				AND T.APPID LIKE concat(concat('%',#{appid_LIKE}),'%')
+			</if>
+			<if test="appid_LLIKE != null and appid_LLIKE != ''">
+				AND T.APPID LIKE concat('%',#{appid_LLIKE})
+			</if>
+			<if test="appid_RLIKE != null and appid_RLIKE != ''">
+				AND T.APPID LIKE concat(#{appid_RLIKE},'%')
+			</if>
+
+			<if test="role != null and role != ''">
+				AND T.ROLE = #{role}
+			</if>
+			<if test="role_LIKE != null and role_LIKE != ''">
+				AND T.ROLE LIKE concat(concat('%',#{role_LIKE}),'%')
+			</if>
+			<if test="role_LLIKE != null and role_LLIKE != ''">
+				AND T.ROLE LIKE concat('%',#{role_LLIKE})
+			</if>
+			<if test="role_RLIKE != null and role_RLIKE != ''">
+				AND T.ROLE LIKE concat(#{role_RLIKE},'%')
+			</if>
+
+			<if test="state != null and state != ''">
+				AND T.STATE = #{state}
+			</if>
+			<if test="state_LIKE != null and state_LIKE != ''">
+				AND T.STATE LIKE concat(concat('%',#{state_LIKE}),'%')
+			</if>
+			<if test="state_LLIKE != null and state_LLIKE != ''">
+				AND T.STATE LIKE concat('%',#{state_LLIKE})
+			</if>
+			<if test="state_RLIKE != null and state_RLIKE != ''">
+				AND T.STATE LIKE concat(#{state_RLIKE},'%')
+			</if>
+
+			<if test="note != null and note != ''">
+				AND T.NOTE = #{note}
+			</if>
+			<if test="note_LIKE != null and note_LIKE != ''">
+				AND T.NOTE LIKE concat(concat('%',#{note_LIKE}),'%')
+			</if>
+			<if test="note_LLIKE != null and note_LLIKE != ''">
+				AND T.NOTE LIKE concat('%',#{note_LLIKE})
+			</if>
+			<if test="note_RLIKE != null and note_RLIKE != ''">
+				AND T.NOTE LIKE concat(#{note_RLIKE},'%')
+			</if>
+
+		</where>
+	</sql>
+	<!-- 应用权限表通用查询 -->
+    <select id="selectAppZuulRole" parameterType="com.xinan.zuul.app.entity.AppZuulRoleEntity" resultMap="BaseResultMap" >
+		<bind name="startNumber" value="(curPage-1)*pageSize"></bind>
+		SELECT (@rowNum:=@rowNum+1) AS ROWNO,
+		(SELECT COUNT(1) FROM APP_ZUUL_ROLE T <include refid="APP_ZUUL_ROLE_WHERE"/>) AS TOTAL,
+		E.* FROM (
+		SELECT T.ID,T.APPID,T.ROLE,T.STATE,T.NOTE
+			
+		FROM APP_ZUUL_ROLE T
+		<include refid="APP_ZUUL_ROLE_WHERE"/>
+		<if test="sortName != null and sortName != ''">
+			ORDER BY  ${sortName}
+ 				${sortOrder}
+ 		</if>
+			limit ${startNumber},${pageSize}
+		)E,APP_ZUUL_ROLE T
+		<if test="pageSize != null and pageSize != ''">
+			,(SELECT(@rowNum :=${startNumber}))TEM_TB
+		</if>
+		WHERE E.ID=T.ID
+
+    </select>
+
+    <!-- 应用权限表通用查询个数 -->
+    <select id="selectAppZuulRoleCount" parameterType="com.xinan.zuul.app.entity.AppZuulRoleEntity" resultType="java.lang.Integer" >
+     	 SELECT COUNT(1) FROM APP_ZUUL_ROLE T <include refid="APP_ZUUL_ROLE_WHERE"/>
+    </select>
+
+    <!-- 应用权限表保存 -->
+    <insert id="insertAppZuulRole" parameterType="com.xinan.zuul.app.entity.AppZuulRoleEntity" >
+    	insert into APP_ZUUL_ROLE
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				  ID ,
+			</if>
+			<if test="appid != null and appid != ''">
+				  APPID ,
+			</if>
+			<if test="role != null and role != ''">
+				  ROLE ,
+			</if>
+			<if test="state != null and state != ''">
+				  STATE ,
+			</if>
+			<if test="note != null and note != ''">
+				  NOTE ,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				 #{id},
+			</if>
+			<if test="appid != null and appid != ''">
+				 #{appid},
+			</if>
+			<if test="role != null and role != ''">
+				 #{role},
+			</if>
+			<if test="state != null and state != ''">
+				 #{state},
+			</if>
+			<if test="note != null and note != ''">
+				 #{note},
+			</if>
+		</trim>
+    </insert>
+
+    <!-- 应用权限表修改-->
+    <update id="updateAppZuulRole" parameterType="com.xinan.zuul.app.entity.AppZuulRoleEntity" >
+    	update   APP_ZUUL_ROLE T
+    	<set>
+			<if test="id_NEW != null and id_NEW != ''">
+				  ID=  #{id_NEW},
+			</if>
+			<if test="appid_NEW != null and appid_NEW != ''">
+				  APPID=  #{appid_NEW},
+			</if>
+			<if test="role_NEW != null and role_NEW != ''">
+				  ROLE=  #{role_NEW},
+			</if>
+			<if test="state_NEW != null and state_NEW != ''">
+				  STATE=  #{state_NEW},
+			</if>
+			<if test="note_NEW != null and note_NEW != ''">
+				  NOTE=  #{note_NEW},
+			</if>
+		</set>
+		<include refid="APP_ZUUL_ROLE_WHERE"/>
+    </update>
+
+    <!-- 应用权限表删除-->
+    <delete id="deleteAppZuulRole" parameterType="com.xinan.zuul.app.entity.AppZuulRoleEntity" >
+    	delete  T  from APP_ZUUL_ROLE  T  <include refid="APP_ZUUL_ROLE_WHERE"/>
+    </delete>
+
+</mapper>

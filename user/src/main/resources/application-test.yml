@@ -1,0 +1,7 @@
+server:
+  port: 9800
+  context-path: /user/
+spring:
+  application:
+    name: user
+zuul_address: http://192.168.0.220:9000/

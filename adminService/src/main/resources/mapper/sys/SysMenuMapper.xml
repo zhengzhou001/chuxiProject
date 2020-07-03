@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinan.userService.sys.mapper.SysMenuMapper" >
+	<resultMap id="BaseResultMap" type="com.xinan.userService.sys.entity.SysMenuEntity" >
+		<result column="TOTAL" property="total"  />
+		<result column="ROWNO" property="rowno"  />
+		<result column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="PID" property="pid" jdbcType="NUMERIC" />
+		<result column="STATE" property="state" jdbcType="NUMERIC" />
+		<result column="URL" property="url" jdbcType="VARCHAR" />
+		<result column="ORDERID" property="orderid" jdbcType="NUMERIC" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+		<result column="APPID" property="appid" jdbcType="NUMERIC" />
+		<result column="checked" property="checked" jdbcType="NUMERIC" />
+		<result column="pidAgain" property="pidAgain" jdbcType="NUMERIC" />
+		<result column="flag" property="flag" jdbcType="NUMERIC" />
+
+	</resultMap>
+	<!--菜单表通用查询条件 -->
+	<sql id="SYS_MENU_WHERE">
+		<where>
+			<if test="flag != null ">
+				AND T.flag = #{flag}
+			</if>
+			<if test="id != null and id != ''">
+				AND T.ID = #{id}
+			</if>
+			<if test="id_LIKE != null and id_LIKE != ''">
+				AND T.ID LIKE concat(concat('%',#{id_LIKE}),'%')
+			</if>
+			<if test="id_LLIKE != null and id_LLIKE != ''">
+				AND T.ID LIKE concat('%',#{id_LLIKE})
+			</if>
+			<if test="id_RLIKE != null and id_RLIKE != ''">
+				AND T.ID LIKE concat(#{id_RLIKE},'%')
+			</if>
+
+			<if test="name != null and name != ''">
+				AND T.NAME = #{name}
+			</if>
+			<if test="name_LIKE != null and name_LIKE != ''">
+				AND T.NAME LIKE concat(concat('%',#{name_LIKE}),'%')
+			</if>
+			<if test="name_LLIKE != null and name_LLIKE != ''">
+				AND T.NAME LIKE concat('%',#{name_LLIKE})
+			</if>
+			<if test="name_RLIKE != null and name_RLIKE != ''">
+				AND T.NAME LIKE concat(#{name_RLIKE},'%')
+			</if>
+
+			<if test="pid != null and pid != ''">
+				AND T.PID = #{pid}
+			</if>
+			<if test="pid_LIKE != null and pid_LIKE != ''">
+				AND T.PID LIKE concat(concat('%',#{pid_LIKE}),'%')
+			</if>
+			<if test="pid_LLIKE != null and pid_LLIKE != ''">
+				AND T.PID LIKE concat('%',#{pid_LLIKE})
+			</if>
+			<if test="pid_RLIKE != null and pid_RLIKE != ''">
+				AND T.PID LIKE concat(#{pid_RLIKE},'%')
+			</if>
+
+			<if test="state != null and state != ''">
+				AND T.STATE = #{state}
+			</if>
+			<if test="state_LIKE != null and state_LIKE != ''">
+				AND T.STATE LIKE concat(concat('%',#{state_LIKE}),'%')
+			</if>
+			<if test="state_LLIKE != null and state_LLIKE != ''">
+				AND T.STATE LIKE concat('%',#{state_LLIKE})
+			</if>
+			<if test="state_RLIKE != null and state_RLIKE != ''">
+				AND T.STATE LIKE concat(#{state_RLIKE},'%')
+			</if>
+
+			<if test="url != null and url != ''">
+				AND T.URL = #{url}
+			</if>
+			<if test="url_LIKE != null and url_LIKE != ''">
+				AND T.URL LIKE concat(concat('%',#{url_LIKE}),'%')
+			</if>
+			<if test="url_LLIKE != null and url_LLIKE != ''">
+				AND T.URL LIKE concat('%',#{url_LLIKE})
+			</if>
+			<if test="url_RLIKE != null and url_RLIKE != ''">
+				AND T.URL LIKE concat(#{url_RLIKE},'%')
+			</if>
+
+			<if test="orderid != null and orderid != ''">
+				AND T.ORDERID = #{orderid}
+			</if>
+			<if test="orderid_LIKE != null and orderid_LIKE != ''">
+				AND T.ORDERID LIKE concat(concat('%',#{orderid_LIKE}),'%')
+			</if>
+			<if test="orderid_LLIKE != null and orderid_LLIKE != ''">
+				AND T.ORDERID LIKE concat('%',#{orderid_LLIKE})
+			</if>
+			<if test="orderid_RLIKE != null and orderid_RLIKE != ''">
+				AND T.ORDERID LIKE concat(#{orderid_RLIKE},'%')
+			</if>
+
+			<if test="createDate != null and createDate != ''">
+				AND T.CREATE_DATE = STR_TO_DATE(#{createDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MIN != null and createDate_MIN != ''">
+				AND T.CREATE_DATE &gt;= STR_TO_DATE(#{createDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="createDate_MAX != null and createDate_MAX != ''">
+				AND T.CREATE_DATE &lt;= STR_TO_DATE(#{createDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+			<if test="updateDate != null and updateDate != ''">
+				AND T.UPDATE_DATE = STR_TO_DATE(#{updateDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="updateDate_MIN != null and updateDate_MIN != ''">
+				AND T.UPDATE_DATE &gt;= STR_TO_DATE(#{updateDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="updateDate_MAX != null and updateDate_MAX != ''">
+				AND T.UPDATE_DATE &lt;= STR_TO_DATE(#{updateDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+			<if test="appid != null and appid != ''">
+				AND T.APPID = #{appid}
+			</if>
+			<if test="appid_LIKE != null and appid_LIKE != ''">
+				AND T.APPID LIKE concat(concat('%',#{appid_LIKE}),'%')
+			</if>
+			<if test="appid_LLIKE != null and appid_LLIKE != ''">
+				AND T.APPID LIKE concat('%',#{appid_LLIKE})
+			</if>
+			<if test="appid_RLIKE != null and appid_RLIKE != ''">
+				AND T.APPID LIKE concat(#{appid_RLIKE},'%')
+			</if>
+
+		</where>
+	</sql>
+	<!-- 菜单表通用查询 -->
+    <select id="selectSysMenu" parameterType="com.xinan.userService.sys.entity.SysMenuEntity" resultMap="BaseResultMap" >
+		<bind name="startNumber" value="(curPage-1)*pageSize"></bind>
+		SELECT (@rowNum:=@rowNum+1) AS ROWNO,
+		(SELECT COUNT(1) FROM SYS_MENU T <include refid="SYS_MENU_WHERE"/>) AS TOTAL,
+		E.* FROM (
+		SELECT T.ID,T.NAME,T.PID,T.STATE,T.URL,
+			T.ORDERID,
+			DATE_FORMAT(T.CREATE_DATE,'%Y-%m-%d %H:%i:%s') CREATE_DATE,
+			DATE_FORMAT(T.UPDATE_DATE,'%Y-%m-%d %H:%i:%s') UPDATE_DATE,T.APPID
+		,T.flag
+		,t.pid as pidAgain
+		FROM SYS_MENU T
+		<include refid="SYS_MENU_WHERE"/>
+		<if test="sortName != null and sortName != ''">
+			ORDER BY  ${sortName}
+ 				${sortOrder}
+ 		</if>
+			limit ${startNumber},${pageSize}
+		)E,SYS_MENU T
+		<if test="pageSize != null and pageSize != ''">
+			,(SELECT(@rowNum :=${startNumber}))TEM_TB
+		</if>
+		WHERE E.ID=T.ID
+
+    </select>
+
+    <!-- 菜单表通用查询个数 -->
+    <select id="selectSysMenuCount" parameterType="com.xinan.userService.sys.entity.SysMenuEntity" resultType="java.lang.Integer" >
+     	 SELECT COUNT(1) FROM SYS_MENU T <include refid="SYS_MENU_WHERE"/>
+    </select>
+
+    <!-- 菜单表保存 -->
+    <insert id="insertSysMenu" useGeneratedKeys="true" keyProperty="id" parameterType="com.xinan.userService.sys.entity.SysMenuEntity" >
+    	insert into SYS_MENU
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				  ID ,
+			</if>
+			<if test="name != null and name != ''">
+				  NAME ,
+			</if>
+			<if test="pid != null and pid != ''">
+				  PID ,
+			</if>
+			<if test="state != null and state != ''">
+				  STATE ,
+			</if>
+			<if test="url != null and url != ''">
+				  URL ,
+			</if>
+			<if test="orderid != null and orderid != ''">
+				  ORDERID ,
+			</if>
+
+				  CREATE_DATE ,
+
+			<if test="updateDate != null and updateDate != ''">
+				  UPDATE_DATE ,
+			</if>
+			<if test="appid != null and appid != ''">
+				  APPID ,
+			</if>
+			<if test="flag != null ">
+				FLAG,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				 #{id},
+			</if>
+			<if test="name != null and name != ''">
+				 #{name},
+			</if>
+			<if test="pid != null and pid != ''">
+				 #{pid},
+			</if>
+			<if test="state != null and state != ''">
+				 #{state},
+			</if>
+			<if test="url != null and url != ''">
+				 #{url},
+			</if>
+			<if test="orderid != null and orderid != ''">
+				 #{orderid},
+			</if>
+			     SYSDATE(),
+			<if test="updateDate != null and updateDate != ''">
+				 STR_TO_DATE(#{updateDate},'%Y-%m-%d %H:%i:%s'),
+			</if>
+			<if test="appid != null and appid != ''">
+				 #{appid},
+			</if>
+			<if test="flag != null ">
+			 	#{flag}
+			</if>
+		</trim>
+    </insert>
+
+    <!-- 菜单表修改-->
+    <update id="updateSysMenu" parameterType="com.xinan.userService.sys.entity.SysMenuEntity" >
+    	update   SYS_MENU T
+		<trim suffixOverrides="," >
+			set UPDATE_DATE=  SYSDATE(),
+
+			<if test="name_NEW != null and name_NEW != ''">
+				  NAME=  #{name_NEW},
+			</if>
+			<if test="pid_NEW != null and pid_NEW != ''">
+				  PID=  #{pid_NEW},
+			</if>
+			<if test="state_NEW != null ">
+				  STATE=  #{state_NEW},
+			</if>
+			<if test="url_NEW != null and url_NEW != ''">
+				  URL=  #{url_NEW},
+			</if>
+			<if test="orderid_NEW != null and orderid_NEW != ''">
+				  ORDERID=  #{orderid_NEW},
+			</if>
+
+
+			<if test="appid_NEW != null and appid_NEW != ''">
+				  APPID=  #{appid_NEW},
+			</if>
+
+			<if test="flag_NEW != null ">
+				   flag = #{flag_NEW}
+			</if>
+		</trim>
+		<include refid="SYS_MENU_WHERE"/>
+    </update>
+
+    <!-- 菜单表删除-->
+    <delete id="deleteSysMenu" parameterType="com.xinan.userService.sys.entity.SysMenuEntity" >
+    	delete  T  from SYS_MENU  T  <include refid="SYS_MENU_WHERE"/>
+    </delete>
+
+	<!--根据用户id查询权限-->
+	<select id="getUserRoleMenu" parameterType="com.xinan.userService.sys.entity.SysUserEntity" resultMap="BaseResultMap">
+		select distinct a.id,a.pid,a.name,a.url,a.flag from sys_menu a where a.id in(
+			select menuid from sys_role_menu b where b.roleid in(
+				select roleid from sys_user_role c ,sys_role d where c.userid=#{id}
+				and c.roleid=d.id and d.state=1
+			)
+		) and a.state=1
+		<if test="appid != null">
+			and a.appid=#{appid}
+		</if>
+		<if test="flag != null">
+			and a.flag=#{flag}
+		</if>
+ 		order by a.pid asc,a.orderid  asc
+	</select>
+
+	<!--根据角色查询菜单列表-->
+	<select id="selectMenuByRole" parameterType="com.xinan.userService.sys.entity.SysRoleEntity" resultMap="BaseResultMap">
+		select t.id,t.name,t.pid,t.pid as pidAgain, (case when role_count>0 then 1 else 0 end ) as checked from
+		(
+			select a.id,a.name,a.pid,a.orderid,
+			(select count(1) from sys_role_menu c where c.menuid=a.id and c.roleid=#{id})  as role_count
+			from sys_menu a where a.id in(
+				select menuid from sys_role_menu b where b.roleid =#{pid}
+			) and a.appid=#{appid}
+		) t  order by t.pid asc,t.orderid asc
+	</select>
+	<!--根据超管菜单-->
+	<select id="selectMenuByAdminRole" parameterType="com.xinan.userService.sys.entity.SysRoleEntity" resultMap="BaseResultMap">
+		select t.id,t.name,t.pid,t.pid as pidAgain, (case when role_count>0 then 1 else 0 end ) as checked from
+		(
+			select a.id,a.name,a.pid,a.orderid,
+			(select count(1) from sys_role_menu c where c.menuid=a.id and c.roleid=#{id})  as role_count
+			from sys_menu a where a.appid=#{appid}
+		) t order by t.pid asc,t.orderid asc
+	</select>
+
+	<!--插入基础菜单-->
+	<insert id="insertBaseMenu" parameterType="com.xinan.userService.sys.entity.SysMenuEntity" >
+		insert into sys_menu (pid,name,orderid,state,url,create_date,appid,flag)
+		select #{pid},name,orderid,1,url,sysdate(),#{appid},#{flag} from sys_menu_base
+	</insert>
+</mapper>

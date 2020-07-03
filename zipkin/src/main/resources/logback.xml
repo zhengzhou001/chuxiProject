@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration scan="true">
+    <property resource="logback.properties" />
+    
+    <!-- 控制台日志配置 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 格式化 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%p] [%t] %c{36} - %m%n</pattern>
+             <charset class="java.nio.charset.Charset">UTF-8</charset> 
+        </encoder>
+    </appender>
+
+    <!-- info级别日志控制 -->
+    <appender name="FILE_INFO"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${logback.path}/info_${logback.name}.log</file>
+        <!-- 是否追加 默认为true -->
+        <append>true</append>
+        <!-- 滚动策略 日期+大小 策略 -->
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logback.zip.path}/%d{yyyy-MM-dd}/info/info_${logback.name}-%i.zip</fileNamePattern>
+            <!-- 单个日志大小 -->
+            <maxFileSize>${logback.maxFileSize}</maxFileSize>
+            <!-- 日志保存周期 -->
+            <maxHistory>${logback.maxHistory}</maxHistory>
+            <!-- 总大小 -->
+            <totalSizeCap>${logback.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <!-- 格式化 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%p] [%t] %c{36} - %m%n</pattern>
+             <charset class="java.nio.charset.Charset">UTF-8</charset> 
+        </encoder>
+        <!-- 级别过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- warn级别日志控制 -->
+    <appender name="WARN_INFO"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${logback.path}/warn_${logback.name}.log</file>
+        <!-- 是否追加 默认为true -->
+        <append>true</append>
+        <!-- 滚动策略 日期+大小 策略 -->
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logback.zip.path}/%d{yyyy-MM-dd}/warn/warn_${logback.name}-%i.zip</fileNamePattern>
+            <!-- 单个日志大小 -->
+            <maxFileSize>${logback.maxFileSize}</maxFileSize>
+            <!-- 日志保存周期 -->
+            <maxHistory>${logback.maxHistory}</maxHistory>
+            <!-- 总大小 -->
+            <totalSizeCap>${logback.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <!-- 格式化 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%p] [%t] %c{36} - %m%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset> 
+        </encoder>
+        <!-- 级别过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- ERROR级别日志控制 -->
+    <appender name="ERROR_INFO"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${logback.path}/error_${logback.name}.log</file>
+        <!-- 是否追加 默认为true -->
+        <append>true</append>
+        <!-- 滚动策略 日期+大小 策略 -->
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logback.zip.path}/%d{yyyy-MM-dd}/error/error_${logback.name}-%i.zip</fileNamePattern>
+            <!-- 单个日志大小 -->
+            <maxFileSize>${logback.maxFileSize}</maxFileSize>
+            <!-- 日志保存周期 -->
+            <maxHistory>${logback.maxHistory}</maxHistory>
+            <!-- 总大小 -->
+            <totalSizeCap>${logback.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <!-- 格式化 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%p] [%t] %c{36} - %m%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset> 
+        </encoder>
+        <!-- 级别过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <!-- mybatis日志打印 -->
+	<logger name="com.tcwy.distribute.*.*.mapper" level="DEBUG" />
+    <root level="${logback.level}">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE_INFO" />
+        <appender-ref ref="WARN_INFO" />
+        <appender-ref ref="ERROR_INFO" />
+    </root>
+</configuration>
