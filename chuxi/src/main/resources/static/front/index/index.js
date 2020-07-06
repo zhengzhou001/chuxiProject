@@ -178,7 +178,7 @@ function getTestData() {
 }
 //退出
 function logout() {
-    if(!$.cookie("CUR_USER")||$.cookie("CUR_USER")=="null"||$.cookie("CUR_USER")==""){
+    if(baseTools.isBlank($.cookie("CUR_USER"))){
         baseTools.gotoLogin();
     }
 

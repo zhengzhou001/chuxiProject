@@ -1,6 +1,6 @@
 var form,table,element,layer;
 layui.use(['element','table',"layer","form"], function(){
-    if(!$.cookie("CUR_USER")||$.cookie("CUR_USER")=="null"||$.cookie("CUR_USER")==""){
+    if(baseTools.isBlank($.cookie("CUR_USER"))){
 
     }else{
         top.location.href=context+"route/index";

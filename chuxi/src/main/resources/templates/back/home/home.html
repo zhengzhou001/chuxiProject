@@ -23,7 +23,6 @@
     <script th:src="@{/plugin/json/json2.js}" type="text/javascript"></script>
 
     <script th:src="@{/back/home/home.js}" type="text/javascript"></script>
-
     <!--[if lt IE 9]>
     <script th:src="@{/plugin/ie/html5.min.js}"></script>
     <script th:src="@{/plugin/ie/respond.min.js}"></script>
@@ -32,10 +31,103 @@
 
     </style>
 </head>
-<body  class="layui-layout-body" layadmin-themealias="default">
+<body class="layui-layout-body" layadmin-themealias="default">
 <!--加载整个base.html-->
 <div th:replace="/common/base/base"></div>
 <div th:replace="/common/base/checkLogin"></div>
- 后台页面
+<div id="base">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <!-- 头部区域 -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item layadmin-flexible" lay-unselect="">
+                    <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩" id="resizeMenu">
+                        <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+
+                <li class="layui-nav-item" lay-unselect="">
+                    <a href="javascript:;">123</a>
+                    <dl class="layui-nav-child">
+                        <dd><a lay-href="set/user/info.html">基本资料</a></dd>
+                        <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                        <hr>
+                        <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item layui-hide-xs" lay-unselect="">
+                    <a href="javascript:;" layadmin-event="about"><i
+                            class="layui-icon layui-icon-more-vertical"></i></a>
+                </li>
+                <li class="layui-nav-item" lay-unselect="">
+                    <a href="javascript:;" layadmin-event="more">退出</a>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-side layui-side-menu">
+            <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
+                lay-filter="layadmin-system-side-menu">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-home"></i>
+                        <cite>个人资料</cite>
+                        <span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd data-name="console" class="layui-this">
+                            <a menuId="1" menuName="基本信息" menuHref="route/index">基本信息</a>
+                        </dd>
+                        <dd data-name="console" class="layui-this">
+                            <a menuId="2" menuName="收货地址" menuHref="route/index">收货地址</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-component"></i>
+                        <cite>店铺</cite>
+                        <span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd data-name="console" class="layui-this">
+                            <a menuId="3" menuName="店铺管理" menuHref="route/test">店铺管理</a>
+                        </dd>
+                        <dd data-name="console" class="layui-this">
+                            <a menuId="4" menuName="店铺管理1" menuHref="route/test">店铺管理1</a>
+                        </dd>
+
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <div class="layadmin-pagetabs" id="LAY_app_tabs">
+            <div class="layui-icon layadmin-tabs-control layui-icon-prev" id="tabLeft"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-next" id="tabRight"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                <ul class="layui-nav layadmin-tabs-select">
+                    <li class="layui-nav-item" lay-unselect="">
+                        <a href="javascript:;"></a>
+                        <dl class="layui-nav-child layui-anim-fadein" style="z-index: 9999999">
+                            <dd><a href="javascript:;" id="closeNow">关闭当前标签页</a></dd>
+                            <dd><a href="javascript:;" id="closeOther">关闭其它标签页</a></dd>
+                            <dd><a href="javascript:;" id="closeAll">关闭全部标签页</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-tab" lay-unauto="" lay-allowclose="true" lay-filter="layadmin-layout-tabs">
+                <ul class="layui-tab-title" id="LAY_app_tabsheader">
+
+                </ul>
+                <div class="layui-tab-content layui-body">
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
 </body>
 </html>

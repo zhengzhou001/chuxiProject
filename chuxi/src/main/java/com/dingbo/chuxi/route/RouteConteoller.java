@@ -1,6 +1,7 @@
 package com.dingbo.chuxi.route;
 
 import com.dingbo.chuxi.common.ChuXiConstants;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +58,7 @@ public class RouteConteoller {
         model.put("title", ChuXiConstants.TITLE +"-测试");
         model.put("foot", ChuXiConstants.FOOT);
         model.put("gsjj", "www.abaidu.com");
+        StringUtils.isEmpty("1");
         return modelAndView;
     }
 

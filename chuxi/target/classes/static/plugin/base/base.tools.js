@@ -28,6 +28,19 @@ var baseTools = (function () {
          	return new Date(dateStr);
         	 
         },
+        //空校验
+        isEmpty:function(obj){
+            return (typeof obj === 'undefined' || obj === null || obj === "");
+        },
+        isNotEmpty:function(obj){
+            return !this.isEmpty(obj);
+        },
+        isBlank:function(obj){
+            return (typeof obj === 'undefined' || obj === null || obj === "" ||this.trim( obj) === "");
+        },
+        isNotBlank:function(obj){
+            return !this.isBlank(obj);
+        },
         //获取url参数
         getUrlParam:function(name){
         	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
