@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  */
@@ -198,6 +199,10 @@ public class BaseTools {
 			}
 		}
 		return "";
+	}
+	//获取uuid
+	public static String getUuid() {
+		return UUID.randomUUID().toString().replaceAll("-","");
 	}
 	public static void main(String[] args) {
 		System.out.println((int) getBetweenTime("2020-04-15 17:11:46","2020-04-15 17:11:46"));

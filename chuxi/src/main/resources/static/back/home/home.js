@@ -79,7 +79,7 @@ function menuClick(menuId,menuName,menuUrl) {
         //添加标签页
         element.tabAdd('layadmin-layout-tabs',{
             title: menuName,
-            content: "<iframe src='"+context+menuUrl+"' class='layadmin-iframe '>", //支持传入html
+            content: "<iframe src='"+context+menuUrl+"' class='layadmin-iframe ' style='padding:10px;  ;border: 0;'>", //支持传入html
             //content: menuId,
             id: menuId,
         });

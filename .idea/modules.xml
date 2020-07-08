@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/chuxi/chuxi.iml" filepath="$PROJECT_DIR$/chuxi/chuxi.iml" />
       <module fileurl="file://$PROJECT_DIR$/springCodeTool/springCodeTool.iml" filepath="$PROJECT_DIR$/springCodeTool/springCodeTool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xinanDistributeCore/xinanDistributeCore.iml" filepath="$PROJECT_DIR$/xinanDistributeCore/xinanDistributeCore.iml" />
     </modules>
   </component>
 </project>

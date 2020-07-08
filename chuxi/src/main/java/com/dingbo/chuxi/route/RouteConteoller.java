@@ -48,6 +48,17 @@ public class RouteConteoller {
         return modelAndView;
     }
 
+    @GetMapping("/personInfo")
+    public ModelAndView personInfo() {
+        //登录
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/back/info/personInfo");
+        Map<String, Object> model = modelAndView.getModel();
+        model.put("title", ChuXiConstants.TITLE +"-个人信息");
+        model.put("foot", ChuXiConstants.FOOT);
+        return modelAndView;
+    }
+
 
     @GetMapping("/test")
     public ModelAndView test() {

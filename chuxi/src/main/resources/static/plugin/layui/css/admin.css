@@ -1,4 +1,10 @@
 /** layuiAdmin.std-v1.4.0 LPPL License By https://www.layui.com/admin/ */
+/** 第一个标签页隐藏关闭功能
+.layadmin-pagetabs .layui-tab-title li:first-child {
+	display:none;
+	padding-right:15px
+}
+**/
  html #layuicss-layuiAdmin {
 	display:none;
 	position:absolute;
@@ -326,8 +332,9 @@ html {
 .layadmin-side-spread-sm .layadmin-body-shade {
 	display:block
 }
-.layadmin-pagetabs .layui-tab-title li:first-child .layui-tab-close,.layadmin-tabs-select.layui-nav .layui-nav-bar,.layadmin-tabs-select.layui-nav .layui-nav-more {
-	display:none
+
+ .layui-tab-close,.layadmin-tabs-select.layui-nav .layui-nav-bar,.layadmin-tabs-select.layui-nav .layui-nav-more {
+
 }
 .layadmin-pagetabs {
 	height:40px;
@@ -408,9 +415,7 @@ html {
 	border-right:1px solid #f6f6f6;
 	vertical-align:top
 }
-.layadmin-pagetabs .layui-tab-title li:first-child {
-	padding-right:15px
-}
+
 .layadmin-pagetabs .layui-tab-title li .layui-tab-close {
 	position:absolute;
 	right:8px;

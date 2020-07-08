@@ -8,10 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="chuxi" />
+        <module name="xinanDistributeCore" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
       <module name="chuxi" target="1.8" />
+      <module name="xinanDistributeCore" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

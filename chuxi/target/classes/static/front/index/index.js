@@ -157,6 +157,7 @@ function getTestData() {
         contentType: "application/json",
         params: JSON.stringify({}),
         callback: [function (jsonObj, xhrArgs) {
+            alert(1);
             switch (parseInt(jsonObj.code)) {
                 case 0://成功
                     layer.alert(jsonObj.data, {
@@ -175,39 +176,6 @@ function getTestData() {
             baseTools.hideMash();
         }]
     });
-}
-//退出
-function logout() {
-    if(baseTools.isBlank($.cookie("CUR_USER"))){
-        baseTools.gotoLogin();
-    }
-
-    baseTools.xhrAjax({
-        url: context + "sys/logout",
-        contentType: "application/json",
-        params: JSON.stringify({userid:user.id}),
-        callback: [function (jsonObj, xhrArgs) {
-            switch (parseInt(jsonObj.code)) {
-                case 0://成功
-                    layer.alert(jsonObj.data, {
-                        icon: 1,
-                        title: '提示'
-                    });
-                    break;
-                default:
-                    layer.alert(jsonObj.msg, {
-                        icon: 2,
-                        title: '提示'
-                    });
-            }
-        }],
-        callbackError: [function (data, xhrArgs) {
-            baseTools.hideMash();
-        }]
-    });
-
-    $.removeCookie("CUR_USER",{path: baseWebPath});
-    baseTools.gotoLogin();
 }
 
 //个人主页
