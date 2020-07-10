@@ -1,5 +1,6 @@
 package com.dingbo.chuxi.sys.controller;
 
+import com.dingbo.chuxi.log.mapper.LogUserMapper;
 import com.dingbo.chuxi.sys.entity.SysUserEntity;
 import com.dingbo.chuxi.sys.service.ISysUserService;
 import com.xinan.distributeCore.result.BaseResult;
@@ -33,6 +34,8 @@ import java.util.Map;
 public class SysUserController{
  	@Autowired
 	private ISysUserService sysUserService;
+	@Autowired
+	private LogUserMapper logUserMapper;
 	
 	/**
 	 * 增加用户表记录

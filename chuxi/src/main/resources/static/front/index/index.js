@@ -157,7 +157,6 @@ function getTestData() {
         contentType: "application/json",
         params: JSON.stringify({}),
         callback: [function (jsonObj, xhrArgs) {
-            alert(1);
             switch (parseInt(jsonObj.code)) {
                 case 0://成功
                     layer.alert(jsonObj.data, {

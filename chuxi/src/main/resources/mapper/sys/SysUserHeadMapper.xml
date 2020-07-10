@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dingbo.chuxi.sys.mapper.SysUserHeadMapper" >
+	<resultMap id="BaseResultMap" type="com.dingbo.chuxi.sys.entity.SysUserHeadEntity" >
+		<result column="TOTAL" property="total"  />
+		<result column="ROWNO" property="rowno"  />
+		<result column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="USERID" property="userid" jdbcType="NUMERIC" />
+		<result column="CEEATE_DATE" property="ceeateDate" jdbcType="VARCHAR" />
+		<result column="USER_FILE_NAME" property="userFileName" jdbcType="VARCHAR" />
+		<result column="FILE_EXT" property="fileExt" jdbcType="VARCHAR" />
+		<result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+		<result column="FILE_PATH" property="filePath" jdbcType="VARCHAR" />
+		<result column="IS_SHOW" property="isShow" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--用户头像表通用查询条件 -->
+	<sql id="SYS_USER_HEAD_WHERE">
+		<where>
+			<if test="id != null and id != ''">
+				AND T.ID = #{id}
+			</if>
+			<if test="id_LIKE != null and id_LIKE != ''">
+				AND T.ID LIKE concat(concat('%',#{id_LIKE}),'%')
+			</if>
+			<if test="id_LLIKE != null and id_LLIKE != ''">
+				AND T.ID LIKE concat('%',#{id_LLIKE})
+			</if>
+			<if test="id_RLIKE != null and id_RLIKE != ''">
+				AND T.ID LIKE concat(#{id_RLIKE},'%')
+			</if>
+
+			<if test="userid != null and userid != ''">
+				AND T.USERID = #{userid}
+			</if>
+			<if test="userid_LIKE != null and userid_LIKE != ''">
+				AND T.USERID LIKE concat(concat('%',#{userid_LIKE}),'%')
+			</if>
+			<if test="userid_LLIKE != null and userid_LLIKE != ''">
+				AND T.USERID LIKE concat('%',#{userid_LLIKE})
+			</if>
+			<if test="userid_RLIKE != null and userid_RLIKE != ''">
+				AND T.USERID LIKE concat(#{userid_RLIKE},'%')
+			</if>
+
+			<if test="ceeateDate != null and ceeateDate != ''">
+				AND T.CEEATE_DATE = STR_TO_DATE(#{ceeateDate,'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="ceeateDate_MIN != null and ceeateDate_MIN != ''">
+				AND T.CEEATE_DATE &gt;= STR_TO_DATE(#{ceeateDate_MIN},'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="ceeateDate_MAX != null and ceeateDate_MAX != ''">
+				AND T.CEEATE_DATE &lt;= STR_TO_DATE(#{ceeateDate_MAX},'%Y-%m-%d %H:%i:%s')
+			</if>
+
+			<if test="userFileName != null and userFileName != ''">
+				AND T.USER_FILE_NAME = #{userFileName}
+			</if>
+			<if test="userFileName_LIKE != null and userFileName_LIKE != ''">
+				AND T.USER_FILE_NAME LIKE concat(concat('%',#{userFileName_LIKE}),'%')
+			</if>
+			<if test="userFileName_LLIKE != null and userFileName_LLIKE != ''">
+				AND T.USER_FILE_NAME LIKE concat('%',#{userFileName_LLIKE})
+			</if>
+			<if test="userFileName_RLIKE != null and userFileName_RLIKE != ''">
+				AND T.USER_FILE_NAME LIKE concat(#{userFileName_RLIKE},'%')
+			</if>
+
+			<if test="fileExt != null and fileExt != ''">
+				AND T.FILE_EXT = #{fileExt}
+			</if>
+			<if test="fileExt_LIKE != null and fileExt_LIKE != ''">
+				AND T.FILE_EXT LIKE concat(concat('%',#{fileExt_LIKE}),'%')
+			</if>
+			<if test="fileExt_LLIKE != null and fileExt_LLIKE != ''">
+				AND T.FILE_EXT LIKE concat('%',#{fileExt_LLIKE})
+			</if>
+			<if test="fileExt_RLIKE != null and fileExt_RLIKE != ''">
+				AND T.FILE_EXT LIKE concat(#{fileExt_RLIKE},'%')
+			</if>
+
+			<if test="fileName != null and fileName != ''">
+				AND T.FILE_NAME = #{fileName}
+			</if>
+			<if test="fileName_LIKE != null and fileName_LIKE != ''">
+				AND T.FILE_NAME LIKE concat(concat('%',#{fileName_LIKE}),'%')
+			</if>
+			<if test="fileName_LLIKE != null and fileName_LLIKE != ''">
+				AND T.FILE_NAME LIKE concat('%',#{fileName_LLIKE})
+			</if>
+			<if test="fileName_RLIKE != null and fileName_RLIKE != ''">
+				AND T.FILE_NAME LIKE concat(#{fileName_RLIKE},'%')
+			</if>
+
+			<if test="filePath != null and filePath != ''">
+				AND T.FILE_PATH = #{filePath}
+			</if>
+			<if test="filePath_LIKE != null and filePath_LIKE != ''">
+				AND T.FILE_PATH LIKE concat(concat('%',#{filePath_LIKE}),'%')
+			</if>
+			<if test="filePath_LLIKE != null and filePath_LLIKE != ''">
+				AND T.FILE_PATH LIKE concat('%',#{filePath_LLIKE})
+			</if>
+			<if test="filePath_RLIKE != null and filePath_RLIKE != ''">
+				AND T.FILE_PATH LIKE concat(#{filePath_RLIKE},'%')
+			</if>
+
+			<if test="isShow != null and isShow != ''">
+				AND T.IS_SHOW = #{isShow}
+			</if>
+			<if test="isShow_LIKE != null and isShow_LIKE != ''">
+				AND T.IS_SHOW LIKE concat(concat('%',#{isShow_LIKE}),'%')
+			</if>
+			<if test="isShow_LLIKE != null and isShow_LLIKE != ''">
+				AND T.IS_SHOW LIKE concat('%',#{isShow_LLIKE})
+			</if>
+			<if test="isShow_RLIKE != null and isShow_RLIKE != ''">
+				AND T.IS_SHOW LIKE concat(#{isShow_RLIKE},'%')
+			</if>
+
+		</where>
+	</sql>
+	<!-- 用户头像表通用查询 -->
+    <select id="selectSysUserHead" parameterType="com.dingbo.chuxi.sys.entity.SysUserHeadEntity" resultMap="BaseResultMap" >
+		<bind name="startNumber" value="(curPage-1)*pageSize"></bind>
+		SELECT (@rowNum:=@rowNum+1) AS ROWNO,
+		(SELECT COUNT(1) FROM SYS_USER_HEAD T <include refid="SYS_USER_HEAD_WHERE"/>) AS TOTAL,
+		E.* FROM (
+		SELECT T.ID,T.USERID,
+			DATE_FORMAT(T.CEEATE_DATE,'%Y-%m-%d %H:%i:%s') CEEATE_DATE,T.USER_FILE_NAME,T.FILE_EXT,
+			T.FILE_NAME,T.FILE_PATH,T.IS_SHOW
+		FROM SYS_USER_HEAD T
+		<include refid="SYS_USER_HEAD_WHERE"/>
+		<if test="sortName != null and sortName != ''">
+			ORDER BY  ${sortName}
+ 				${sortOrder}
+ 		</if>
+			limit ${startNumber},${pageSize}
+		)E,SYS_USER_HEAD T
+		<if test="pageSize != null and pageSize != ''">
+			,(SELECT(@rowNum :=${startNumber}))TEM_TB
+		</if>
+		WHERE E.ID=T.ID
+
+    </select>
+
+    <!-- 用户头像表通用查询个数 -->
+    <select id="selectSysUserHeadCount" parameterType="com.dingbo.chuxi.sys.entity.SysUserHeadEntity" resultType="java.lang.Integer" >
+     	 SELECT COUNT(1) FROM SYS_USER_HEAD T <include refid="SYS_USER_HEAD_WHERE"/>
+    </select>
+
+    <!-- 用户头像表保存 -->
+    <insert id="insertSysUserHead" parameterType="com.dingbo.chuxi.sys.entity.SysUserHeadEntity" >
+    	insert into SYS_USER_HEAD
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				  ID ,
+			</if>
+			<if test="userid != null and userid != ''">
+				  USERID ,
+			</if>
+
+				  CEEATE_DATE ,
+
+			<if test="userFileName != null and userFileName != ''">
+				  USER_FILE_NAME ,
+			</if>
+			<if test="fileExt != null and fileExt != ''">
+				  FILE_EXT ,
+			</if>
+			<if test="fileName != null and fileName != ''">
+				  FILE_NAME ,
+			</if>
+			<if test="filePath != null and filePath != ''">
+				  FILE_PATH ,
+			</if>
+			<if test="isShow != null and isShow != ''">
+				  IS_SHOW ,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				 #{id},
+			</if>
+			<if test="userid != null and userid != ''">
+				 #{userid},
+			</if>
+
+				now(),
+
+			<if test="userFileName != null and userFileName != ''">
+				 #{userFileName},
+			</if>
+			<if test="fileExt != null and fileExt != ''">
+				 #{fileExt},
+			</if>
+			<if test="fileName != null and fileName != ''">
+				 #{fileName},
+			</if>
+			<if test="filePath != null and filePath != ''">
+				 #{filePath},
+			</if>
+			<if test="isShow != null and isShow != ''">
+				 #{isShow},
+			</if>
+		</trim>
+    </insert>
+
+    <!-- 用户头像表修改-->
+    <update id="updateSysUserHead" parameterType="com.dingbo.chuxi.sys.entity.SysUserHeadEntity" >
+    	update   SYS_USER_HEAD T
+    	<set>
+			<if test="id_NEW != null and id_NEW != ''">
+				  ID=  #{id_NEW},
+			</if>
+			<if test="userid_NEW != null and userid_NEW != ''">
+				  USERID=  #{userid_NEW},
+			</if>
+			<if test="ceeateDate_NEW != null and ceeateDate_NEW != ''">
+				  CEEATE_DATE=  STR_TO_DATE(#{ceeateDate_NEW},'%Y-%m-%d %H:%i:%s'),
+			</if>
+
+			<if test="userFileName_NEW != null and userFileName_NEW != ''">
+				  USER_FILE_NAME=  #{userFileName_NEW},
+			</if>
+			<if test="fileExt_NEW != null and fileExt_NEW != ''">
+				  FILE_EXT=  #{fileExt_NEW},
+			</if>
+			<if test="fileName_NEW != null and fileName_NEW != ''">
+				  FILE_NAME=  #{fileName_NEW},
+			</if>
+			<if test="filePath_NEW != null and filePath_NEW != ''">
+				  FILE_PATH=  #{filePath_NEW},
+			</if>
+			<if test="isShow_NEW != null and isShow_NEW != ''">
+				  IS_SHOW=  #{isShow_NEW},
+			</if>
+		</set>
+		<include refid="SYS_USER_HEAD_WHERE"/>
+    </update>
+
+    <!-- 用户头像表删除-->
+    <delete id="deleteSysUserHead" parameterType="com.dingbo.chuxi.sys.entity.SysUserHeadEntity" >
+    	delete  T  from SYS_USER_HEAD  T  <include refid="SYS_USER_HEAD_WHERE"/>
+    </delete>
+
+</mapper>

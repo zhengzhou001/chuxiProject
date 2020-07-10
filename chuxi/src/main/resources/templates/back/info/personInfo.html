@@ -37,8 +37,8 @@
 </head>
 <body>
 <!--加载整个base.html-->
-<div th:replace="/common/base/base"></div>
-<div th:replace="/common/base/checkLogin"></div>
+<div th:replace="common/base/base"></div>
+<div th:replace="common/base/checkLogin"></div>
 <div class="layui-fluid">
     <div class="layui-col-md12">
         <div class="layui-card">
@@ -65,17 +65,8 @@
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">头像</label>
-                        <div class="layui-input-inline">
-                            <input name="avatar" lay-verify="required" id="LAY_avatarSrc" placeholder="图片地址" value="http://cdn.layui.com/avatar/168.jpg" class="layui-input">
-                        </div>
-                        <div class="layui-input-inline layui-btn-container" style="width: auto;">
-                            <button type="button" class="layui-btn layui-btn-primary" id="headImgUpload">
-                                <i class="layui-icon"></i>上传图片
-                            </button><input class="layui-upload-file" type="file" accept="" name="file">
-                            <button class="layui-btn layui-btn-primary" layadmin-event="avartatPreview">查看图片</button>
-                        </div>
-                        <div id="myDropzone" class="dropzone" >点我上传</div>
-
+                        <div id="myDropzone" class="dropzone layui-input-inline"  ></div>
+                        <div class="layui-form-mid layui-word-aux">用户头像展示</div>
                     </div>
                 </div>
             </div>
@@ -84,22 +75,93 @@
 
 
 </div>
-<script type="text/javascript">
-    Dropzone.autoDiscover = false;
-    $("#myDropzone").dropzone({
-        url: "127.0.0.1",
+<script  th:inline="javascript">
+    var context = [[@{/}]];
+        Dropzone.autoDiscover = false;
+    var myDropzone = new Dropzone("#myDropzone", {
+        url: context+"file/uploadFile",
+        method: "post",  //也可用put
+        paramName: "file", //默认为file
+        maxFiles: 1,//一次性上传的文件数量上限
+        maxFilesize: 20, //文件大小，单位：MB
+        acceptedFiles: ".jpg,.gif,.png,.jpeg", //上传的类型
         addRemoveLinks: true,
-        filesizeBase: 1024,
-        sending: function(file, xhr, formData) {
-            formData.append("filesize", file.size);
-        },
-        success: function(file, response, e) {
-            var res = JSON.parse(response);
-            if(res.error) {
-            }
+        parallelUploads: 1,//一次上传的文件数量
+        //previewsContainer:"#preview",//上传图片的预览窗口
+        dictDefaultMessage: '拖动文件至此或者点击上传',
+        dictMaxFilesExceeded: "您最多只能上传1个文件！",
+        dictResponseError: '文件上传失败!',
+        dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png,*.jpeg。",
+        dictFallbackMessage: "浏览器不受支持",
+        dictFileTooBig: "文件过大上传文件最大支持.",
+        dictRemoveLinks: "删除",
+        dictCancelUpload: "取消",
+        //params:{userid:123},
+        init: function () {
+
+            this.on('sending', function (data, xhr, formData) {
+                //向后台发送该文件的参数
+                formData.append('userid',user.id);
+                formData.append('path','head');
+            });
+            this.on("addedfile", function (file) {
+                //上传文件时触发的事件
+
+            });
+            this.on("success", function (file, jsonObj) {
+                //上传成功触发的事件
+                switch (parseInt(jsonObj.code)) {
+                    case 0://成功
+                        uploadHead(jsonObj.data);//修改头像
+                        break;
+                    default:
+                        layer.alert(jsonObj.msg, {
+                            icon: 2,
+                            title: '提示'
+                        });
+                }
+
+
+            });
+            this.on("error", function (file, data) {
+                //上传失败触发的事件
+
+            });
+            this.on("removedfile", function (file) {//删除文件触发结果
+
+            });
         }
     });
+    //修改头像
+    function uploadHead(data){
+        baseTools.xhrAjax({
+            url: context + "sys/insertSysUserHead",
+            contentType: "application/json",
+            params: JSON.stringify({
+                "userid":user.id,
+                "userFileName":data.userFileName,
+                "fileExt":data.userFileExt,
+                "fileName":data.fileName,
+                "filePath":data.filePath,
+                "isShow":"1"
+            }),
+            callback: [function (jsonObj, xhrArgs) {
+                switch (parseInt(jsonObj.code)) {
+                    case 0://成功
 
+                        break;
+                    default:
+                        layer.alert(jsonObj.msg, {
+                            icon: 2,
+                            title: '提示'
+                        });
+                }
+            }],
+            callbackError: [function (data, xhrArgs) {
+                baseTools.hideMash();
+            }]
+        });
+    }
 </script>
 </body>
 </html>

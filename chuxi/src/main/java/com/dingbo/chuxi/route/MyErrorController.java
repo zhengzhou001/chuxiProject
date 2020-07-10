@@ -49,11 +49,11 @@ public class MyErrorController  implements ErrorController {
         int status = response.getStatus();
         switch (status) {
             case 403:
-                return "/common/error/403";
+                return "common/error/403";
             case 404:
-                return "/common/error/404";
+                return "common/error/404";
             case 500:
-                return "/common/error/500";
+                return "common/error/500";
         }
         return "front/index/index";
     }

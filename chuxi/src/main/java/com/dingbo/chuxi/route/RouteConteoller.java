@@ -18,7 +18,7 @@ public class RouteConteoller {
     public ModelAndView index() {
         //首页
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/front/index/index");
+        modelAndView.setViewName("front/index/index");
         Map<String, Object> model = modelAndView.getModel();
         model.put("title", ChuXiConstants.TITLE +"-首页");
         model.put("foot", ChuXiConstants.FOOT);
@@ -30,7 +30,7 @@ public class RouteConteoller {
     public ModelAndView login() {
         //登录
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/common/user/login");
+        modelAndView.setViewName("common/user/login");
         Map<String, Object> model = modelAndView.getModel();
         model.put("title", ChuXiConstants.TITLE +"-登陆");
         model.put("foot", ChuXiConstants.FOOT);
@@ -41,7 +41,7 @@ public class RouteConteoller {
     public ModelAndView home() {
         //登录
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/back/home/home");
+        modelAndView.setViewName("back/home/home");
         Map<String, Object> model = modelAndView.getModel();
         model.put("title", ChuXiConstants.TITLE +"-个人主页");
         model.put("foot", ChuXiConstants.FOOT);
@@ -52,7 +52,7 @@ public class RouteConteoller {
     public ModelAndView personInfo() {
         //登录
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/back/info/personInfo");
+        modelAndView.setViewName("back/info/personInfo");
         Map<String, Object> model = modelAndView.getModel();
         model.put("title", ChuXiConstants.TITLE +"-个人信息");
         model.put("foot", ChuXiConstants.FOOT);
@@ -64,7 +64,19 @@ public class RouteConteoller {
     public ModelAndView test() {
         //首页
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/front/test/test");
+        modelAndView.setViewName("front/test/test");
+        Map<String, Object> model = modelAndView.getModel();
+        model.put("title", ChuXiConstants.TITLE +"-测试");
+        model.put("foot", ChuXiConstants.FOOT);
+        model.put("gsjj", "www.abaidu.com");
+        StringUtils.isEmpty("1");
+        return modelAndView;
+    }
+    @GetMapping("/testA")
+    public ModelAndView testA() {
+        //首页
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("front/test/AA");
         Map<String, Object> model = modelAndView.getModel();
         model.put("title", ChuXiConstants.TITLE +"-测试");
         model.put("foot", ChuXiConstants.FOOT);

@@ -45,13 +45,13 @@
 </head>
 <body  >
 <!--加载整个base.html-->
-<div th:replace="/common/base/base"></div>
-<div th:replace="/common/base/checkLogin"></div>
+<div th:replace="common/base/base"></div>
+<div th:replace="common/base/checkLogin"></div>
 
 
 <div class="layui-container"  >
     <!--head-->
-    <div th:replace="/front/head/head :: head"></div>
+    <div th:replace="front/head/head :: head"></div>
 
     <!--轮播图-->
     <div class="layui-carousel" id="carousel"  style="margin-top: 65px">
@@ -96,7 +96,7 @@
     </div>
 
     <!--foot-->
-    <div th:replace="/front/head/head :: foot"></div>
+    <div th:replace="front/head/head :: foot"></div>
 </div>
 </body>
 </html>
