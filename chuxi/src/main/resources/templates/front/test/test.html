@@ -23,10 +23,15 @@
 
     <script th:src="@{/front/test/test.js}" type="text/javascript"></script>
 
+    <script th:src="@{/plugin/jQuery-File-Upload-master/js/vendor/jquery.ui.widget.js}"></script>
+    <script th:src="@{/plugin/jQuery-File-Upload-master/js/cors/jquery.postmessage-transport.js}"></script>
+    <script th:src="@{/plugin/jQuery-File-Upload-master/js/jquery.fileupload.js}"></script>
+    <script th:src="@{/plugin/jQuery-File-Upload-master/js/jquery.fileupload-process.js}"></script>
+    <script th:src="@{/plugin/jQuery-File-Upload-master/js/jquery.fileupload-validate.js}"></script>
 
-    <link rel="stylesheet" th:href="@{/plugin/dropzone/dist/dropzone.css}" media="all">
+    <link rel="stylesheet" th:href="@{/plugin/jQuery-File-Upload-master/css/jquery.fileupload.css}" media="all">
+    <link rel="stylesheet" th:href="@{/plugin/jQuery-File-Upload-master/css/jquery.fileupload-ui.css}" media="all">
 
-    <script th:src="@{/plugin/dropzone/dist/dropzone.js}" type="text/javascript"></script>
 
     <!--[if lt IE 9]>
     <script th:src="@{/plugin/ie/html5.min.js}"></script>
@@ -34,58 +39,22 @@
     <![endif]-->
     <style>
 
-
+        .bar {
+            height: 18px;
+            background: green;
+        }
     </style>
 </head>
 <body>
-<div id="myDropzone" class="dropzone"  >点我上传</div>
 
-<script  th:inline="javascript">
-    var context = [[@{/}]];
-        Dropzone.autoDiscover = false;
-    var myDropzone = new Dropzone("#myDropzone", {
-        url: context+"file/uploadFile",
-        method: "post",  //也可用put
-        paramName: "file", //默认为file
+<!--加载整个base.html-->
+<div th:replace="common/base/base"></div>
+<div th:replace="common/base/checkLogin"></div>
+<input id="fileupload" type="file" name="file"  multiple  style="display: none">
 
-        maxFiles: 1,//一次性上传的文件数量上限
-        maxFilesize: 20, //文件大小，单位：MB
-        acceptedFiles: ".jpg,.gif,.png,.jpeg", //上传的类型
-        addRemoveLinks: true,
-        parallelUploads: 1,//一次上传的文件数量
-        //previewsContainer:"#preview",//上传图片的预览窗口
-        dictDefaultMessage: '拖动文件至此或者点击上传',
-        dictMaxFilesExceeded: "您最多只能上传1个文件！",
-        dictResponseError: '文件上传失败!',
-        dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png,*.jpeg。",
-        dictFallbackMessage: "浏览器不受支持",
-        dictFileTooBig: "文件过大上传文件最大支持.",
-        dictRemoveLinks: "删除",
-        dictCancelUpload: "取消",
-        //params:{userid:123},
-        init: function () {
-            this.on('sending', function (data, xhr, formData) {
-                //向后台发送该文件的参数
-                formData.append('userid', "123");
-            });
-            this.on("addedfile", function (file) {
-                //上传文件时触发的事件
-
-            });
-            this.on("success", function (file, data) {
-                //上传成功触发的事件
-                alert(data);
-
-            });
-            this.on("error", function (file, data) {
-                //上传失败触发的事件
-
-            });
-            this.on("removedfile", function (file) {//删除文件触发结果
-
-            });
-        }
-    });
-</script>
+<div id="progress">
+    　　<div class="bar" style="width: 0%;"></div>
+    　　</div>
 </body>
+
 </html>
