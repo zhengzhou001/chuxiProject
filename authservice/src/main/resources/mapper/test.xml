@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="test" >
+
+    <resultMap id="BaseResultMap" type="com.xinan.authservice.security.entity.UserEntity">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="username" property="account" jdbcType="VARCHAR"/>
+        <result column="password" property="pwd" jdbcType="VARCHAR"/>
+        <result column="cnname" property="name" jdbcType="VARCHAR"/>
+     </resultMap>
+
+    <select id="selectUser" parameterType="java.lang.String"  resultMap="BaseResultMap">
+        select id, username,cnname,password  from auth_user where username = #{username}
+    </select>
+
+    <!--根据用户id查询用户权限-->
+    <select id="selectUserPermission" parameterType="java.lang.String"  resultType="java.lang.String">
+        select permission  from AUTH_USER_PERMISSION_TEST where userid = #{userid}
+    </select>
+
+
+
+
+</mapper>

@@ -7,14 +7,23 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="chuxi" />
+        <module name="zuul" />
         <module name="xinanDistributeCore" />
+        <module name="eureka" />
+        <module name="authservice" />
+        <module name="chuxi" />
+        <module name="userService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
+      <module name="authservice" target="1.8" />
+      <module name="basePom" target="1.8" />
       <module name="chuxi" target="1.8" />
+      <module name="eureka" target="1.8" />
+      <module name="userService" target="1.8" />
       <module name="websocket-demo" target="1.8" />
       <module name="xinanDistributeCore" target="1.8" />
+      <module name="zuul" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

@@ -21,4 +21,7 @@ endpoints:
 management:
   security:
     enabled: false
+logging:
+  level:
+    com.netflix: warn ##Running the evict tabsh with compensationTime {}ms eureka-core1.7.2.jar com.netflix.eureka.registry AbstractInstanceRegistry
 ###actuator监控点 end####

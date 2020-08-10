@@ -1,6 +1,8 @@
 package com.xinan.userService.sys.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.xinan.distributeCore.result.BaseResult;
+import com.xinan.userService.security.entity.UserEntity;
 import com.xinan.userService.sys.entity.SysMenuEntity;
 import com.xinan.userService.sys.entity.SysRoleEntity;
 import com.xinan.userService.sys.entity.SysRoleMenuEntity;
@@ -11,6 +13,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +43,7 @@ public class SysMenuController{
 	private ISysMenuService sysMenuService;
 	@Autowired
 	private ISysRoleMenuService sysRoleMenuService;
+
 	
 	/**
 	 * 增加菜单表记录
@@ -129,10 +134,15 @@ public class SysMenuController{
 	 * @return List<SysMenuEntity>返回符合条件的菜单表实体对象结果集
  	 */
  	@ApiOperation(value = "查询菜单表记录", notes="根据sysMenu实体对象查询菜单表")
-	@RequestMapping(value={"/selectSysMenu"}, method={RequestMethod.POST})
-	public	BaseResult<List<SysMenuEntity>> selectSysMenu(@RequestBody SysMenuEntity sysMenuEntity){
-        BaseResult<List<SysMenuEntity>> baseResult = new BaseResult<List<SysMenuEntity>>();
-        try{
+	//@RequestMapping(value={"/selectSysMenu"}, method={RequestMethod.POST})
+	@RequestMapping(value={"/selectSysMenu"})
+	@PreAuthorize("hasAuthority('getmenu')")//权限控制
+ 	public	BaseResult<List<SysMenuEntity>> selectSysMenu(@RequestBody SysMenuEntity sysMenuEntity){
+		UserEntity user =  JSON.parseObject(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), UserEntity.class);
+		BaseResult<List<SysMenuEntity>> baseResult = new BaseResult<List<SysMenuEntity>>();
+		baseResult.setMsg("------selectSysMenu--------"+user.getName());
+		System.out.println("------selectSysMenu--------" + user.getName());
+		try{
             baseResult.setData(sysMenuService.selectSysMenu(sysMenuEntity));
  		} catch (Exception e) {
             baseResult.code=-1;

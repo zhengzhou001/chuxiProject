@@ -1,7 +1,6 @@
 package com.xinan.zuul;
 
 import com.xinan.zuul.filter.PreRequest;
-import com.xinan.zuul.filter.PreResponse;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -27,13 +26,13 @@ public class Start {
         return new RestTemplate();
     }
 
-    @Bean
+   @Bean
     public PreRequest preRequest() {
         return new PreRequest();
     }
-
+/*
     @Bean
     public PreResponse preResponse() {
         return new PreResponse();
-    }
+    }*/
 }

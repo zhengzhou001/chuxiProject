@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/authservice/authservice.iml" filepath="$PROJECT_DIR$/authservice/authservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basePom/basePom.iml" filepath="$PROJECT_DIR$/basePom/basePom.iml" />
       <module fileurl="file://$PROJECT_DIR$/chuxi/chuxi.iml" filepath="$PROJECT_DIR$/chuxi/chuxi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eureka/eureka.iml" filepath="$PROJECT_DIR$/eureka/eureka.iml" />
       <module fileurl="file://$PROJECT_DIR$/springCodeTool/springCodeTool.iml" filepath="$PROJECT_DIR$/springCodeTool/springCodeTool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/userService/userService.iml" filepath="$PROJECT_DIR$/userService/userService.iml" />
       <module fileurl="file://$PROJECT_DIR$/xinanDistributeCore/xinanDistributeCore.iml" filepath="$PROJECT_DIR$/xinanDistributeCore/xinanDistributeCore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zuul/zuul.iml" filepath="$PROJECT_DIR$/zuul/zuul.iml" />
     </modules>
   </component>
 </project>

@@ -1,5 +1,5 @@
 server:
-  port: 9300
+  port: 9303
 spring:
   application:
     name: user-service

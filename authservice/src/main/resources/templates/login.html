@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<title>认证中心</title>
+	<script th:src="@{/js/jquery-1.9.1.min.js}"></script>
+	<script th:src="@{/js/login.js}"></script>
+
+</head>
+
+<body>
+用户名 <input type="text" value="admin" id="username">
+	密码：<input type="password" value="admin" id="password">
+<button  onclick="login()">登录</button>
+<button  onclick="refreshToken()">刷新令牌</button>
+<button  onclick="checkToken()">校验令牌</button>
+
+<button  onclick="getApi()">访问资源</button>
+<br>
+access_token:
+<textarea id="t1" style="height: 200px;width: 300px"></textarea>
+
+refresh_token
+<textarea id="t2" style="height: 200px;width: 300px"></textarea>
+
+<br>
+
+jti
+<textarea id="t3" style="height: 200px;width: 300px"></textarea>
+令牌信息
+<textarea id="t4" style="height: 200px;width: 300px"></textarea>
+<br>
+<textarea id="t5" style="height: 200px;width: 300px"></textarea>
+
+<script th:inline="javascript">
+	var context = [[@{/}]];
+</script>
+
+</body>
+</html>
