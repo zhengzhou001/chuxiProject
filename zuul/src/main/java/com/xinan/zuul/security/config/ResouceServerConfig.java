@@ -22,13 +22,16 @@ public class ResouceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
     TokenStore tokenStore;
+    @Autowired
+    private AuthExceptionEntryPoint authExceptionEntryPoint;
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
         resources.resourceId(RESOURCE_ID)//资源 id
                 .tokenStore(tokenStore)
+                .authenticationEntryPoint(authExceptionEntryPoint)//配置token异常的处理
                  .stateless(true);
-    }
+     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {

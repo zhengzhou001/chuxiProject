@@ -1,5 +1,8 @@
 server:
   port: 9100
+spring:
+  application:
+    name: eureka123
 eureka:
   instance:
     hostname: 127.0.0.1  # eureka实例的主机名
