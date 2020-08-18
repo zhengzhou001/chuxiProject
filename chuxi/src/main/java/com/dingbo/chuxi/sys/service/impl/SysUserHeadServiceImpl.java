@@ -50,6 +50,7 @@ public class SysUserHeadServiceImpl extends BaseServiceImpl implements ISysUserH
 		logUserEntity.setContent("<a href=\"/file/getFile?realFile="+file+"&fileName="+fileName+"\" target=\"_blank\">新增头像 "+fileName+"</a>");
 		logUserEntity.setIp(BaseTools.getIPAddress());
 		logUserMapper.insertLogUser(logUserEntity);
+		sysUserHeadEntity.setIsShow("1");
 		return sysUserHeadMapper.insertSysUserHead(sysUserHeadEntity);
 	}
 	

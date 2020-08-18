@@ -1,17 +1,18 @@
 package com.dingbo.chuxi.route;
 
 import com.dingbo.chuxi.common.ChuXiConstants;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Map;
 
 //页面路由
 @Controller
 @RequestMapping(value = "/route")
+@ApiIgnore
 public class RouteConteoller {
 
     @GetMapping("/index")
@@ -59,6 +60,17 @@ public class RouteConteoller {
         return modelAndView;
     }
 
+    @GetMapping("/personInfoA")
+    public ModelAndView personInfoA() {
+        //登录
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("back/info/personInfo1");
+        Map<String, Object> model = modelAndView.getModel();
+        model.put("title", ChuXiConstants.TITLE +"-个人信息");
+        model.put("foot", ChuXiConstants.FOOT);
+        return modelAndView;
+    }
+
 
     @GetMapping("/test")
     public ModelAndView test() {
@@ -69,7 +81,6 @@ public class RouteConteoller {
         model.put("title", ChuXiConstants.TITLE +"-测试");
         model.put("foot", ChuXiConstants.FOOT);
         model.put("gsjj", "www.abaidu.com");
-        StringUtils.isEmpty("1");
         return modelAndView;
     }
     @GetMapping("/testA")
@@ -81,7 +92,6 @@ public class RouteConteoller {
         model.put("title", ChuXiConstants.TITLE +"-测试");
         model.put("foot", ChuXiConstants.FOOT);
         model.put("gsjj", "www.abaidu.com");
-        StringUtils.isEmpty("1");
         return modelAndView;
     }
 

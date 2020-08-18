@@ -1,6 +1,7 @@
 package ${basePackage}.controller;
 
 import com.xinan.distributeCore.result.BaseResult;
+import com.xinan.distributeCore.entity.PageEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class ${className}Controller{
 	 * 增加${tabelComments}记录
 	 * @param ${className}Entity ${tabelComments}实体对象
   	 */
-  	@ApiOperation(value = "增加${tabelComments}记录", notes="根据${humpName}实体对象增加${tabelComments}")
+  	@ApiOperation(value = "增加${tabelComments}记录", notes="根据${humpName}实体对象增加${tabelComments}",hidden = true)
 	@RequestMapping(value={"/insert${className}"}, method={RequestMethod.POST})
 	public BaseResult<Integer> insert${className}(@RequestBody ${className}Entity ${humpName}Entity){
         BaseResult<Integer> baseResult = new BaseResult<Integer>();
@@ -54,7 +55,7 @@ public class ${className}Controller{
 	 * 删除${tabelComments}记录
 	 * @param ${className}Entity ${tabelComments}实体对象
   	 */
-  	@ApiOperation(value = "删除${tabelComments}记录", notes="根据${humpName}实体对象删除${tabelComments}")
+  	@ApiOperation(value = "删除${tabelComments}记录", notes="根据${humpName}实体对象删除${tabelComments}",hidden = true)
 	@RequestMapping(value={"/delete${className}"}, method={RequestMethod.POST})
 	public BaseResult<Integer> delete${className}(@RequestBody ${className}Entity ${humpName}Entity){
         BaseResult<Integer> baseResult = new BaseResult<Integer>();
@@ -72,7 +73,7 @@ public class ${className}Controller{
 	 * 修改${tabelComments}记录
 	 * @param ${className}Entity ${tabelComments}实体对象
   	 */
-  	@ApiOperation(value = "修改${tabelComments}记录", notes="根据${humpName}实体对象修改${tabelComments}")
+  	@ApiOperation(value = "修改${tabelComments}记录", notes="根据${humpName}实体对象修改${tabelComments}",hidden = true)
 	@RequestMapping(value={"/update${className}"}, method={RequestMethod.POST})
 	public BaseResult<Integer> update${className}(@RequestBody ${className}Entity ${humpName}Entity){
         BaseResult<Integer> baseResult = new BaseResult<Integer>();
@@ -88,14 +89,23 @@ public class ${className}Controller{
 	/**
 	 * 查询${tabelComments}记录
 	 * @param ${className}Entity ${tabelComments}实体对象
-	 * @return List<${className}Entity>返回符合条件的${tabelComments}实体对象结果集
+	 * @return List<${className}Entity>返回符合条件的${tabelComments}分页对象
  	 */
- 	@ApiOperation(value = "查询${tabelComments}记录", notes="根据${humpName}实体对象查询${tabelComments}")
+ 	@ApiOperation(value = "查询${tabelComments}记录", notes="根据${humpName}实体对象查询${tabelComments}",hidden = true)
 	@RequestMapping(value={"/select${className}"}, method={RequestMethod.POST})
-	public	BaseResult<List<${className}Entity>> select${className}(@RequestBody ${className}Entity ${humpName}Entity){
-        BaseResult<List<${className}Entity>> baseResult = new BaseResult<List<${className}Entity>>();
+	public	BaseResult<PageEntity<${className}Entity>> select${className}(@RequestBody ${className}Entity ${humpName}Entity){
+        BaseResult<PageEntity<${className}Entity>> baseResult = new BaseResult<PageEntity<${className}Entity>>();
         try{
-            baseResult.setData(${humpName}Service.select${className}(${humpName}Entity));
+			PageEntity<${className}Entity> pageEntity = new PageEntity<${className}Entity>();
+			List<${className}Entity> rows = ${humpName}Service.select${className}(${humpName}Entity);
+			pageEntity.setRows(rows);
+			if(rows != null && rows.size() > 0){
+				${className}Entity entity = rows.get(0);
+				pageEntity.setTotal(entity.getTotal());
+			}else{
+				pageEntity.setTotal(0);
+			}
+            baseResult.setData(pageEntity);
  		} catch (Exception e) {
             baseResult.code=-1;
             baseResult.msg=e.getMessage();
@@ -109,7 +119,7 @@ public class ${className}Controller{
 	 * @param ${className}Entity ${tabelComments}实体对象
 	 * @return int返回符合条件的${tabelComments}实体对象个数
  	 */
- 	@ApiOperation(value = "查询${tabelComments}记录个数", notes="根据${humpName}实体对象查询${tabelComments}记录个数")
+ 	@ApiOperation(value = "查询${tabelComments}记录个数", notes="根据${humpName}实体对象查询${tabelComments}记录个数",hidden = true)
 	@RequestMapping(value={"/select${className}Count"}, method={RequestMethod.POST})
 	public	BaseResult<Integer> select${className}Count(@RequestBody ${className}Entity ${humpName}Entity){
         BaseResult<Integer> baseResult = new BaseResult<Integer>();

@@ -3,6 +3,7 @@ package com.dingbo.chuxi.sys.controller;
 import com.dingbo.chuxi.log.mapper.LogUserMapper;
 import com.dingbo.chuxi.sys.entity.SysUserEntity;
 import com.dingbo.chuxi.sys.service.ISysUserService;
+import com.xinan.distributeCore.entity.PageEntity;
 import com.xinan.distributeCore.result.BaseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,7 +42,7 @@ public class SysUserController{
 	 * 增加用户表记录
 	 * @param SysUserEntity 用户表实体对象
   	 */
-  	@ApiOperation(value = "增加用户表记录", notes="根据sysUser实体对象增加用户表")
+  	@ApiOperation(value = "增加用户表记录", notes="根据sysUser实体对象增加用户表",hidden = true)
 	@RequestMapping(value={"/insertSysUser"}, method={RequestMethod.POST})
 	public BaseResult<Integer> insertSysUser(@RequestBody SysUserEntity sysUserEntity){
         BaseResult<Integer> baseResult = new BaseResult<Integer>();
@@ -59,7 +60,7 @@ public class SysUserController{
 	 * 删除用户表记录
 	 * @param SysUserEntity 用户表实体对象
   	 */
-  	@ApiOperation(value = "删除用户表记录", notes="根据sysUser实体对象删除用户表")
+  	@ApiOperation(value = "删除用户表记录", notes="根据sysUser实体对象删除用户表",hidden = true)
 	@RequestMapping(value={"/deleteSysUser"}, method={RequestMethod.POST})
 	public BaseResult<Integer> deleteSysUser(@RequestBody SysUserEntity sysUserEntity){
         BaseResult<Integer> baseResult = new BaseResult<Integer>();
@@ -77,7 +78,7 @@ public class SysUserController{
 	 * 修改用户表记录
 	 * @param SysUserEntity 用户表实体对象
   	 */
-  	@ApiOperation(value = "修改用户表记录", notes="根据sysUser实体对象修改用户表")
+  	@ApiOperation(value = "修改用户表记录", notes="根据sysUser实体对象修改用户表",hidden = true)
 	@RequestMapping(value={"/updateSysUser"}, method={RequestMethod.POST})
 	public BaseResult<Integer> updateSysUser(@RequestBody SysUserEntity sysUserEntity){
         BaseResult<Integer> baseResult = new BaseResult<Integer>();
@@ -95,16 +96,25 @@ public class SysUserController{
 	 * @param SysUserEntity 用户表实体对象
 	 * @return List<SysUserEntity>返回符合条件的用户表实体对象结果集
  	 */
- 	@ApiOperation(value = "查询用户表记录", notes="根据sysUser实体对象查询用户表")
+	@ApiOperation(value = "查询用户表记录", notes="根据sysUser实体对象查询用户表",hidden = true)
 	@RequestMapping(value={"/selectSysUser"}, method={RequestMethod.POST})
-	public	BaseResult<List<SysUserEntity>> selectSysUser(@RequestBody SysUserEntity sysUserEntity){
-        BaseResult<List<SysUserEntity>> baseResult = new BaseResult<List<SysUserEntity>>();
-        try{
-            baseResult.setData(sysUserService.selectSysUser(sysUserEntity));
- 		} catch (Exception e) {
-            baseResult.code=-1;
-            baseResult.msg=e.getMessage();
-            log.error(baseResult.msg);
+	public	BaseResult<PageEntity<SysUserEntity>> selectSysUser(@RequestBody SysUserEntity sysUserEntity){
+		BaseResult<PageEntity<SysUserEntity>> baseResult = new BaseResult<PageEntity<SysUserEntity>>();
+		try{
+			PageEntity<SysUserEntity> pageEntity = new PageEntity<SysUserEntity>();
+			List<SysUserEntity> rows = sysUserService.selectSysUser(sysUserEntity);
+			pageEntity.setRows(rows);
+			if(rows != null && rows.size() > 0){
+				SysUserEntity entity = rows.get(0);
+				pageEntity.setTotal(entity.getTotal());
+			}else{
+				pageEntity.setTotal(0);
+			}
+			baseResult.setData(pageEntity);
+		} catch (Exception e) {
+			baseResult.code=-1;
+			baseResult.msg=e.getMessage();
+			log.error(baseResult.msg);
 		}
 		return baseResult;
 	}
@@ -114,7 +124,7 @@ public class SysUserController{
 	 * @param SysUserEntity 用户表实体对象
 	 * @return int返回符合条件的用户表实体对象个数
  	 */
- 	@ApiOperation(value = "查询用户表记录个数", notes="根据sysUser实体对象查询用户表记录个数")
+ 	@ApiOperation(value = "查询用户表记录个数", notes="根据sysUser实体对象查询用户表记录个数",hidden = true)
 	@RequestMapping(value={"/selectSysUserCount"}, method={RequestMethod.POST})
 	public	BaseResult<Integer> selectSysUserCount(@RequestBody SysUserEntity sysUserEntity){
         BaseResult<Integer> baseResult = new BaseResult<Integer>();

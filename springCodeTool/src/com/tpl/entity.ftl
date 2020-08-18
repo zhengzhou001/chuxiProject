@@ -1,5 +1,6 @@
 package ${basePackage}.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.xinan.distributeCore.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,21 +27,28 @@ public class ${className}Entity extends BaseEntity{
 	@ApiModelProperty(value="备注：${col.COMMENTS}，类型：${col.COLUMN_TYPE}")
     private ${col.javaType} ${col.COLUMN_NAME_HUMP} ;
     @ApiModelProperty(hidden = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private ${col.javaType} ${col.COLUMN_NAME_HUMP}_MIN ;
     @ApiModelProperty(hidden = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ${col.javaType} ${col.COLUMN_NAME_HUMP}_MAX ;
     @ApiModelProperty(hidden = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ${col.javaType} ${col.COLUMN_NAME_HUMP}_NEW ;
 	<#else>
 	@ApiModelProperty(value="备注：${col.COMMENTS}，类型：${col.COLUMN_TYPE}")
     private ${col.javaType} ${col.COLUMN_NAME_HUMP} ;
     @ApiModelProperty(hidden = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ${col.javaType} ${col.COLUMN_NAME_HUMP}_LIKE ;
     @ApiModelProperty(hidden = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ${col.javaType} ${col.COLUMN_NAME_HUMP}_LLIKE ;
     @ApiModelProperty(hidden = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ${col.javaType} ${col.COLUMN_NAME_HUMP}_RLIKE ;
     @ApiModelProperty(hidden = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ${col.javaType} ${col.COLUMN_NAME_HUMP}_NEW ;
 	</#if>
     </#list>

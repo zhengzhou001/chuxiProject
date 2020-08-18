@@ -158,9 +158,9 @@
 			<if test="userid != null and userid != ''">
 				  USERID ,
 			</if>
-
+			<if test="ceeateDate != null and ceeateDate != ''">
 				  CEEATE_DATE ,
-
+			</if>
 			<if test="userFileName != null and userFileName != ''">
 				  USER_FILE_NAME ,
 			</if>
@@ -184,9 +184,9 @@
 			<if test="userid != null and userid != ''">
 				 #{userid},
 			</if>
-
-				now(),
-
+			<if test="ceeateDate != null and ceeateDate != ''">
+				 STR_TO_DATE(#{ceeateDate},'%Y-%m-%d %H:%i:%s'),
+			</if>
 			<if test="userFileName != null and userFileName != ''">
 				 #{userFileName},
 			</if>

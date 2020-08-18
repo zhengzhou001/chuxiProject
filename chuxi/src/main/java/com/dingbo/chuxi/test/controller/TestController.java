@@ -4,12 +4,14 @@ import com.xinan.distributeCore.result.BaseResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 import java.util.Set;
 
 @Controller
 @RequestMapping(value = "/test")
+@ApiIgnore
 public class TestController {
     @Resource
     MyWebsocketServer myWebsocketServer;

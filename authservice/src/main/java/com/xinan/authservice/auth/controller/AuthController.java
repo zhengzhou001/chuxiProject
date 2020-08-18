@@ -74,7 +74,7 @@ public class AuthController {
     public BaseResult getApi(String accressToken, HttpServletResponse response){
         //校验参数
         if (StringUtils.isEmpty(accressToken)){
-            throw new RuntimeException("accressToken");
+            throw new RuntimeException("请输入accressToken");
         }
 
        Map requestMap = new HashMap();
@@ -87,8 +87,6 @@ public class AuthController {
         ResponseEntity<BaseResult> postEntity =  restTemplate.postForEntity("http://zuul/user-service/sys/selectSysMenu",
                 httpEntity, BaseResult.class);
         BaseResult body = postEntity.getBody();
-
-
         //返回结果
         return  body;
     }

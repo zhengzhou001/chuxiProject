@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/file")
 @Slf4j
+@ApiIgnore
 public class FileController {
 
     //@RequestMapping(value = "uploadFile", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
@@ -44,10 +46,10 @@ public class FileController {
             file.getParentFile().mkdirs();
             FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
             Map retMap = new HashMap<>();
-            retMap.put("userFileName", userFileNameNoExt);
-            retMap.put("userFileExt", userFileExt);
-            retMap.put("fileName", uuid);
-            retMap.put("filePath", ChuXiConstants.PRE_PATH + userid + "/" + path + "/");
+            retMap.put("userFileName", userFileNameNoExt); //文件本身名字
+            retMap.put("userFileExt", userFileExt);//文件本身后缀
+            retMap.put("fileName", uuid);//系统生成uuid代表文件名字
+            retMap.put("filePath", ChuXiConstants.PRE_PATH + userid + "/" + path + "/");//文件路径
             return BaseResult.getInstance(retMap);
         } catch (Exception e) {
             log.error(e.getMessage());
