@@ -84,6 +84,13 @@ public class DbUtil {
 			tMap.put("DATA_SCALE", rs.getString("DATA_SCALE")==null?"":rs.getString("DATA_SCALE"));
 			tMap.put("DATA_TYPE", rs.getString("DATA_TYPE"));
 			tMap.put("COMMENTS", rs.getString("COMMENTS")==null?"":rs.getString("COMMENTS"));
+			String type = String.format("{DATA_TYPE:%s,DATA_LENGTH:%s,DATA_PRECISION:%s,DATA_SCALE:%s}",
+					MapUtils.getString(tMap,"DATA_TYPE",""),
+					MapUtils.getString(tMap,"DATA_LENGTH",""),
+					MapUtils.getString(tMap,"DATA_PRECISION",""),
+					MapUtils.getString(tMap,"DATA_SCALE","")
+			);
+			tMap.put("COLUMN_TYPE",type);
 			if (rs.getString("DATA_TYPE").equals("NUMBER")) {
 				tMap.put("javaType", "String");
 				tMap.put("sqlMapType", "NUMERIC");

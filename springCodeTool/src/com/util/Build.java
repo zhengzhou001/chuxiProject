@@ -17,7 +17,7 @@ public class Build {
 	Build(){
 		//获取properties文件内容
 		//this.configMap = PropertyUtil.getMap( Build.class.getResourceAsStream("/config.properties"));
-		this.configMap = PropertyUtil.getMap( Build.class.getResourceAsStream("/config-chuxi.properties"));
+		this.configMap = PropertyUtil.getMap( Build.class.getResourceAsStream("/config.properties"));
 
 		configMap.put("BUILD_TAB_MC", MapUtils.getString(this.configMap, "BUILD_TAB_MC").toUpperCase());
 		cfg = new Configuration();

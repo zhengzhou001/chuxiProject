@@ -8,8 +8,8 @@
     <file url="file://$PROJECT_DIR$/chuxi/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eureka/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eureka/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/userService/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/userService/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/testservice/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/testservice/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/xinanDistributeCore/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/xinanDistributeCore/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zuul/src/main/java" charset="UTF-8" />

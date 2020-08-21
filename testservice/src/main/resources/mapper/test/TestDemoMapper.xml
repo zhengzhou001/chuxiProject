@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinan.testservice.test.mapper.TestDemoMapper" >
+	<resultMap id="BaseResultMap" type="com.xinan.testservice.test.entity.TestDemoEntity" >
+		<result column="TOTAL" property="total"  />
+		<result column="ROWNO" property="rowno"  />
+		<result column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--示例表通用查询条件 -->
+	<sql id="TEST_DEMO_WHERE">
+		<where>
+			<if test="id != null and id != ''">
+				AND T.ID = #{id}
+			</if>
+			<if test="id_LIKE != null and id_LIKE != ''">
+				AND T.ID LIKE concat(concat('%',#{id_LIKE}),'%')
+			</if>
+			<if test="id_LLIKE != null and id_LLIKE != ''">
+				AND T.ID LIKE concat('%',#{id_LLIKE})
+			</if>
+			<if test="id_RLIKE != null and id_RLIKE != ''">
+				AND T.ID LIKE concat(#{id_RLIKE},'%')
+			</if>
+				
+			<if test="name != null and name != ''">
+				AND T.NAME = #{name}
+			</if>
+			<if test="name_LIKE != null and name_LIKE != ''">
+				AND T.NAME LIKE concat(concat('%',#{name_LIKE}),'%')
+			</if>
+			<if test="name_LLIKE != null and name_LLIKE != ''">
+				AND T.NAME LIKE concat('%',#{name_LLIKE})
+			</if>
+			<if test="name_RLIKE != null and name_RLIKE != ''">
+				AND T.NAME LIKE concat(#{name_RLIKE},'%')
+			</if>
+				
+			<if test="createDate != null and createDate != ''">
+				AND T.CREATE_DATE = TO_DATE(#{createDate,'YYYY-MM-DD hh24:mi:ss')
+			</if>
+			<if test="createDate_MIN != null and createDate_MIN != ''">
+				AND T.CREATE_DATE &gt;= TO_DATE(#{createDate_MIN},'YYYY-MM-DD hh24:mi:ss')
+			</if>
+			<if test="createDate_MAX != null and createDate_MAX != ''">
+				AND T.CREATE_DATE &lt;= TO_DATE(#{createDate_MAX},'YYYY-MM-DD hh24:mi:ss')
+			</if>
+				
+		</where>
+	</sql>
+	<!-- 示例表通用查询 -->
+    <select id="selectTestDemo" parameterType="com.xinan.testservice.test.entity.TestDemoEntity" resultMap="BaseResultMap" >
+     	<if test="curPage != null and curPage != ''">
+            <if test="pageSize != null and pageSize != ''">
+                SELECT F.* FROM (
+            </if>
+        </if>
+         SELECT E.*,ROWNUM ROWNO FROM (
+            SELECT T.ID,T.NAME,
+            TO_CHAR(T.CREATE_DATE,'YYYY-MM-DD hh24:mi:ss') CREATE_DATE
+             ,FIRST_VALUE(ROWNUM) OVER(ORDER BY ROWNUM DESC) AS TOTAL
+             FROM TEST_DEMO T
+            <include refid="TEST_DEMO_WHERE"/>
+            <if test="sortName != null and sortName != ''">
+            	 ORDER BY  ${sortName}
+            	 <if test="sortOrder != null and sortOrder != ''">
+            	 	 ${sortOrder}
+            	 </if>
+            </if>
+            )E
+      <if test="curPage != null and curPage != ''">
+            <if test="pageSize != null and pageSize != ''">
+                <![CDATA[ WHERE ROWNUM <=#{curPage} * #{pageSize} ) F WHERE F.ROWNO >=(#{curPage} - 1) * #{pageSize} + 1]]>
+            </if>
+        </if>
+    </select>
+    
+    <!-- 示例表通用查询个数 -->
+    <select id="selectTestDemoCount" parameterType="com.xinan.testservice.test.entity.TestDemoEntity" resultType="java.lang.Integer" >
+     	 SELECT COUNT(1) FROM TEST_DEMO T <include refid="TEST_DEMO_WHERE"/>
+    </select>
+    
+    <!-- 示例表保存 -->
+    <insert id="insertTestDemo" parameterType="com.xinan.testservice.test.entity.TestDemoEntity" >
+    	insert into TEST_DEMO 
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				  ID ,
+			</if>
+			<if test="name != null and name != ''">
+				  NAME ,
+			</if>
+			 CREATE_DATE ,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null and id != ''">
+				 #{id},  
+			</if>
+			<if test="name != null and name != ''">
+				 #{name},  
+			</if>
+				SYSDATE,
+		</trim>
+    </insert>
+    
+    <!-- 示例表修改-->
+    <update id="updateTestDemo" parameterType="com.xinan.testservice.test.entity.TestDemoEntity" >
+    	update   TEST_DEMO 
+    	<set>
+			<if test="id != null and id != ''">
+				  ID=  #{id},
+			</if>
+			<if test="name != null and name != ''">
+				  NAME=  #{name},
+			</if>
+			<if test="createDate != null and createDate != ''">
+				  CREATE_DATE=  TO_DATE(#{createDate},'YYYY-MM-DD hh24:mi:ss'),
+			</if>
+			 
+		</set>
+		 where ID=#{id}
+    </update>
+    
+    <!-- 示例表删除-->
+    <delete id="deleteTestDemo" parameterType="com.xinan.testservice.test.entity.TestDemoEntity" >
+    	delete  from TEST_DEMO   where ID=#{id}
+    </delete>
+    
+</mapper>

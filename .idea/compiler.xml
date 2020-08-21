@@ -12,7 +12,7 @@
         <module name="eureka" />
         <module name="authservice" />
         <module name="chuxi" />
-        <module name="userService" />
+        <module name="testservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
@@ -20,6 +20,7 @@
       <module name="basePom" target="1.8" />
       <module name="chuxi" target="1.8" />
       <module name="eureka" target="1.8" />
+      <module name="testservice" target="1.8" />
       <module name="userService" target="1.8" />
       <module name="websocket-demo" target="1.8" />
       <module name="xinanDistributeCore" target="1.8" />

@@ -7,7 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/chuxi/chuxi.iml" filepath="$PROJECT_DIR$/chuxi/chuxi.iml" />
       <module fileurl="file://$PROJECT_DIR$/eureka/eureka.iml" filepath="$PROJECT_DIR$/eureka/eureka.iml" />
       <module fileurl="file://$PROJECT_DIR$/springCodeTool/springCodeTool.iml" filepath="$PROJECT_DIR$/springCodeTool/springCodeTool.iml" />
-      <module fileurl="file://$PROJECT_DIR$/userService/userService.iml" filepath="$PROJECT_DIR$/userService/userService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testservice/testservice.iml" filepath="$PROJECT_DIR$/testservice/testservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/xinanDistributeCore/xinanDistributeCore.iml" filepath="$PROJECT_DIR$/xinanDistributeCore/xinanDistributeCore.iml" />
       <module fileurl="file://$PROJECT_DIR$/zuul/zuul.iml" filepath="$PROJECT_DIR$/zuul/zuul.iml" />
     </modules>
