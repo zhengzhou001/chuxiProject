@@ -49,54 +49,22 @@
 <div th:replace="common/base/checkLogin"></div>
 
 
-<div class="layui-container"  >
-    <!--head-->
-    <div th:replace="front/head/head :: head"></div>
+<div class="layui-container"   >
 
-    <!--轮播图-->
-    <div class="layui-carousel" id="carousel"  style="margin-top: 65px">
-        <div carousel-item="">
-            <div  class="divMain"><img   th:src="@{/images/carousel/index/1.jpg}"></div>
-            <div  class="divMain"><img   th:src="@{/images/carousel/index/2.jpg}"></div>
-            <div  class="divMain"><img   th:src="@{/images/carousel/index/3.jpg}"></div>
-            <div  class="divMain"><img   th:src="@{/images/carousel/index/4.jpg}"></div>
-            <div  class="divMain"><img   th:src="@{/images/carousel/index/5.jpg}"></div>
-            <div  class="divMain"><img   th:src="@{/images/carousel/index/6.jpg}"></div>
-
-        </div>
+    <div th:if="true" th:remove="tag">
+        <!--头部-->
+        <div th:replace="front/head/head :: head"></div>
     </div>
 
-
-
-    <div class="layui-row"  style="margin-bottom: 50px">
-        <!--热销产品-->
-        <div class="layui-col-xs6">
-            <div class="layui-card">
-                 <div class="layui-card-body">
-                     <div style="height:400px;" id="rxcpChartBar">
-                     </div>
-
-                </div>
-            </div>
-        </div>
-        <!--推荐产品-->
-        <div class="layui-col-xs6">
-            <div class="layui-card">
-<!--
-                <div class="layui-card-header" style="background-color: #dedede">推荐Top5 <a style=" float: right;" target="_blank" href="http://www.baidu.com">更多。。。</a>  </div>
--->
-                <div class="layui-card-body">
-                    <div style="height:400px;" id="tjcpChartBar">
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
+    <div th:if="true" th:remove="tag">
+        <!--轮播图-->
+        <div th:replace="front/carousel/carousel :: carousel"></div>
     </div>
 
-    <!--foot-->
-    <div th:replace="front/head/head :: foot"></div>
-</div>
+</div> 
 </body>
+<script th:inline="javascript">
+
+
+</script>
 </html>

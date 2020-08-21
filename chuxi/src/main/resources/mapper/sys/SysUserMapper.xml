@@ -265,4 +265,10 @@
     	delete  T  from SYS_USER  T  <include refid="SYS_USER_WHERE"/>
     </delete>
 
+	<!--获取用户详细信息-->
+	<select id="getPersonInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select a.name,a.mobile,a.email,b.user_file_name,b.file_name,b.file_ext,b.file_path from sys_user a left join sys_user_head b on a.id=b.userid and b.is_show='1' where a.id = #{userid}
+	</select>
+
+
 </mapper>

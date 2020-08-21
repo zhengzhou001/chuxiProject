@@ -49,6 +49,7 @@ public class RouteConteoller {
         return modelAndView;
     }
 
+    //个人信息
     @GetMapping("/personInfo")
     public ModelAndView personInfo() {
         //登录
@@ -60,13 +61,25 @@ public class RouteConteoller {
         return modelAndView;
     }
 
-    @GetMapping("/personInfoA")
-    public ModelAndView personInfoA() {
+    //模块设置
+    @GetMapping("/module")
+    public ModelAndView module() {
         //登录
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("back/info/personInfo1");
+        modelAndView.setViewName("back/module/module");
         Map<String, Object> model = modelAndView.getModel();
-        model.put("title", ChuXiConstants.TITLE +"-个人信息");
+        model.put("title", ChuXiConstants.TITLE +"-模块设置");
+        model.put("foot", ChuXiConstants.FOOT);
+        return modelAndView;
+    }
+    //模块设置
+    @GetMapping("/carousel")
+    public ModelAndView carousel() {
+        //登录
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("back/carousel/carousel");
+        Map<String, Object> model = modelAndView.getModel();
+        model.put("title", ChuXiConstants.TITLE +"-轮播图设置");
         model.put("foot", ChuXiConstants.FOOT);
         return modelAndView;
     }

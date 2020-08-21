@@ -186,4 +186,19 @@ public class SysUserController{
 		return BaseResult.getInstance();
 	}
 
+	//根据用户id获取用户信息
+	@ApiOperation(value = "用户详细信息接口", notes="根据用户id查询用户详细信息")
+	@RequestMapping(value={"/getPersonInfo"}, method={RequestMethod.POST})
+	public BaseResult getPersonInfo(@RequestBody Map map){
+		BaseResult<Map> result;
+		try{
+			result = sysUserService.getPersonInfo(map);
+ 		} catch (Exception e) {
+			log.error(e.getMessage());
+			return BaseResult.getInstance(-1,e.getMessage());
+		}
+		return result;
+	}
+
+
 }

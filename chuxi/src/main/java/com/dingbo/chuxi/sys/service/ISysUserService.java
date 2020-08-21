@@ -58,4 +58,7 @@ public interface ISysUserService extends IBaseService{
 
 	//退出登录
 	public void updateLogout(Map map);
+
+	//用户详细信息
+	public BaseResult<Map>  getPersonInfo(Map map);
 }

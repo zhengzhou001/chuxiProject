@@ -44,3 +44,7 @@ spring:
     logSlowSql: true
     druid_user: chuxi
     druid_pwd: chuxi
+  http:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB

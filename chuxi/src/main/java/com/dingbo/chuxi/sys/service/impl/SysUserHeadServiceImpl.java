@@ -39,7 +39,7 @@ public class SysUserHeadServiceImpl extends BaseServiceImpl implements ISysUserH
 		if (sysUserHeadEntity.getIsShow().equals("1")){
 			SysUserHeadEntity sysUserHeadEntity1 = new SysUserHeadEntity();
 			sysUserHeadEntity1.setUserid(sysUserHeadEntity.getUserid());
-			sysUserHeadEntity1.setIsShow_NEW("0");
+			sysUserHeadEntity1.setIsShow_NEW(0);
 			sysUserHeadMapper.updateSysUserHead(sysUserHeadEntity1);
 		}
 		//记录日志
@@ -50,7 +50,7 @@ public class SysUserHeadServiceImpl extends BaseServiceImpl implements ISysUserH
 		logUserEntity.setContent("<a href=\"/file/getFile?realFile="+file+"&fileName="+fileName+"\" target=\"_blank\">新增头像 "+fileName+"</a>");
 		logUserEntity.setIp(BaseTools.getIPAddress());
 		logUserMapper.insertLogUser(logUserEntity);
-		sysUserHeadEntity.setIsShow("1");
+		sysUserHeadEntity.setIsShow(1);
 		return sysUserHeadMapper.insertSysUserHead(sysUserHeadEntity);
 	}
 	

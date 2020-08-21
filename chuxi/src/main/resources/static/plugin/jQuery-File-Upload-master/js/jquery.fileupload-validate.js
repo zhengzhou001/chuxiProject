@@ -71,6 +71,7 @@
 
     processActions: {
       validate: function (data, options) {
+        debugger
         if (options.disabled) {
           return data;
         }

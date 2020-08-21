@@ -6,7 +6,7 @@
 		<result column="ROWNO" property="rowno"  />
 		<result column="ID" property="id" jdbcType="NUMERIC" />
 		<result column="USERID" property="userid" jdbcType="NUMERIC" />
-		<result column="CEEATE_DATE" property="ceeateDate" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
 		<result column="USER_FILE_NAME" property="userFileName" jdbcType="VARCHAR" />
 		<result column="FILE_EXT" property="fileExt" jdbcType="VARCHAR" />
 		<result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
@@ -42,14 +42,14 @@
 				AND T.USERID LIKE concat(#{userid_RLIKE},'%')
 			</if>
 
-			<if test="ceeateDate != null and ceeateDate != ''">
-				AND T.CEEATE_DATE = STR_TO_DATE(#{ceeateDate,'%Y-%m-%d %H:%i:%s')
+			<if test="createDate != null and createDate != ''">
+				AND T.CREATE_DATE = STR_TO_DATE(#{createDate,'%Y-%m-%d %H:%i:%s')
 			</if>
-			<if test="ceeateDate_MIN != null and ceeateDate_MIN != ''">
-				AND T.CEEATE_DATE &gt;= STR_TO_DATE(#{ceeateDate_MIN},'%Y-%m-%d %H:%i:%s')
+			<if test="createDate_MIN != null and createDate_MIN != ''">
+				AND T.CREATE_DATE &gt;= STR_TO_DATE(#{createDate_MIN},'%Y-%m-%d %H:%i:%s')
 			</if>
-			<if test="ceeateDate_MAX != null and ceeateDate_MAX != ''">
-				AND T.CEEATE_DATE &lt;= STR_TO_DATE(#{ceeateDate_MAX},'%Y-%m-%d %H:%i:%s')
+			<if test="createDate_MAX != null and createDate_MAX != ''">
+				AND T.CREATE_DATE &lt;= STR_TO_DATE(#{createDate_MAX},'%Y-%m-%d %H:%i:%s')
 			</if>
 
 			<if test="userFileName != null and userFileName != ''">
@@ -126,7 +126,7 @@
 		(SELECT COUNT(1) FROM SYS_USER_HEAD T <include refid="SYS_USER_HEAD_WHERE"/>) AS TOTAL,
 		E.* FROM (
 		SELECT T.ID,T.USERID,
-			DATE_FORMAT(T.CEEATE_DATE,'%Y-%m-%d %H:%i:%s') CEEATE_DATE,T.USER_FILE_NAME,T.FILE_EXT,
+			DATE_FORMAT(T.CREATE_DATE,'%Y-%m-%d %H:%i:%s') CREATE_DATE,T.USER_FILE_NAME,T.FILE_EXT,
 			T.FILE_NAME,T.FILE_PATH,T.IS_SHOW
 		FROM SYS_USER_HEAD T
 		<include refid="SYS_USER_HEAD_WHERE"/>
@@ -158,9 +158,7 @@
 			<if test="userid != null and userid != ''">
 				  USERID ,
 			</if>
-			<if test="ceeateDate != null and ceeateDate != ''">
-				  CEEATE_DATE ,
-			</if>
+			CREATE_DATE ,
 			<if test="userFileName != null and userFileName != ''">
 				  USER_FILE_NAME ,
 			</if>
@@ -184,9 +182,7 @@
 			<if test="userid != null and userid != ''">
 				 #{userid},
 			</if>
-			<if test="ceeateDate != null and ceeateDate != ''">
-				 STR_TO_DATE(#{ceeateDate},'%Y-%m-%d %H:%i:%s'),
-			</if>
+			now(),
 			<if test="userFileName != null and userFileName != ''">
 				 #{userFileName},
 			</if>
@@ -215,8 +211,8 @@
 			<if test="userid_NEW != null and userid_NEW != ''">
 				  USERID=  #{userid_NEW},
 			</if>
-			<if test="ceeateDate_NEW != null and ceeateDate_NEW != ''">
-				  CEEATE_DATE=  STR_TO_DATE(#{ceeateDate_NEW},'%Y-%m-%d %H:%i:%s'),
+			<if test="createDate_NEW != null and createDate_NEW != ''">
+				  CREATE_DATE=  STR_TO_DATE(#{createDate_NEW},'%Y-%m-%d %H:%i:%s'),
 			</if>
 
 			<if test="userFileName_NEW != null and userFileName_NEW != ''">

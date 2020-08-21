@@ -106,20 +106,20 @@ SysUserEntity extends BaseEntity{
     @ApiModelProperty(hidden = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password_NEW ;
-    @ApiModelProperty(value="备注：状态，类型：char(1)")
-    private String state ;
+    @ApiModelProperty(value="备注：状态，类型：int(1)")
+    private Integer state ;
     @ApiModelProperty(hidden = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String state_LIKE ;
+    private Integer state_LIKE ;
     @ApiModelProperty(hidden = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String state_LLIKE ;
+    private Integer state_LLIKE ;
     @ApiModelProperty(hidden = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String state_RLIKE ;
+    private Integer state_RLIKE ;
     @ApiModelProperty(hidden = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String state_NEW ;
+    private Integer state_NEW ;
     @ApiModelProperty(value="备注：创建时间，类型：datetime")
     private String createDate ;
     @ApiModelProperty(hidden = true)

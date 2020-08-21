@@ -21,7 +21,7 @@ import lombok.Data;
 @ApiModel(value="用户头像表")
 @Data
 public class SysUserHeadEntity extends BaseEntity{
-	@ApiModelProperty(value="备注：，类型：int(11)")
+	@ApiModelProperty(value="备注：头像id，类型：int(11)")
     private Integer id ;
     @ApiModelProperty(hidden = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -116,18 +116,18 @@ public class SysUserHeadEntity extends BaseEntity{
     @ApiModelProperty(hidden = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String filePath_NEW ;
-	@ApiModelProperty(value="备注：是否展示，类型：varchar(255)")
-    private String isShow ;
+	@ApiModelProperty(value="备注：是否展示，类型：int(1)")
+    private Integer isShow ;
     @ApiModelProperty(hidden = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String isShow_LIKE ;
+    private Integer isShow_LIKE ;
     @ApiModelProperty(hidden = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String isShow_LLIKE ;
+    private Integer isShow_LLIKE ;
     @ApiModelProperty(hidden = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String isShow_RLIKE ;
+    private Integer isShow_RLIKE ;
     @ApiModelProperty(hidden = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String isShow_NEW ;
+    private Integer isShow_NEW ;
 }

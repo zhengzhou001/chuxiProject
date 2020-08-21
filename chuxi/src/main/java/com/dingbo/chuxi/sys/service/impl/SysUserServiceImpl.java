@@ -111,7 +111,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
 			return result;
 		}
 		SysUserEntity mobileDbEntity = mobileList.get(0);
-		if (!StringUtils.equals(mobileDbEntity.getState(),"1")){
+		if (mobileDbEntity.getState()!=1){
 			result.setCode(103);
 			result.setMsg("账号状态异常,请联系客服人员解决");
 			return result;
@@ -174,7 +174,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
 			return result;
 		}
 		//注册用户
-		sysUserEntity.setState("1");
+		sysUserEntity.setState(1);
 		sysUserEntity.setPassword(EncryptTools.encodeMD5String(sysUserEntity.getPassword()));
 		sysUserEntity.setCreateDate(BaseTools.getCurStrDate(1));
 		sysUserEntity.setLoginDate(BaseTools.getCurStrDate(1));
@@ -202,5 +202,19 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
 		logUserEntity.setContent("用户退出");
 		logUserEntity.setIp(BaseTools.getIPAddress());
 		logUserMapper.insertLogUser(logUserEntity);
+	}
+
+	//用户详细信息
+	public BaseResult<Map>  getPersonInfo(Map map){
+		BaseResult<Map> ret = new BaseResult<>();
+		int userid = MapUtils.getIntValue(map,"userid",-1);
+		if (userid==-1)
+			return BaseResult.getInstance(100,"用户id不能为空");
+		List<Map> personList = sysUserMapper.getPersonInfo(map);
+		if (personList==null||personList.size()==0)
+			return BaseResult.getInstance(101,"根据用户id查询不到用户信息");
+		if (personList.size()>1)
+			return BaseResult.getInstance(102,"根据用户id查询到多条用户信息，请联系管理员进行数据维护");
+		return BaseResult.getInstance(personList.get(0));
 	}
 }

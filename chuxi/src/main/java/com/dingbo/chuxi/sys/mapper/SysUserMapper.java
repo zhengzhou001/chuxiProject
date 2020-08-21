@@ -1,8 +1,9 @@
 package com.dingbo.chuxi.sys.mapper;
 
-import java.util.List;
-
 import com.dingbo.chuxi.sys.entity.SysUserEntity;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <ol>
@@ -46,4 +47,7 @@ public interface SysUserMapper {
 	 * @return int返回符合条件的用户表实体对象个数
  	 */
 	public	int selectSysUserCount(SysUserEntity sysUserEntity);
+
+	//获取用户详细信息
+	public List<Map> getPersonInfo(Map map);
 }

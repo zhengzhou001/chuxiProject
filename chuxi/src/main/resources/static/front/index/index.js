@@ -10,9 +10,10 @@ layui.use(['element', 'table', "layer", "form", "carousel"], function () {
 
 //初始化
 function init() {
+
     initCarousel();//轮播图初始化
-    initRxcpChartBar();//热销产品柱状图
-    initTjcpChartBar();//推荐产品柱状图
+    //initRxcpChartBar();//热销产品柱状图
+    //initTjcpChartBar();//推荐产品柱状图
     //getTestData();
 }
 
